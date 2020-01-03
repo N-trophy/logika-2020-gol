@@ -26,8 +26,11 @@ def _split_compare(text: str) -> Tuple[str, str, str, Operator]:
         raise EInvalidExpr(f'Výraz "{text}" obsahuje více operátorů než '
                            'jeden!')
 
-    left, right = text.split(operators[0])
-    return left, right, operators[0], COMPARES[operators[0]]
+    splitted = text.split(operators[0])
+    if len(splitted) != 2:
+        raise EInvalidExpr(f'Výraz "{text}" obsahuje více operátorů než '
+                           'jeden!')
+    return splitted[0], splitted[1], operators[0], COMPARES[operators[0]]
 
 
 class Comparator:
