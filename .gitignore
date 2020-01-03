@@ -4,3 +4,4 @@ __pycache__
 djangoenv
 gol/static/admin
 gol/migrations
+.idea

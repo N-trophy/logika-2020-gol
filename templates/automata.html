@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="static/automata.js"></script>
+        <script src="static/world.js"></script>
+        <script src="static/test.js"></script>
+        <link rel="stylesheet" type="text/css" href="static/style.css">
+    </head>
+    <body>
+        <table id="automata"></table>
+        <button onclick="world.tick()">Tick</button>
+        <button onclick="world.run()">Run</button>
+        <button onclick="world.stop()">Stop</button>
+        <script>
+            $(initWorld);
+        </script>
+    </body>
+</html>
