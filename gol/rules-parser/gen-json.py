@@ -7,8 +7,8 @@ from rules import rules
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        sys.stderr.write('Usage: test.py rules.txt\n')
+        sys.stderr.write('Usage: gen-json.py rules.txt\n')
         sys.exit(1)
 
     with open(sys.argv[1]) as f:
-        print(json.dumps(rules(f.read(), 'rgb').repr(), indent=4))
+        print(json.dumps(rules(f.read(), 'bw').repr(), indent=4))
