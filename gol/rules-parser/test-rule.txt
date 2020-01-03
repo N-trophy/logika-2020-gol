@@ -1,0 +1,10 @@
+if ****r**** == 1:
+    if (rrrrrrrrr == 3) or (rrrrrrrrr == 4):
+        r
+    else:
+        b
+else:
+    if rrrrbrrrr == 4:
+        r
+    else:
+        b
