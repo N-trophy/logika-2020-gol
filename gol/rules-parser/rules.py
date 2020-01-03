@@ -6,9 +6,6 @@ from comparator import Comparator
 import brackets
 
 
-debug = False
-
-
 class RuleType(Enum):
     CONSTANT = 0
     CONDITION = 1
@@ -28,7 +25,7 @@ class Rule:
 
     def _parse_if(self, line: str, allowed_colors: str):
         if not line.endswith(':'):
-            raise EInvalidExpr(f'Řádek {line} nekončí dvojtečkou!')
+            raise EInvalidExpr(f'Řádek nekončí dvojtečkou!')
 
         self.type = RuleType.CONDITION
         self.condition_text = brackets.remove_toplevel_brackets(line[2:-1])
@@ -41,7 +38,7 @@ class Rule:
 
     def _parse_constant(self, line: str, allowed_colors: str):
         if line not in allowed_colors:
-            raise EInvalidExpr(f'Řádek "{line}" obsahuje neplatnou barvu!')
+            raise EInvalidExpr(f'Neplatná barva: {line}!')
         self.type = RuleType.CONSTANT
         self.color = line
 
@@ -64,7 +61,7 @@ class Rule:
 
 def rules(lines: str, allowed_colors: str) -> Rule:
     lines = lines.split('\n')
-    if not lines[0].startswith('if'):
+    if not lines[0].strip().startswith('if'):
         raise EInvalidExpr(f'Řádek 1 nezačíná příkazem "if"!')
 
     stack = []
@@ -76,17 +73,40 @@ def rules(lines: str, allowed_colors: str) -> Rule:
 
         try:
             if line.startswith('else:'):
-                if (len(stack) > 1 and stack[-2].if_rule is not None and
+                if len(stack) < 2:
+                    raise EInvalidExpr('else před sebou nemá "if" nebo tělo '
+                                      'podmínky!')
+
+                if (stack[-2].if_rule is not None and
                     stack[-1].type == RuleType.CONSTANT):
+                    # else-branch constant rule to else-branch
+                    rule = stack.pop()
+                    if stack[-1].else_rule is not None:
+                        raise EInvaliExpr('Více else větví!')
+                    stack[-1].else_rule = rule
+
+                while (stack[-1].if_rule is not None and
+                       stack[-1].else_rule is None):
+                    # Propagate to else-branches till else-branches are empty
+                    # and if-branches are non-empty
                     rule = stack.pop()
                     stack[-1].else_rule = rule
-                while stack[-1].if_rule is not None and stack[-1].else_rule is None:
-                    rule = stack.pop()
-                    stack[-1].else_rule = rule
+
+                # Whole rule before else to if-branch
                 rule = stack.pop()
+                if not stack or stack[-1].if_rule is not None:
+                    raise EInvalidExpr('Neplatný výraz!')
                 stack[-1].if_rule = rule
+
             else:
                 stack.append(Rule(line.replace(' ', ''), allowed_colors))
+                if len(stack) >= 2 and stack[-2].type == RuleType.CONSTANT:
+                    raise EInvalidExpr('Po barvě může následovat jedině else!')
+
+            # print(len(stack))
+            # for rule in stack:
+            #    print(rule.repr())
+            # print('--------------------')
         except EInvalidExpr as exc:
             args = list(exc.args)
             if args:
@@ -94,20 +114,19 @@ def rules(lines: str, allowed_colors: str) -> Rule:
             exc.args = tuple(args)
             raise
 
-        if debug:
-            for rule in stack:
-                print(rule.repr())
-            print('--------------------')
-
+    if (stack[-1].type == RuleType.CONDITION and
+        (stack[-1].if_rule is None or stack[-1].else_rule is None)):
+        raise EInvalidExpr('Výraz není řádně ukončen!')
     rule = stack.pop()
+    if stack[-1].else_rule is not None:
+        raise EInvaliExpr('Více else větví!')
     stack[-1].else_rule = rule
     while len(stack) > 1 and stack[-2].else_rule is None:
+        # Pack all end else branches
         rule = stack.pop()
         stack[-1].else_rule = rule
 
-    if debug:
-        for rule in stack:
-            print(rule.repr())
-        print('--------------------')
+    if len(stack) != 1:
+        raise EInvaliExpr('Více top-level podmínek!')
 
     return stack[0]

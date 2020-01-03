@@ -1,10 +1,10 @@
 if ****b**** == 1:
-    if (bbbbbbbbb == 3) or (bbbbbbbbb == 4):
-        b
-    else:
-        w
+	if (bbbbbbbbb == 3) or (bbbbbbbbb == 4):
+		b
+	else:
+		w
 else:
-    if bbbbwbbbb == 4:
-        b
-    else:
-        w
+	if bbbbwbbbb == 4:
+		b
+	else:
+		w
