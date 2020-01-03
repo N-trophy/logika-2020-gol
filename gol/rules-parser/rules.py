@@ -1,5 +1,5 @@
-from typing import List, Tuple
 from enum import Enum
+
 from errors import EInvalidExpr
 from bool_operator import BoolOperator, OPERATORS
 from comparator import Comparator
@@ -75,14 +75,14 @@ def rules(lines: str, allowed_colors: str) -> Rule:
             if line.startswith('else:'):
                 if len(stack) < 2:
                     raise EInvalidExpr('else před sebou nemá "if" nebo tělo '
-                                      'podmínky!')
+                                       'podmínky!')
 
                 if (stack[-2].if_rule is not None and
-                    stack[-1].type == RuleType.CONSTANT):
+                        stack[-1].type == RuleType.CONSTANT):
                     # else-branch constant rule to else-branch
                     rule = stack.pop()
                     if stack[-1].else_rule is not None:
-                        raise EInvaliExpr('Více else větví!')
+                        raise EInvalidExpr('Více else větví!')
                     stack[-1].else_rule = rule
 
                 while (stack[-1].if_rule is not None and
@@ -115,11 +115,11 @@ def rules(lines: str, allowed_colors: str) -> Rule:
             raise
 
     if (stack[-1].type == RuleType.CONDITION and
-        (stack[-1].if_rule is None or stack[-1].else_rule is None)):
+            (stack[-1].if_rule is None or stack[-1].else_rule is None)):
         raise EInvalidExpr('Výraz není řádně ukončen!')
     rule = stack.pop()
     if stack[-1].else_rule is not None:
-        raise EInvaliExpr('Více else větví!')
+        raise EInvalidExpr('Více else větví!')
     stack[-1].else_rule = rule
     while len(stack) > 1 and stack[-2].else_rule is None:
         # Pack all end else branches
@@ -127,6 +127,6 @@ def rules(lines: str, allowed_colors: str) -> Rule:
         stack[-1].else_rule = rule
 
     if len(stack) != 1:
-        raise EInvaliExpr('Více top-level podmínek!')
+        raise EInvalidExpr('Více top-level podmínek!')
 
     return stack[0]

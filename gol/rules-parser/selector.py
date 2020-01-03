@@ -1,4 +1,5 @@
 from enum import Enum
+
 from errors import EInvalidExpr
 
 
@@ -21,10 +22,11 @@ class Selector:
 
     def _parse_grid(self, text: str, color_codes: str):
         if len(text) != 9:
-            raise EInvalidExpr(f'Selektor {text} neobsahuje právě 9 znaků!')
+            raise EInvalidExpr(f'Selektor "{text}" neobsahuje právě 9 znaků!')
         for char in text:
             if char not in color_codes and char != '*':
-                raise EInvalidExpr(f'Selektor: {text} obsahuje neplatné znaky!')
+                raise EInvalidExpr(f'Selektor: "{text}" obsahuje '
+                                   'neplatné znaky!')
         self.grid = text
 
     def repr(self):
@@ -37,7 +39,6 @@ class Selector:
             'className': 'ConstantSelector',
             'args': [self.number]
         }
-
 
     def __call__(self, grid):
         pass  # TODO

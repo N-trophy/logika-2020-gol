@@ -1,5 +1,4 @@
 import operator
-import re
 from typing import Tuple, Callable, Dict
 
 from selector import Selector
@@ -24,7 +23,8 @@ def _split_compare(text: str) -> Tuple[str, str, str, Operator]:
     if len(operators_set) == 0:
         raise EInvalidExpr(f'Výraz "{text}" neobsahuje operátor!')
     if len(operators_set) > 1:
-        raise EInvalidExpr(f'Výraz "{text}" obsahuje více operátorů než jeden!')
+        raise EInvalidExpr(f'Výraz "{text}" obsahuje více operátorů než '
+                           'jeden!')
 
     left, right = text.split(operators[0])
     return left, right, operators[0], COMPARES[operators[0]]
@@ -36,7 +36,8 @@ class Comparator:
 
     def _parse(self, text: str, allowed_colors: str):
         text = text.replace(' ', '')
-        self.left_text, self.right_text, self.operator_text, self.operator = _split_compare(text)
+        self.left_text, self.right_text, self.operator_text, self.operator = \
+            _split_compare(text)
         self.left = Selector(self.left_text, allowed_colors)
         self.right = Selector(self.right_text, allowed_colors)
 
