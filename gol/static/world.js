@@ -1,11 +1,10 @@
 class World {
-    constructor(width, height, rootId, ruleSet) {
+    constructor(width, height, rootId, rules) {
         this.width = width;
         this.height = height;
         this.root = $("#" + rootId);
-        this.ruleSet = ruleSet;
 
-        this.automata = new Automata(25, 25, r);
+        this.automata = new Automata(25, 25, rules);
 
         this.initTableImage();
     }    
@@ -56,6 +55,20 @@ class World {
             }
         }
     }
+
+    loadSource(srcId) {
+        const src = $('#' + srcId).val();
+        $.ajax({
+            type: 'POST',
+            url: '/rules/parse',
+            data: src,
+            dataType: 'text',
+            success: ((data)=>{
+                const rules = Rule.deserialize(JSON.parse(data));
+                this.automata.setRules(rules);
+            }).bind(this)
+        });
+    }
 }
 
 class BWWorld extends World {
@@ -81,6 +94,16 @@ class BWWorld extends World {
 
     toggle(x, y) {
         this.automata.setCell(this.automata.getCell(x, y) == 'w' ? 'b' : 'w', x, y);
+        this.drawTable();
+    }
+
+    clear() {
+        this.automata.fill('w');
+        this.drawTable();
+    }
+
+    fill() {
+        this.automata.fill('b');
         this.drawTable();
     }
 }

@@ -55,6 +55,10 @@ class Automata {
     getCurrentTable(){
         return this.tables[this.tick % 2];
     }
+
+    setRules(rules){
+        this.rules = rules;
+    }
 }
 
 // Selectors ------------------------------------------------------------------------------------------
