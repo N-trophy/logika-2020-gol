@@ -1,7 +1,7 @@
 from typing import List
 import math
 
-from errors import EInvalidExpr
+from gol.rules_parser.errors import EInvalidExpr
 
 
 def is_correctly_bracked(expr: str) -> str:

@@ -1,6 +1,6 @@
-import brackets
-from errors import EInvalidExpr
-from comparator import Comparator
+import gol.rules_parser.brackets as brackets
+from gol.rules_parser.errors import EInvalidExpr
+from gol.rules_parser.comparator import Comparator
 
 
 OPERATORS = {

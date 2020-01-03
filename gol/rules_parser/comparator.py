@@ -1,8 +1,8 @@
 import operator
 from typing import Tuple, Callable, Dict
 
-from selector import Selector
-from errors import EInvalidExpr
+from gol.rules_parser.selector import Selector
+from gol.rules_parser.errors import EInvalidExpr
 
 
 Operator = Callable[[int, int], bool]

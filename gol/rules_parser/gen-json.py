@@ -2,8 +2,9 @@
 
 import json
 import sys
-from rules import rules
+sys.path.append('../../')
 
+from rules import rules
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:

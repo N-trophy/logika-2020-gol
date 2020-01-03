@@ -1,6 +1,6 @@
 from enum import Enum
 
-from errors import EInvalidExpr
+from gol.rules_parser.errors import EInvalidExpr
 
 
 class SelectorVariant(Enum):
@@ -9,24 +9,25 @@ class SelectorVariant(Enum):
 
 
 class Selector:
-    def __init__(self, text: str, color_codes: str):
-        self._parse(text, color_codes)
+    def __init__(self, text: str, allowed_colors: str):
+        self._parse(text, allowed_colors)
 
-    def _parse(self, text: str, color_codes: str):
+    def _parse(self, text: str, allowed_colors: str):
         if text.isdigit():
             self.type = SelectorVariant.NUMBER
             self.number = int(text)
         else:
             self.type = SelectorVariant.GRID
-            self._parse_grid(text, color_codes)
+            self._parse_grid(text, allowed_colors)
 
-    def _parse_grid(self, text: str, color_codes: str):
+    def _parse_grid(self, text: str, allowed_colors: str):
         if len(text) != 9:
             raise EInvalidExpr(f'Selektor "{text}" neobsahuje právě 9 znaků!')
-        for char in text:
-            if char not in color_codes and char != '*':
-                raise EInvalidExpr(f'Selektor: "{text}" obsahuje '
-                                   'neplatné znaky!')
+        if allowed_colors != '':
+            for char in text:
+                if char not in allowed_colors and char != '*':
+                    raise EInvalidExpr(f'Selektor: "{text}" obsahuje '
+                                       'neplatné znaky!')
         self.grid = text
 
     def repr(self):

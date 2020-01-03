@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+import gol.rules_parser_endpoint as rules_parser
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('rules/parse', rules_parser.parse_rules),
 ]

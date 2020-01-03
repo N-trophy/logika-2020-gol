@@ -1,9 +1,9 @@
 from enum import Enum
 
-from errors import EInvalidExpr
-from bool_operator import BoolOperator, OPERATORS
-from comparator import Comparator
-import brackets
+from gol.rules_parser.errors import EInvalidExpr
+from gol.rules_parser.bool_operator import BoolOperator, OPERATORS
+from gol.rules_parser.comparator import Comparator
+import gol.rules_parser.brackets as brackets
 
 
 class RuleType(Enum):
@@ -37,7 +37,7 @@ class Rule:
             self.condition = Comparator(self.condition_text, allowed_colors)
 
     def _parse_constant(self, line: str, allowed_colors: str):
-        if line not in allowed_colors:
+        if allowed_colors != '' and line not in allowed_colors:
             raise EInvalidExpr(f'Neplatná barva: {line}!')
         self.type = RuleType.CONSTANT
         self.color = line
@@ -59,11 +59,8 @@ class Rule:
         }
 
 
-def rules(lines: str, allowed_colors: str) -> Rule:
+def rules(lines: str, allowed_colors: str = '') -> Rule:
     lines = lines.split('\n')
-    if not lines[0].strip().startswith('if'):
-        raise EInvalidExpr(f'Řádek 1 nezačíná příkazem "if"!')
-
     stack = []
 
     for i, line in enumerate(lines):
@@ -114,13 +111,18 @@ def rules(lines: str, allowed_colors: str) -> Rule:
             exc.args = tuple(args)
             raise
 
+    if not stack:
+        raise EInvalidExpr('Prázdný výraz!')
     if (stack[-1].type == RuleType.CONDITION and
             (stack[-1].if_rule is None or stack[-1].else_rule is None)):
         raise EInvalidExpr('Výraz není řádně ukončen!')
-    rule = stack.pop()
-    if stack[-1].else_rule is not None:
-        raise EInvalidExpr('Více else větví!')
-    stack[-1].else_rule = rule
+
+    if len(stack) > 1:
+        rule = stack.pop()
+        if stack[-1].else_rule is not None:
+            raise EInvalidExpr('Více else větví!')
+        stack[-1].else_rule = rule
+
     while len(stack) > 1 and stack[-2].else_rule is None:
         # Pack all end else branches
         rule = stack.pop()
