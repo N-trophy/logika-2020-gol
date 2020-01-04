@@ -81,10 +81,11 @@ class GridSelector extends Selector {
         let s = 0;
         let p = 0;
         
-        for (let i=-1; i<=1; i++) {
-            for (let j=-1; j<=1; j++) {
+        for (let j=-1; j<=1; j++) {
+            for (let i=-1; i<=1; i++) {
+                p++;
                 if (x+i < 0 || y+j < 0 || x+i >= table.length || y+j >= table[0].length) continue;
-                if (this.cells[p++] == table[x+i][y+j]) s++;
+                if (this.cells[p-1] == table[x+i][y+j]) s++;
             } 
         }
         

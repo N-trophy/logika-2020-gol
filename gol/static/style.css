@@ -1,19 +1,45 @@
 body {
     margin: 0;
     padding: 0;
+    color: rgb(42, 255, 42);
+    background-color: rgb(16, 17, 16);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+input[type="text"], input[type="password"], textarea, select { 
+    outline: none;
+}
+
+#src {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgb(42, 255, 42);
 }
 
 .cell {
     width: 20px;
     height: 20px;
     margin: 2px;
-    background-color: aliceblue;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    border-width: 2px;
+    border-style: solid;
+
+    -webkit-transition: background-color 0.05s ease;
+    -moz-transition: background-color 0.05s ease;
+    -o-transition: background-color 0.05s ease;
+    transition: background-color 0.05s ease;
 }
 
-.cell-color-b {
-    background-color: black;
+table#automata {
+    float: left;
 }
 
-.cell-color-w {
-    background-color: aliceblue;
+.table-button {
+    float: right;
+}
+
+.table-button > li {
+    list-style: none;
+    margin: 10px;
 }

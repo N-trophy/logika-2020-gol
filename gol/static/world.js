@@ -5,8 +5,10 @@ class World {
         this.root = $("#" + rootId);
 
         this.automata = new Automata(25, 25, rules);
-
+        
         this.initTableImage();
+
+        this.loopSet = false;
     }    
     
     tick(){
@@ -15,11 +17,17 @@ class World {
     }
 
     run() {
+        if (this.loopSet) return;
+
         this.loop = setInterval(this.tick.bind(this), 200);
+        this.loopSet = true;
     }
 
     stop() {
+        if (!this.loopSet) return;
+
         clearInterval(this.loop);
+        this.loopSet = false;
     }
 
     initTableImage(){
@@ -78,8 +86,8 @@ class BWWorld extends World {
         this.automata.fill('w');
 
         this.pallet = {
-            'w': '#eeeeee',
-            'b': '#000000',
+            'w': 'rgba(255, 255, 255, 0.5)',
+            'b': 'rgba(255, 255, 255, 0.1)',
         };
 
         for (let x = 0; x<this.width; x++) {
