@@ -1,5 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, permission_required
 
 
-def automata_view(request):
+def index(request, *args, **kwargs):
+    return redirect('/automata')
+
+
+@login_required(login_url='/admin')
+def automata(request):
     return render(request, "automata.html")

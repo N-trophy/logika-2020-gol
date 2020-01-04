@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path
 
 import gol.rules_parser_endpoint as rules_parser
-from gol.views import automata_view
+import gol.views as views
 
 urlpatterns = [
+    path('', views.index),
     path('admin/', admin.site.urls),
     path('rules/parse', rules_parser.parse_rules),
-    path('automata', automata_view),
+    path('automata', views.automata),
 ]

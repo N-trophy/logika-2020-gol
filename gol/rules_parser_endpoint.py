@@ -14,8 +14,8 @@ import traceback
 from datetime import datetime
 
 
-@csrf_exempt
 @require_http_methods(['POST'])
+@login_required()
 def parse_rules(request, *args, **kwargs):
     expr = request.body.decode('utf-8')
 
