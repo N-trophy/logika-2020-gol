@@ -71,6 +71,9 @@ class World {
             url: '/rules/parse',
             data: src,
             dataType: 'text',
+            headers: {
+                "X-CSRFToken": CSRF_TOKEN,
+            },
             success: ((data)=>{
                 const rules = Rule.deserialize(JSON.parse(data));
                 this.automata.setRules(rules);
