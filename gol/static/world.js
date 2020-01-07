@@ -65,7 +65,7 @@ class World {
     }
 
     loadSource(srcId) {
-        document.getElementById('parse-info').innerHTML = 'Zpracovávám...';
+        $('#parse-info').text('Zpracovávám...');
         const src = $('#' + srcId).val();
         $.ajax({
             type: 'POST',
@@ -78,11 +78,15 @@ class World {
             success: ((data)=>{
                 const rules = Rule.deserialize(JSON.parse(data));
                 this.automata.setRules(rules);
-                document.getElementById('parse-info').innerHTML = 'OK';
+                $('#parse-info').text('OK');
+                $('#parse-info-bar').removeClass('w3-red')
+                $('#parse-info-bar').addClass('w3-green')
             }),
             error: ((xhr)=>{
-                document.getElementById('parse-info').innerHTML = xhr.responseText;
-            }).bind(this)
+                $('#parse-info').text(xhr.responseText);
+                $('#parse-info-bar').removeClass('w3-green')
+                $('#parse-info-bar').addClass('w3-red')
+            })
         });
     }
 }
