@@ -65,6 +65,7 @@ class World {
     }
 
     loadSource(srcId) {
+        document.getElementById('parse-info').innerHTML = 'Zpracovávám...';
         const src = $('#' + srcId).val();
         $.ajax({
             type: 'POST',
@@ -77,6 +78,10 @@ class World {
             success: ((data)=>{
                 const rules = Rule.deserialize(JSON.parse(data));
                 this.automata.setRules(rules);
+                document.getElementById('parse-info').innerHTML = 'OK';
+            }),
+            error: ((xhr)=>{
+                document.getElementById('parse-info').innerHTML = xhr.responseText;
             }).bind(this)
         });
     }

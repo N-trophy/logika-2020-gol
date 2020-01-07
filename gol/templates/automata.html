@@ -18,7 +18,8 @@
             <p>
                 V této úloze je vaším úkolem najít minimální popis pravidel takový,
                 že se výsledná hra chová jako tradiční game of life.
-                Bodován je počet písmen i počet logických spojek a podbínek
+                Bodován je počet písmen i počet logických spojek a podmínek.
+                Dostupné barvy: bw.
             </p>
         </div>
         <div class="w3-cell-row">
@@ -26,6 +27,8 @@
                 <div class="w3-center">
                     <textarea id="src" rows = "25" cols = "40" name = "source_input"></textarea><br>
                     <button onclick="world.loadSource('src')">Load source</button>
+                    <br />
+                    <span id='parse-info'>Zatím nic nezadáno.</span>
                 </div>
             </div>
             
