@@ -54,7 +54,7 @@ class MatrixText {
         for (let i=0; i<this.cols; i++) {
             this.pointers[i] = Array();
             for (let j=0; j<this.ptrNum; j++){
-                this.pointers[i].push(j*20);
+                this.pointers[i].push(Math.floor(Math.random() * 50));
             }
         }
 
@@ -76,6 +76,9 @@ class MatrixText {
     run() {
         if (this.matrixRunning) return;
         this.matrixRunning = true;
+        for(let i=0; i<10; i++){
+            this.matrixLoop();
+        }
         this.interval = setInterval(this.matrixLoop.bind(this), 100);
     }
 
@@ -101,7 +104,7 @@ class MatrixText {
         this.ctx.fillRect(0, 0, this.width, this.height);
       
         // Set font to 15pt monospace in the drawing context
-        const fontSize = this.colWidth * 0.6 * (1 + 0. * Math.random());
+        const fontSize = this.colWidth * 0.6 * (1 + .4 * Math.random());
         this.ctx.font = fontSize + 'pt monospace';
       
         // for each column put a random character at the end
