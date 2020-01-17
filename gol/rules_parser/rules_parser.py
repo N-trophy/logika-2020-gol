@@ -7,9 +7,15 @@ from typing import Dict, Callable, Union, Any, List
 import sys
 import json
 
+sys.path.append('../..')
+
+import gol.evaluator
+from gol.evaluator import Point2D
+
 
 Color = str
 BinaryIntOperator = Callable[[int, int], bool]
+Grid = List[List[str]]
 
 
 class Selector:
@@ -25,8 +31,12 @@ class Selector:
     def web_repr(self):
         return {
             'className': 'GridSelector',
-            'args': [self.text]
+            'args': [self.text],
         }
+
+    def __call__(self, grid: Grid, pos: Point2D,
+                 global_config: Dict[str, Any]):
+        return evaluator.selector_eval(self.text, grid, pos, global_config)
 
 
 def _selector_or_number_webrepr(sel_or_num: Union[int, Selector]) \
@@ -75,6 +85,9 @@ class SelectorOperator:
                       for op in self.operands]),
         }
 
+    def __call__(self, grid: Grid, pos: Point2D,
+                 global_config: Dict[str, Any]):
+        return evaluator.selector_op_eval(self, grid, pos, global_config)
 
 def _parse_selector_operator(p):
     p_ = p[0]
@@ -122,9 +135,9 @@ class Comparison:
         return {
             'className': 'Comparator',
             'args': [
+                self.operator_text,
                 _selector_or_number_webrepr(self.left),
                 _selector_or_number_webrepr(self.right),
-                self.operator_text,
             ],
         }
 
