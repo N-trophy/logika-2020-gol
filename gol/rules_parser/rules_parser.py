@@ -18,7 +18,16 @@ from gol.rules_parser.comparison import Comparison
 from gol.common import Color
 
 
+def strip_comments(lines: str) -> str:
+    result = ''
+    for line in lines.split('\n'):
+        result += (line[:line.find('#')] if '#' in line else line) + '\n'
+    return result
+
+
 def parse(lines: str, allowed_colors: str = '') -> Union[Rule, Color]:
+    lines = strip_comments(lines)
+
     if allowed_colors == '':
         allowed_colors = string.ascii_lowercase + string.ascii_uppercase
     color = Word(allowed_colors, exact=1)
