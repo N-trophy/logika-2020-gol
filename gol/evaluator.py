@@ -38,16 +38,19 @@ def selector_eval(selector: str, grid: Grid, pos: Point2D,
     return count
 
 
-def _selector_operand_eval(operand):
+def _selector_operand_eval(operand, *args, **kwargs):
     if isinstance(operand, int):
         return operand
-    return operand()
+    return operand(*args, **kwargs)
 
 
 def selector_op_eval(selector_op, grid: Grid, pos: Point2D,
                      global_config: Dict[str, Any]) -> int:
-    result = _selector_operand_eval(selector_op.operands[0])
+    result = _selector_operand_eval(selector_op.operands[0], grid, pos, global_config)
     for operand in selector_op.operands[1:]:
-        result = selector_op.operator(result, _selector_operand_eval(operand))
+        result = selector_op.operator(
+            result,
+            _selector_operand_eval(operand, grid, pos, global_config)
+        )
     return result
 

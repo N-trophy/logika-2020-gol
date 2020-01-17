@@ -31,6 +31,9 @@ def _test_selector_evaluator():
     assert SelectorOperator('+', [1, 1, 1])(GRID, (0, 0), {}) == 3
     assert SelectorOperator('-', [5, 2, 2])(GRID, (0, 0), {}) == 1
 
+    assert SelectorOperator('*', [Selector('aaaaaaaaa'), 2])\
+        (GRID, (1, 1), {}) == 6
+
 
 if __name__ == '__main__':
     _test_evaluator()
