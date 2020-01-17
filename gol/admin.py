@@ -1,10 +1,17 @@
 from django.contrib import admin
-from gol.models import Task, Post, Parse
+from gol.models import Task, Post, Parse, TaskCategory
+
+
+@admin.register(TaskCategory)
+class TaskCategoryAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'order')
+    ordering = ['order']
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = ('id', 'category', 'name')
+    ordering = ['id']
 
 
 @admin.register(Post)

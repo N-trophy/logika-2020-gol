@@ -83,7 +83,7 @@
                 <h1>Úrovně</h1>
                 {% for category in categories %}
                 <div class="w3-third">
-                    <h2>{{ category }}</h2>
+                    <h2>{{ category.name }}</h2>
                     {% for task in tasks %}
                     {% if task.category == category %}
                         <a href="/task/{{ task.id }}">

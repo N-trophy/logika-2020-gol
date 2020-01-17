@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils import timezone
 
-from gol.models import Task
-from gol.models import Post
+from gol.models import Task, Post, TaskCategory
 
 
 @login_required(login_url='/admin')
@@ -13,23 +12,9 @@ def simulation(request):
 
 @login_required(login_url='/login')
 def index(request, *args, **kwargs):
-    tasks = [
-        {
-            'id': task.id,
-            'name': task.name,
-            'category': task.category
-        }
-        for task in Task.objects.all()
-    ]
-
-    categories = []
-    for task in tasks:
-        if not task['category'] in categories:
-            categories.append(task['category'])
-
     context = {
-        'categories': categories,
-        'tasks': tasks,
+        'categories': TaskCategory.objects.order_by('order').all(),
+        'tasks': Task.objects.order_by('id').all(),
         'posts': (Post.objects.filter(published__lt=timezone.now()).
                   order_by('-published')[:12]),
     }
