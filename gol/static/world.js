@@ -4,31 +4,38 @@ class World {
             'r': '#f00f',
             'g': '#0f0f',
             'b': '#00ff',
-            'k': '#000f',
+            'k': '#555',
         };
 
-        this.width = width;
-        this.height = height;
         this.canvas = document.getElementById(rootId);
         this.canvas.height = this.canvas.width = 500;
         this.ctx = this.canvas.getContext('2d');
 
-        this.automata = new Automata(25, 25, rules);
-        this.automata.fill
-
-        this.clear();
-        this.drawTable();
+        this.init(width, height, rules);
 
         this.loopSet = false;
 
         this.canvas.addEventListener('click', this.canvasClick.bind(this), false);
 
-        this.levelBackup = null;
-        this.levelHistory = [];
-        this.historyLength = 3;
-
         this.switchTorus();
         this.selectColor('k');
+
+        this.historyLength = 3;
+    }
+
+    init(width, height, rules){
+        this.width = width;
+        this.height = height;
+
+        this.automata = new Automata(width, height, rules);
+        this.automata.fill
+
+        this.clear();
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawTable();
+
+        this.levelBackup = null;
+        this.levelHistory = [];
     }
     
     // Time controlling methods ------------------------------------------------------
@@ -159,6 +166,14 @@ class World {
                 $('#console-info').addClass('w3-red')
             })
         });
+
+        const newWidth = Math.floor($('#width-input').val());
+        const newHeight = Math.floor($('#height-input').val());
+
+        if (newWidth != this.width || newHeight != this.height){
+            this.init(newWidth, newHeight, this.automata.rules);
+            this.drawTable();
+        }
     }
 
     canvasClick(event){

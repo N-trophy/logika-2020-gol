@@ -10,6 +10,11 @@ input[type="text"], input[type="password"], textarea, select, button {
     outline: none;
 }
 
+#width-input, #height-input {
+    border: none !important;
+    outline: none;
+}
+
 #console {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
