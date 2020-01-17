@@ -106,7 +106,7 @@ COMPARES: Dict[str, BinaryIntOperator] = {
     '<=': operator.le,
     '>=': operator.ge,
     '<': operator.lt,
-    '>': operator.ge,
+    '>': operator.gt,
     '==': operator.eq,
     '!=': not operator.eq,
 }
@@ -141,6 +141,10 @@ class Comparison:
                 _selector_or_number_webrepr(self.right),
             ],
         }
+
+    def __call__(self, grid: Grid, pos: Point2D,
+                 global_config: Dict[str, Any]):
+        return evaluator.comparison_eval(self, grid, pos, global_config)
 
 ###############################################################################
 

@@ -38,7 +38,7 @@ def selector_eval(selector: str, grid: Grid, pos: Point2D,
     return count
 
 
-def _selector_operand_eval(operand, *args, **kwargs):
+def _eval(operand, *args, **kwargs):
     if isinstance(operand, int):
         return operand
     return operand(*args, **kwargs)
@@ -46,11 +46,17 @@ def _selector_operand_eval(operand, *args, **kwargs):
 
 def selector_op_eval(selector_op, grid: Grid, pos: Point2D,
                      global_config: Dict[str, Any]) -> int:
-    result = _selector_operand_eval(selector_op.operands[0], grid, pos, global_config)
+    result = _eval(selector_op.operands[0], grid, pos, global_config)
     for operand in selector_op.operands[1:]:
         result = selector_op.operator(
             result,
-            _selector_operand_eval(operand, grid, pos, global_config)
+            _eval(operand, grid, pos, global_config)
         )
     return result
 
+
+def comparison_eval(comparison, grid: Grid, pos: Point2D,
+                    global_config: Dict[str, Any]) -> bool:
+    left = _eval(comparison.left, grid, pos, global_config)
+    right = _eval(comparison.right, grid, pos, global_config)
+    return comparison.operator(left, right)

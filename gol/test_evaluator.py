@@ -5,7 +5,7 @@ import sys
 if __name__ == '__main__':
     sys.path.append('..')
 
-from rules_parser.rules_parser import Selector, SelectorOperator
+from rules_parser.rules_parser import Selector, SelectorOperator, Comparison
 
 GRID = [
     'ccc',
@@ -19,6 +19,7 @@ def _test_evaluator():
     assert Selector('aaaaaaaaa')(GRID, (0, 1), {}) == 2
     assert Selector('*********')(GRID, (1, 1), {}) == 9
     assert Selector('*********')(GRID, (0, 1), {}) == 6
+    # TODO: add more tests
 
 
 def _test_selector_evaluator():
@@ -33,8 +34,21 @@ def _test_selector_evaluator():
 
     assert SelectorOperator('*', [Selector('aaaaaaaaa'), 2])\
         (GRID, (1, 1), {}) == 6
+    # TODO: add more tests
+
+
+def _test_comparison_evaluator():
+    assert Comparison(5, '<', 10)(GRID, (0, 0), {}) is True
+    assert Comparison(5, '>', 10)(GRID, (0, 0), {}) is False
+    assert Comparison(Selector('cccaaaaaa'), '>=', 6)(GRID, (1, 1), {}) is True
+    assert Comparison(Selector('cccaaaaaa'), '>=', 5)(GRID, (1, 1), {}) is True
+    assert Comparison(Selector('cccaaaaaa'), '>=', 7)(GRID, (1, 1), {}) is False
+    assert Comparison(Selector('cccaaaaaa'), '>', 6)(GRID, (1, 1), {}) is False
+
+    # TODO: add all operators & some SelectorOperators
 
 
 if __name__ == '__main__':
     _test_evaluator()
     _test_selector_evaluator()
+    _test_comparison_evaluator()
