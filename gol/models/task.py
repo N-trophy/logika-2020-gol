@@ -12,7 +12,7 @@ class TaskCategory(models.Model):
 class Task(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(default='', max_length=128)
-    category = models.ForeignKey(TaskCategory, on_delete=models.PROTECT, default='proofs')
+    category = models.ForeignKey(TaskCategory, on_delete=models.PROTECT)
     max_points = models.PositiveIntegerField(default=1)
     intro_text = models.TextField(default='')
     config = models.TextField(default='{}')
