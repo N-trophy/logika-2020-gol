@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" type="text/css" href="static/style.css">
+        <script src="static/matrix.js"></script>
+        <script>
+            CSRF_TOKEN = "{{ csrf_token }}"
+
+            $(()=>{
+                matrix = new MatrixText('matrix-chars');
+            })
+        </script>
+        <title>N-Trophy</title>
+    </head>
+    <body>
+        <canvas id="matrix-chars"></canvas>
+    </body>
+</html>

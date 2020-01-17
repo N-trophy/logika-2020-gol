@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 
 def index(request, *args, **kwargs):
-    return redirect('/automata')
+    return render(request, "index.html")
 
 
 @login_required(login_url='/admin')
