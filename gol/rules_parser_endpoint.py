@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
+import pyparsing
 
-from gol.rules_parser.rules import rules
-from gol.rules_parser.errors import EInvalidExpr
+from gol.rules_parser.rules_parser import parse, webrepr
 
 import json
 import traceback
@@ -20,8 +20,10 @@ def parse_rules(request, *args, **kwargs):
     expr = request.body.decode('utf-8')
 
     try:
-        rules_ = rules(expr).repr()
-    except EInvalidExpr as e:
+        rules_ = webrepr(parse(expr))
+    except pyparsing.ParseException as e:
         return HttpResponseBadRequest(str(e))
+
+    # TODO: log other exceptions
 
     return JsonResponse(rules_)

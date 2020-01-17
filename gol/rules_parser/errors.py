@@ -1,2 +1,0 @@
-class EInvalidExpr(Exception):
-    pass
