@@ -35,10 +35,14 @@ input[type="text"], input[type="password"], textarea, select, button {
     width: 100%;
 }
 
-#automata.running {
-    box-shadow: 0 0 10px #00ff00;
+.selected {
+    background-color: rgb(42, 255, 42);
+    color: black;
 }
 
+.v-space {
+    height: 30px;
+}
 
 /* Matrix characters */
 /* #matrix-chars {

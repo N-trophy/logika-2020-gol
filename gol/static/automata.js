@@ -14,6 +14,8 @@ class Automata {
         }
 
         this.fill(0);
+
+        this.isTorus = true;
     }
 
     nextTick(){
@@ -21,7 +23,7 @@ class Automata {
 
         for (let x=0; x<this.width; x++){
             for (let y=0; y < this.height; y++){
-                this.tables[this.tick % 2][x][y] = this.rules.eval(this.tables[(this.tick + 1) % 2], x, y);
+                this.tables[this.tick % 2][x][y] = this.rules.eval(this.tables[(this.tick + 1) % 2], x, y, this.isTorus);
             }
         }
     }
@@ -56,6 +58,14 @@ class Automata {
         return this.tables[this.tick % 2];
     }
 
+    setTable(table){
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                this.tables[this.tick % 2][x][y] = table[x][y];
+            }
+        }
+    }
+
     setRules(rules){
         this.rules = rules;
     }
@@ -77,15 +87,26 @@ class GridSelector extends Selector {
         this.cells = cells;
     }
 
-    match_table(table, x, y) {
+    match_table(table, x, y, isTorus) {
         let s = 0;
         let p = 0;
         
         for (let j=-1; j<=1; j++) {
             for (let i=-1; i<=1; i++) {
                 p++;
-                if (x+i < 0 || y+j < 0 || x+i >= table.length || y+j >= table[0].length) continue;
-                if (this.cells[p-1] == table[x+i][y+j]) s++;
+
+                if (isTorus) {
+                    const w = table.length;
+                    const h = table[0].length;
+
+                    const px = (x+i+w) % w;
+                    const py = (y+j+h) % h;
+
+                    if (this.cells[p-1] == table[px][py]) s++;
+                } else {
+                    if (x+i < 0 || y+j < 0 || x+i >= table.length || y+j >= table[0].length) continue;
+                    if (this.cells[p-1] == table[x+i][y+j]) s++;
+                }
             } 
         }
         
@@ -99,7 +120,7 @@ class ConstantSelector extends Selector {
         this.value = value;
     }
 
-    match_table(table, x, y) {
+    match_table(table, x, y, isTorus) {
         return this.value;
     }
 }
@@ -111,8 +132,8 @@ class OperationSelector extends Selector {
         this.operands = operands;
     }
 
-    match_table(table, x, y) {
-        let results = this.operands.map(o=>o.match_table(table, x, y))
+    match_table(table, x, y, isTorus) {
+        let results = this.operands.map(o=>o.match_table(table, x, y, isTorus))
         let first = results.shift()
         return results.reduce(this.op, first)
     }
@@ -129,7 +150,7 @@ class OperationSelector extends Selector {
 
 // Logical expressions -----------------------------------------------------------------------------
 class BoolExpr {
-    eval(table, x, y) {}
+    eval(table, x, y, isTorus) {}
 }
 
 class Comparator extends BoolExpr {
@@ -139,8 +160,8 @@ class Comparator extends BoolExpr {
         this.cmp = Comparator.getComparator(cmp);
     }
 
-    eval(table, x, y) {        
-        let results = this.operands.map(o=>o.match_table(table, x, y))
+    eval(table, x, y, isTorus) {        
+        let results = this.operands.map(o=>o.match_table(table, x, y, isTorus))
         let good = true;
         for (let i=0;i<results.length-1;i++){
             good &= this.cmp(results[i], results[i+1])
@@ -164,8 +185,8 @@ class BoolOperator extends BoolExpr {
         this.operands = operands;
     }
 
-    eval(table, x, y) {
-        let results = this.operands.map(o=>o.eval(table, x, y))
+    eval(table, x, y, isTorus) {
+        let results = this.operands.map(o=>o.eval(table, x, y, isTorus))
         let first = results.shift()
         return results.reduce(this.op, first)
     }
@@ -178,7 +199,7 @@ class BoolOperator extends BoolExpr {
 
 // Rules ----------------------------------------------------------------------------------------------
 class Rule {
-    eval(table, x, y){}
+    eval(table, x, y, isTorus){}
 
     static deserialize(object) {
         const className = object.className
@@ -202,7 +223,7 @@ class ConstantRule extends Rule {
         this.value = value;
     }
 
-    eval(table, x, y) {
+    eval(table, x, y, isTorus) {
         return this.value;
     }
 }
@@ -215,11 +236,11 @@ class ConditionalRule extends Rule {
         this.condition = condition;
     }
 
-    eval(table, x, y) {
-        if (this.condition.eval(table, x, y)) {
-            return this.ifBranch.eval(table, x, y);
+    eval(table, x, y, isTorus) {
+        if (this.condition.eval(table, x, y, isTorus)) {
+            return this.ifBranch.eval(table, x, y, isTorus);
         } else {
-            return this.elseBranch.eval(table, x, y);
+            return this.elseBranch.eval(table, x, y, isTorus);
         }
     }
 }

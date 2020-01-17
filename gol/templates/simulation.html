@@ -13,7 +13,7 @@
             CSRF_TOKEN = "{{ csrf_token }}"
 
             $(()=>{
-                world = new World(25, 25, "automata", new ConstantRule('w'), ['w', 'b']);
+                world = new World(25, 25, "automata", new ConstantRule('k'));
             });
         </script>
     </head>
@@ -26,35 +26,68 @@
         <div class = "w3-col w3-container l6">
             <div class="w3-row">
                 <textarea id="console" class = "w3-col w3-container l12"></textarea>
+                <!-- save -->
                 <div id="console-info" class = "w3-col w3-container s12 m9 l9 w3-gray w3-padding">
-                     Žádná pravidla nenačtena.
+                    žádná pravidla nenačtena.
                 </div>
                 <div id="load-btn" class = "w3-col w3-container s12 m3 l3 w3-button w3-padding" onclick="world.loadSource(editor)">
-                    Načíst
-                </div>
+                    načíst
+                </div>                
+
+                <!-- time control -->
                 <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.prevTick()">
-                    Zpět
+                    zpět
                 </button>
                 <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.run()">
-                    Spustit
+                    spustit
                 </button>
                 <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.stop()">
-                    Zastavit
+                    zastavit
                 </button>
                 <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.nextTick()">
-                    Další
+                    další
                 </button>
+
+                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
+
+                <!-- map control -->
                 <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.clear()">
-                    Vyčistit
+                    vyčistit
                 </button>
                 <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.fill()">
-                    Zaplnit
+                    zaplnit
                 </button>
-                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.reset()">
-                    Reset
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.load()">
+                    načíst
                 </button>
                 <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.save()">
-                    Uložit
+                    uložit
+                </button>
+
+                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
+                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
+                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
+
+                <!-- colors -->
+                <button class = "color-btn r w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('r')">
+                    R
+                </button>
+                <button class = "color-btn g w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('g')">
+                    G
+                </button>
+                <button class = "color-btn b w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('b')">
+                    B
+                </button>
+                <button class = "color-btn k w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('k')">
+                    K
+                </button>
+
+                <!-- map type -->
+                <button id="plane-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchTorus()">
+                    rovina
+                </button>
+                <button id="torus-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchTorus()">
+                    torus
                 </button>
             </div>
             
