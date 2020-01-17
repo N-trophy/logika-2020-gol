@@ -29,4 +29,5 @@ urlpatterns = [
     path('accounts/profile/', lambda request: redirect('/', permanent=False)),
     path('rules/parse', rules_parser.parse_rules),
     path('simulation', views.simulation),
+    path('task/<int:id>', views.task),
 ]

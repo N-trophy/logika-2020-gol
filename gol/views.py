@@ -6,6 +6,11 @@ from gol.models import Task
 from gol.models import Post
 
 
+@login_required(login_url='/admin')
+def simulation(request):
+    return render(request, "simulation.html")
+
+
 @login_required(login_url='/login')
 def index(request, *args, **kwargs):
     tasks = [
@@ -31,6 +36,16 @@ def index(request, *args, **kwargs):
     return render(request, "index.html", context)
 
 
-@login_required(login_url='/admin')
-def simulation(request):
-    return render(request, "simulation.html")
+@login_required(login_url='/login')
+def task(request, *args, **kwargs):
+    try:
+        task = Task.objects.get(id=kwargs['id'])
+    except api_server.models.level.Level.DoesNotExist:
+        return HttpResponseNotFound('Task not found')
+
+    context = {
+        'task': task,
+        'posts': (Post.objects.filter(published__lt=timezone.now()).
+                  order_by('-published')[:12]),
+    }
+    return render(request, "task.html", context)
