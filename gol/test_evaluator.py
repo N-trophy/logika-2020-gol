@@ -6,7 +6,7 @@ if __name__ == '__main__':
     sys.path.append('..')
 
 from rules_parser.rules_parser import Selector, SelectorOperator, Comparison, \
-    BoolOperator
+    BoolOperator, Rule
 
 GRID = [
     'ccc',
@@ -55,6 +55,16 @@ def _test_bool_op_evaluator():
     assert BoolOperator('or', [Comparison(5, '<', 10), Comparison(0, '<', 1)]) is True
     assert BoolOperator('or', [Comparison(5, '<', 10), Comparison(1, '<', 1)]) is True
     assert BoolOperator('or', [Comparison(5, '>', 10), Comparison(1, '<', 1)]) is True
+
+
+def _test_rule_evaluator():
+    assert Rule(Comparison(5, '<', 10), 'r', 'g')(GRID, (1, 1,), {}) == 'r'
+    assert Rule(Comparison(5, '>', 10), 'r', 'g')(GRID, (1, 1,), {}) == 'g'
+    assert Rule(
+        Comparison(5, '<', 10),
+        'g',
+        Rule(Comparison(1, '>', 0), 'x', 'y'),
+    )(GRID, (1, 1,), {}) == 'x'
 
 
 if __name__ == '__main__':

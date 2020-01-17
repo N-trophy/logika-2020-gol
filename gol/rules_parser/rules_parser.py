@@ -195,7 +195,9 @@ def _parse_bool_expr(p):
 
 
 class Rule:
-    def __init__(self, bool_expr, if_rule, else_rule):
+    def __init__(self, bool_expr: Union[BoolOperator, Comparison],
+                 if_rule: Union['Rule', Color],
+                 else_rule: Union['Rule', Color]):
         self.bool_expr = bool_expr
         self.if_rule = if_rule
         self.else_rule = else_rule
