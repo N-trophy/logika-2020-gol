@@ -5,7 +5,8 @@ import sys
 if __name__ == '__main__':
     sys.path.append('..')
 
-from rules_parser.rules_parser import Selector, SelectorOperator, Comparison
+from rules_parser.rules_parser import Selector, SelectorOperator, Comparison, \
+    BoolOperator
 
 GRID = [
     'ccc',
@@ -46,6 +47,14 @@ def _test_comparison_evaluator():
     assert Comparison(Selector('cccaaaaaa'), '>', 6)(GRID, (1, 1), {}) is False
 
     # TODO: add all operators & some SelectorOperators
+
+
+def _test_bool_op_evaluator():
+    assert BoolOperator('and', [Comparison(5, '<', 10), Comparison(0, '<', 1)]) is True
+    assert BoolOperator('and', [Comparison(5, '<', 10), Comparison(1, '<', 1)]) is False
+    assert BoolOperator('or', [Comparison(5, '<', 10), Comparison(0, '<', 1)]) is True
+    assert BoolOperator('or', [Comparison(5, '<', 10), Comparison(1, '<', 1)]) is True
+    assert BoolOperator('or', [Comparison(5, '>', 10), Comparison(1, '<', 1)]) is True
 
 
 if __name__ == '__main__':

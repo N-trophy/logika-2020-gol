@@ -156,7 +156,8 @@ BOOL_OPERATORS = {
 
 
 class BoolOperator:
-    def __init__(self, operator: str, operands: List[Comparison]):
+    def __init__(self, operator: str,
+                 operands: List[Union[Comparison, 'BoolOperator']]):
         assert operator in BOOL_OPERATORS
 
         self.operands = operands
@@ -178,6 +179,9 @@ class BoolOperator:
                      [op.web_repr() for op in self.operands]),
         }
 
+    def __call__(self, grid: Grid, pos: Point2D,
+                 global_config: Dict[str, Any]):
+        return evaluator.bool_op_eval(self, grid, pos, global_config)
 
 def _parse_bool_expr(p):
     p_ = p[0]

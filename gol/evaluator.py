@@ -1,4 +1,5 @@
 from typing import List, Tuple, Any, Dict
+import operator
 
 Grid = List[List[str]]
 Point2D = Tuple[int, int]  # x, y
@@ -60,3 +61,19 @@ def comparison_eval(comparison, grid: Grid, pos: Point2D,
     left = _eval(comparison.left, grid, pos, global_config)
     right = _eval(comparison.right, grid, pos, global_config)
     return comparison.operator(left, right)
+
+
+def bool_op_eval(bool_op, grid: Grid, pos: Point2D,
+                 global_config: Dict[str, Any]) -> bool:
+    if bool_op.operator == operator.and_:
+        for operand in bool_op.operands:
+            if not bool_op.operands[0](grid, pos, global_config):
+                return False
+        return True
+    elif bool_op.operator == operator.or_:
+        for operand in bool_op.operands:
+            if bool_op.operands[0](grid, pos, global_config):
+                return True
+        return False
+
+    assert False, 'Invalid operator in evaluation!'
