@@ -5,3 +5,4 @@ djangoenv
 gol/static/admin
 gol/migrations
 .idea
+.mypy_cache
