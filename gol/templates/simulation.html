@@ -18,9 +18,10 @@
                 world = new World(25, 25, "automata", new ConstantRule('k'));
             });
         </script>
+        <title>Klikátko</title>
     </head>
     <body>
-        
+
         <header class = "w3-container w3-center">
             <h2>KLIKÁTKO</h2>
         </header>
@@ -42,7 +43,7 @@
                 <input id="height-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value=25></input>
                 <div id="load-btn" class = "w3-col w3-container s4 m4 l4 w3-button w3-padding" onclick="world.loadSource(editor)">
                     načíst
-                </div>                
+                </div>
 
                 <!-- time control -->
                 <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.prevTick()">
@@ -105,9 +106,9 @@
                     vložit mapu
                 </button>
             </div>
-            
+
         </div>
-        
+
         <div class = "w3-col w3-container l6">
             <canvas id="automata"></canvas>
         </div>
