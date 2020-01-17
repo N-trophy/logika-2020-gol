@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" type="text/css" href="static/style.css">
+        <script src="static/matrix.js"></script>
+        <script>
+            CSRF_TOKEN = "{{ csrf_token }}"
+
+            $(()=>{
+                matrix = new MatrixText('matrix-chars');
+            })
+        </script>
+        <title>N-Trophy</title>
+    </head>
+    <body>
+        <canvas id="matrix-chars"></canvas>
+        <div class="w3-content w3-container w3-display-middle w3-center w3-padding-small w3-content" style="background-color: #101010">
+            <div class="w3-center w3-large w3-padding-small">Byli jste odhlášeni</div>
+            <a href="/" class="w3-button w3-black w3-center w3-section">Znovu se přihlásit.</a>
+        </div>
+    </body>
+</html>
