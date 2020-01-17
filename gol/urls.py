@@ -28,6 +28,5 @@ urlpatterns = [
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
     path('accounts/profile/', lambda request: redirect('/', permanent=False)),
     path('rules/parse', rules_parser.parse_rules),
-    path('automata', views.automata),
     path('simulation', views.simulation),
 ]

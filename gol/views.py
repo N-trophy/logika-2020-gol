@@ -25,11 +25,6 @@ def index(request, *args, **kwargs):
     return render(request, "index.html", context)
 
 
-@login_required(login_url='/login')
-def automata(request):
-    return render(request, "automata.html")
-
-
 @login_required(login_url='/admin')
 def simulation(request):
     return render(request, "simulation.html")
