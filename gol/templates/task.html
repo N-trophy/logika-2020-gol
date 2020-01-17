@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="/static/automata.js"></script>
+        <script src="/static/world.js"></script>
+        <script src="/static/test.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+
+        <script>
+            CSRF_TOKEN = "{{ csrf_token }}"
+
+            $(()=>{
+                world = new World(25, 25, "automata", new ConstantRule('k'));
+            });
+        </script>
+    </head>
+    <body>
+        <header class = "w3-container w3-center">
+            <h2>{{ task.name }}</h2>
+            <p>
+                Maximální počet bodů: {{ task.max_points }}
+            </p>
+            {{ task.intro_text |safe }}
+        </header>
+    <div class = "w3-row">
+        <div class = "w3-col w3-container l6">
+            <div class="w3-row">
+                <textarea id="console" class = "w3-col w3-container l12"></textarea>
+                <!-- save -->
+                <div id="console-info" class = "w3-col w3-container s12 m12 l12 w3-gray w3-padding">
+                    žádná pravidla nenačtena.
+                </div>
+                <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
+                    x:
+                </div>
+                <input id="width-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value=25></input>
+                <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
+                    h:
+                </div>
+                <input id="height-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value=25></input>
+                <div id="load-btn" class = "w3-col w3-container s4 m4 l4 w3-button w3-padding" onclick="world.loadSource(editor)">
+                    načíst
+                </div>                
+
+                <!-- time control -->
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.prevTick()">
+                    zpět
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.run()">
+                    spustit
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.stop()">
+                    zastavit
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.nextTick()">
+                    další
+                </button>
+
+                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
+
+                <!-- map control -->
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.clear()">
+                    vyčistit
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.fill()">
+                    zaplnit
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.load()">
+                    načíst
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.save()">
+                    uložit
+                </button>
+
+                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
+                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
+                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
+
+                <!-- colors -->
+                <button class = "color-btn r w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('r')">
+                    R
+                </button>
+                <button class = "color-btn g w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('g')">
+                    G
+                </button>
+                <button class = "color-btn b w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('b')">
+                    B
+                </button>
+                <button class = "color-btn k w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('k')">
+                    K
+                </button>
+
+                <!-- map type -->
+                <button id="plane-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchTorus()">
+                    rovina
+                </button>
+                <button id="torus-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchTorus()">
+                    torus
+                </button>
+            </div>
+            
+        </div>
+        
+        <div class = "w3-col w3-container l6">
+            <canvas id="automata"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const editor = CodeMirror.fromTextArea(document.getElementById('console'), {
+            lineNumbers: true
+        });
+    </script>
+    </body>
+</html>

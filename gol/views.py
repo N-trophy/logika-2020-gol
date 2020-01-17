@@ -25,7 +25,7 @@ def index(request, *args, **kwargs):
 def task(request, *args, **kwargs):
     try:
         task = Task.objects.get(id=kwargs['id'])
-    except api_server.models.level.Level.DoesNotExist:
+    except Task.DoesNotExist:
         return HttpResponseNotFound('Task not found')
 
     context = {
