@@ -7,9 +7,10 @@ from typing import Dict, Callable, Union, Any, List
 import sys
 import json
 
-sys.path.append('../..')
+if __name__ == '__main__':
+    sys.path.append('../..')
 
-import gol.evaluator
+import gol.evaluator as evaluator
 from gol.evaluator import Point2D
 
 
