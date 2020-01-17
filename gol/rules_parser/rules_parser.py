@@ -183,6 +183,7 @@ class BoolOperator:
                  global_config: Dict[str, Any]):
         return evaluator.bool_op_eval(self, grid, pos, global_config)
 
+
 def _parse_bool_expr(p):
     p_ = p[0]
     if len(p_) == 1:
@@ -192,6 +193,15 @@ def _parse_bool_expr(p):
     return BoolOperator(p_[1], operands)
 
 ###############################################################################
+
+
+def _rule_eval_rec(rule, grid: Grid, pos: Point2D,
+                   global_config: Dict[str, Any]) -> bool:
+    if isinstance(rule, str):
+        return rule
+    if rule.bool_expr(grid, pos, global_config):
+        return _rule_eval_rec(rule.if_rule, grid, pos, global_config)
+    return _rule_eval_rec(rule.else_rule, grid, pos, global_config)
 
 
 class Rule:
@@ -232,6 +242,10 @@ class Rule:
                 self.bool_expr.web_repr(),
             ],
         }
+
+    def __call__(self, grid: Grid, pos: Point2D,
+                 global_config: Dict[str, Any]):
+        return _rule_eval_rec(self, grid, pos, global_config)
 
 
 def _rule_or_color_webrepr(rule_or_col: Union[int, Selector]) \

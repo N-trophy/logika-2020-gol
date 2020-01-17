@@ -77,12 +77,3 @@ def bool_op_eval(bool_op, grid: Grid, pos: Point2D,
         return False
 
     assert False, 'Invalid operator in evaluation!'
-
-
-def rule_eval(rule, grid: Grid, pos: Point2D,
-              global_config: Dict[str, Any]) -> bool:
-    if isinstance(rule, str):
-        return rule
-    if rule.bool_expr(grid, pos, global_config):
-        return rule_eval(rule.if_rule, grid, pos, global_config)
-    return rule_eval(rule.else_rule, grid, pos, global_config)
