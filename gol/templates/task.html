@@ -32,7 +32,7 @@
             <div class="w3-row">
                 <textarea id="console" class = "w3-col w3-container l12"></textarea>
                 <!-- save -->
-                <div id="console-info" class = "w3-col w3-container s12 m12 l12 w3-gray w3-padding">
+                <div id="console-info" class = "w3-col w3-container s12 m12 l12 w3-padding">
                     žádná pravidla nenačtena.
                 </div>
                 <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
@@ -116,7 +116,15 @@
             lineNumbers: true,
             mode: 'python',
             keyMap: 'sublime',
+            onChange: (e)=>{console.log(e)}
         });
+
+        editor.on('change', (a,b)=>{
+            $('#console-info').text('Kód změněn.')
+            $('#console-info').css({
+                color: "red",
+            })
+        })
     </script>
     </body>
 </html>

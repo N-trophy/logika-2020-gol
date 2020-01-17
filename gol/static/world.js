@@ -157,13 +157,10 @@ class World {
                 const rules = Rule.deserialize(JSON.parse(data));
                 this.automata.setRules(rules);
                 $('#console-info').text('OK');
-                $('#console-info').removeClass('w3-red')
-                $('#console-info').addClass('w3-green')
+                $('#console-info').removeAttr('style');
             }),
             error: ((xhr)=>{
                 $('#console-info').text(xhr.responseText);
-                $('#console-info').removeClass('w3-green')
-                $('#console-info').addClass('w3-red')
             })
         });
 
