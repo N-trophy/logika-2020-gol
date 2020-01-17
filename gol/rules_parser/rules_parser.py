@@ -86,7 +86,7 @@ if __name__ == '__main__':
         sys.argv.remove('-r')
 
     with open(sys.argv[1]) as f:
-        result = parse(f.read(), 'bw')
+        result = parse(f.read(), '')
 
     if web_print:
         print(json.dumps(webrepr(result), indent=4))

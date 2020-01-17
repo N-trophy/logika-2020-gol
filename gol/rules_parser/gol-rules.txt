@@ -1,10 +1,10 @@
-if ****k**** == 1:
-	if (kkkkkkkkk == 3) or (kkkkkkkkk == 4):
-		k
-	else:
+if ****g**** == 1:
+	if (gggg*gggg == 2) or (gggg*gggg == 3):
 		g
+	else:
+		k
 else:
-	if kkkkgkkkk == 4:
-		k
-	else:
+	if gggg*gggg == 3:
 		g
+	else:
+		k
