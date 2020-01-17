@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="cs">
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -9,7 +10,7 @@
 
             $(()=>{
                 matrix = new MatrixText('matrix-chars');
-            })
+            });
         </script>
         <title>N-Trophy</title>
     </head>
@@ -17,7 +18,7 @@
         <canvas id="matrix-chars">
         </canvas>
         <div class="w3-content w3-container w3-display-middle">
-            <h3 class="w3-center" style="background-color: black">Přihášení</h3>
+            <h3 class="w3-center black-background">Přihášení</h3>
             <form method="post" class="w3-center" >
                 {% csrf_token %}
                 <input class="w3-input w3-border" type="login" name="username" placeholder="Uživatelské jméno" autofocus required id="id_username">

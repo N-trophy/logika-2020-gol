@@ -35,7 +35,7 @@ class MatrixText {
         }
 
         // Get the canvas node and the drawing context
-        this.canvas = document.getElementById('matrix-chars');
+        this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
         
         // set the width and height of the canvas

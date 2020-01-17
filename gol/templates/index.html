@@ -1,19 +1,106 @@
-<html>
+<!DOCTYPE html>
+<html lang="cs">
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" type="text/css" href="static/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <script src="static/matrix.js"></script>
         <script>
             CSRF_TOKEN = "{{ csrf_token }}"
 
             $(()=>{
-                matrix = new MatrixText('matrix-chars');
+                // matrix = new MatrixText('matrix-chars'); // TODO
             })
         </script>
-        <title>N-Trophy</title>
+        <title>Logika N-trophy 2020</title>
+        <meta charset="UTF-8">
     </head>
     <body>
-        <canvas id="matrix-chars"></canvas>
+        <!-- <canvas id='matrix-chars'></canvas> TODO -->
+        <!-- Navbar -->
+        <div class="w3-top">
+            <div class="w3-bar w3-black w3-card w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="toggleNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a href="/#" class="w3-bar-item w3-button w3-padding-large w3-padding-large w3-hover-white"><i class="fa fa-home"></i></a>
+                <a href="/#rules" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pravidla</a>
+                <a href="/#tasks" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Přehled úrovní</a>
+                {% if user.is_authenticated %}
+                    <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Odhlásit</a>
+                {% else %}
+                    <a href="/login" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Přihlásit se</a>
+                {% endif %}
+            <div class="w3-bar-item w3-hide-small w3-padding-large w3-right">{{ name }}</div>
+            </div>
+
+            <!-- Navbar on small screens -->
+            <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+                <div class="w3-bar-item w3-padding-large w3-black">{{ name }}</div>
+                <a href="/#rules" class="w3-bar-item w3-button w3-padding-large">Pravidla</a>
+                <a href="/#tasks" class="w3-bar-item w3-button w3-padding-large">Přehled úrovní</a>
+                {% if user.is_authenticated %}
+                    <a href="/logout" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Odhlásit</a>
+                {% else %}
+                    <a href="/login" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white w3-right">Přihlásit se</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Reminder -->
+        <div class="w3-center" style="margin-top: 50px;">
+            <p class="w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Nezapomeňte odevzdat pdf soubor do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p>
+        </div>
+
+        <!-- News -->
+        <div id="news" class="w3-container w3-center">
+            <div class="w3-content">
+                <h1>Novinky</h1>
+                {% for post in posts %}
+                <div class="w3-container w3-padding black-background w3-margin">
+                    <h6 class="post-head">
+                        {{ post.published }}
+                    </h6>
+                    <div class="post">
+                        {{ post.text | safe }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Rules -->
+        <div id="rules" class="w3-row-padding w3-padding-64 w3-container w3-center">
+            <div class="w3-content">
+                <h1>Pravidla hry</h1>
+
+                <p>Pdf soubor odevzdávejte do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p>
+            </div>
+        </div>
+
+        <!-- Tasks -->
+        <div id="tasks" class="w3-container">
+            <div class="w3-content w3-center">
+                <h1>Úrovně</h1>
+                {% for category in categories %}
+                <div class="w3-third">
+                    <h2>{{ category }}</h2>
+                    {% for task in tasks %}
+                    {% if task.category == category %}
+                        <a href="/task/{{ task.id }}">
+                            <div class="w3-padding-large w3-large">
+                                <div class="w3-center w3-container">{{ task.name }}</div>
+                            </div>
+                        </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="w3-container w3-black w3-center w3-opacity">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+        </footer>
     </body>
 </html>
