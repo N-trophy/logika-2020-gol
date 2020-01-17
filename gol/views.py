@@ -30,7 +30,5 @@ def task(request, *args, **kwargs):
 
     context = {
         'task': task,
-        'posts': (Post.objects.filter(published__lt=timezone.now()).
-                  order_by('-published')[:12]),
     }
     return render(request, "task.html", context)
