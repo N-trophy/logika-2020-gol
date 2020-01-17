@@ -51,10 +51,10 @@
         </div>
         <div class="w3-cell-row">
             <div class="w3-container w3-cell w3-half">
-                    <textarea id="src" class="w3-input" rows="15" name = "source_input"></textarea>
+                    <textarea id="console" class="w3-input" rows="15" name = "source_input"></textarea>
                     <div id="parse-info-bar" class="w3-bar w3-green">
                         <div id='parse-info' class="w3-bar-item">Zatím nic nezadáno.</div>
-                        <button class="w3-bar-item w3-right" onclick="world.loadSource('src')">Load source</button>
+                        <button class="w3-bar-item w3-right" onclick="world.loadSource(editor)">Load source</button>
                     </div>
             </div>
             
@@ -82,6 +82,7 @@
             </div>
         </div>
 
+        {% include "components/editor.html" %}
         <script>
             $(initWorld);
         </script>

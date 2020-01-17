@@ -21,6 +21,8 @@ class World {
 
         this.loop = setInterval(this.tick.bind(this), 200);
         this.loopSet = true;
+
+        this.root.addClass('running')
     }
 
     stop() {
@@ -28,6 +30,8 @@ class World {
 
         clearInterval(this.loop);
         this.loopSet = false;
+
+        this.root.removeClass('running')
     }
 
     initTableImage(){
@@ -64,9 +68,11 @@ class World {
         }
     }
 
-    loadSource(srcId) {
+    loadSource(editor) {
         $('#parse-info').text('Zpracovávám...');
-        const src = $('#' + srcId).val();
+        // const src = $('#' + srcId).val();
+        const src = editor.getValue()
+        // console.log($('#'+srcId));
         $.ajax({
             type: 'POST',
             url: '/rules/parse',

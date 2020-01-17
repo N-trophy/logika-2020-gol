@@ -10,10 +10,16 @@ input[type="text"], input[type="password"], textarea, select {
     outline: none;
 }
 
-#src {
+#console {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.3);
     color: rgb(42, 255, 42);
+}
+
+.CodeMirror, .CodeMirror-cursor, .CodeMirror-cursor, .CodeMirror-gutters {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: rgb(42, 255, 42) !important;
 }
 
 .cell {
@@ -33,6 +39,10 @@ input[type="text"], input[type="password"], textarea, select {
 
 table#automata {
     float: left;
+}
+
+#automata.running {
+    box-shadow: 0 0 10px #00ff00;
 }
 
 .table-button {
