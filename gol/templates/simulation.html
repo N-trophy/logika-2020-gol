@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="static/automata.js"></script>
+        <script src="static/world.js"></script>
+        <script src="static/test.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" type="text/css" href="static/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
+
+        <script>
+            CSRF_TOKEN = "{{ csrf_token }}"
+
+            $(()=>{
+                world = new World(25, 25, "automata", new ConstantRule('w'), ['w', 'b']);
+            });
+        </script>
+    </head>
+    <body>
+        
+        <header class = "w3-container w3-center">
+            <h2>SIMULÁTOR</h2>
+        </header>
+    <div class = "w3-row">
+        <div class = "w3-col w3-container l6">
+            <div class="w3-row">
+                <textarea id="console" class = "w3-col w3-container l12"></textarea>
+                <div id="console-info" class = "w3-col w3-container s12 m9 l9 w3-gray w3-padding">
+                     Žádná pravidla nenačtena.
+                </div>
+                <div id="load-btn" class = "w3-col w3-container s12 m3 l3 w3-button w3-padding" onclick="world.loadSource(editor)">
+                    Načíst
+                </div>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.prevTick()">
+                    Zpět
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.run()">
+                    Spustit
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.stop()">
+                    Zastavit
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.nextTick()">
+                    Další
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.clear()">
+                    Vyčistit
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.fill()">
+                    Zaplnit
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.reset()">
+                    Reset
+                </button>
+                <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.save()">
+                    Uložit
+                </button>
+            </div>
+            
+        </div>
+        
+        <div class = "w3-col w3-container l6">
+            <canvas id="automata"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const editor = CodeMirror.fromTextArea(document.getElementById('console'), {
+            lineNumbers: true
+        });
+    </script>
+    </body>
+</html>

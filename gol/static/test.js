@@ -117,6 +117,5 @@ ruleSet = {
 }
 
 function initWorld(){
-    r = Rule.deserialize(ruleSet);
-    world = new BWWorld(25, 25, "automata", r);
+    world = new BWWorld(25, 25, "automata", new ConstantRule('w'));
 }

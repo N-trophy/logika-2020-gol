@@ -76,7 +76,7 @@ class MatrixText {
     run() {
         if (this.matrixRunning) return;
         this.matrixRunning = true;
-        this.interval = setInterval(this.matrixLoop.bind(this), 50);
+        this.interval = setInterval(this.matrixLoop.bind(this), 100);
     }
 
     stop() {

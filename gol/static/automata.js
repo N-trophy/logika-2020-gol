@@ -104,6 +104,28 @@ class ConstantSelector extends Selector {
     }
 }
 
+class OperationSelector extends Selector {
+    constructor(op, ...operands){
+        super()
+        this.op = this.getOperator(op);
+        this.operands = operands;
+    }
+
+    match_table(table, x, y) {
+        let results = this.operands.map(o=>o.match_table(table, x, y))
+        let first = results.shift()
+        return results.reduce(this.op, first)
+    }
+
+    getOperator(op){
+        if (cmpName == '*') return (a,b)=>{a * b}
+        if (cmpName == '/') return (a,b)=>{a / b}
+        if (cmpName == '%') return (a,b)=>{a % b}
+        if (cmpName == '+') return (a,b)=>{a + b}
+        if (cmpName == '-') return (a,b)=>{a - b}
+    }
+}
+
 
 // Logical expressions -----------------------------------------------------------------------------
 class BoolExpr {
@@ -111,15 +133,19 @@ class BoolExpr {
 }
 
 class Comparator extends BoolExpr {
-    constructor(left, right, cmp) {
+    constructor(cmp, ...operands) {
         super()
-        this.left = left;
-        this.right = right;
+        this.operands = operands;
         this.cmp = Comparator.getComparator(cmp);
     }
 
-    eval(table, x, y) {
-        return this.cmp(this.left.match_table(table, x, y), this.right.match_table(table, x, y));
+    eval(table, x, y) {        
+        let results = this.operands.map(o=>o.match_table(table, x, y))
+        let good = true;
+        for (let i=0;i<results.length-1;i++){
+            good &= this.cmp(results[i], results[i+1])
+        }
+        return good;
     }
 
     static getComparator(cmpName){
@@ -132,15 +158,16 @@ class Comparator extends BoolExpr {
 }
 
 class BoolOperator extends BoolExpr {
-    constructor(left, right, op) {
+    constructor(op, ...operands) {
         super()
-        this.left = left;
-        this.right = right;
         this.op = BoolOperator.getOperator(op);
+        this.operands = operands;
     }
 
     eval(table, x, y) {
-        return this.op(this.left.eval(table, x, y), this.right.eval(table, x, y));
+        let results = this.operands.map(o=>o.eval(table, x, y))
+        let first = results.shift()
+        return results.reduce(this.op, first)
     }
 
     static getOperator(cmpName){
@@ -154,13 +181,16 @@ class Rule {
     eval(table, x, y){}
 
     static deserialize(object) {
-        const klass = classMap[object.className]
+        const className = object.className
+        const klass = classMap[className]
 
-        for (let i=0; i < argsMap[object.className].length; i++) {
-            if (argsMap[object.className][i]) {
-                object.args[i] = Rule.deserialize(object.args[i]);
+        object.args = object.args.map((arg, i)=>{
+            if ((i>=argsMap[className].length && argsMap[className][argsMap[className].length-1]) || argsMap[className][i]) {
+                return Rule.deserialize(arg);
+            } else {
+                return arg;
             }
-        }
+        })
 
         return new klass(...object.args);
     }
@@ -197,8 +227,9 @@ class ConditionalRule extends Rule {
 argsMap = {
     "GridSelector" : [false],
     "ConstantSelector" : [false],
-    "Comparator" : [true, true, false],
-    "BoolOperator" : [true, true, false],
+    "OperationSelector" : [false, true],
+    "Comparator" : [false, true],
+    "BoolOperator" : [false, true],
     "ConstantRule" : [false],
     "ConditionalRule" : [true, true, true]
 }
@@ -206,6 +237,7 @@ argsMap = {
 classMap = {
     "GridSelector" : GridSelector,
     "ConstantSelector" : ConstantSelector,
+    "OperationSelector" : OperationSelector,
     "Comparator" : Comparator,
     "BoolOperator" : BoolOperator,
     "ConstantRule" : ConstantRule,

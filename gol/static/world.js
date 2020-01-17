@@ -1,17 +1,36 @@
 class World {
-    constructor(width, height, rootId, rules) {
+    constructor(width, height, rootId, rules, colors) {
+        this.pallet = {
+            'w': 'rgba(255, 255, 255, 0.5)',
+            'b': 'rgba(255, 255, 255, 0.1)',
+        };
+
+        this.colors = colors;
+
         this.width = width;
         this.height = height;
-        this.root = $("#" + rootId);
+        this.canvas = document.getElementById(rootId);
+        this.canvas.height = this.canvas.width = 500;
+        this.ctx = this.canvas.getContext('2d');
 
         this.automata = new Automata(25, 25, rules);
-        
-        this.initTableImage();
+        this.automata.fill
+
+        this.clear();
+        this.drawTable();
 
         this.loopSet = false;
+
+        this.canvas.addEventListener('click', this.canvasClick.bind(this), false);
     }    
     
-    tick(){
+    // Time controlling methods ------------------------------------------------------
+    nextTick(){
+        this.automata.nextTick();
+        this.drawTable();
+    }
+
+    prevTick(){
         this.automata.nextTick();
         this.drawTable();
     }
@@ -19,10 +38,10 @@ class World {
     run() {
         if (this.loopSet) return;
 
-        this.loop = setInterval(this.tick.bind(this), 200);
+        this.loop = setInterval(this.nextTick.bind(this), 200);
         this.loopSet = true;
 
-        this.root.addClass('running')
+        this.canvas.addClass('running')
     }
 
     stop() {
@@ -34,45 +53,34 @@ class World {
         this.root.removeClass('running')
     }
 
-    initTableImage(){
-        const rows = [];
-        const table = this.automata.getCurrentTable();
 
-        table[0].forEach(()=>{
-            rows.push($("<tr></tr>"));
-        });
-
-        for (let x = 0; x<this.width; x++) {
-            for (let y = 0; y<this.height; y++) {
-                const cell = $('<td></td>', {
-                    id: this.root.attr('id') + '_cell',
-                    class: "cell c"+x + " r" + y,
-                });
-
-                rows[y].append(cell);
-            }
-        }
-
-        this.root.append(rows);
+    // Drawing methods ----------------------------------------------------------------    
+    drawSquare(x, y, color){
+        const px = x * this.canvas.width / this.width;
+        const py = y * this.canvas.height / this.height;
+        const dx = this.canvas.width / this.width;
+        const dy = this.canvas.height / this.height;
+        this.ctx.fillStyle = color;
+        this.ctx.clearRect(px, py, dx-3, dy-3);
+        this.ctx.fillRect(px, py, dx-3, dy-3);
     }
-    
     
     drawTable(){
         const table = this.automata.getCurrentTable()
+
         for (let x = 0; x<this.width; x++) {
             for (let y = 0; y<this.height; y++) {
-                const id = '#' + this.root.attr('id') + '_cell';
-                const val = table[x][y];
-                $(id + '.c' + x + '.r' + y).css('background-color', this.pallet[val]);
+                const val = table[x][y]
+                this.drawSquare(x, y, this.pallet[val]);
             }
         }
     }
 
     loadSource(editor) {
-        $('#parse-info').text('Zpracovávám...');
-        // const src = $('#' + srcId).val();
+        $('#console-info').text('Zpracovávám...');
+
         const src = editor.getValue()
-        // console.log($('#'+srcId));
+        
         $.ajax({
             type: 'POST',
             url: '/rules/parse',
@@ -84,52 +92,38 @@ class World {
             success: ((data)=>{
                 const rules = Rule.deserialize(JSON.parse(data));
                 this.automata.setRules(rules);
-                $('#parse-info').text('OK');
-                $('#parse-info-bar').removeClass('w3-red')
-                $('#parse-info-bar').addClass('w3-green')
+                $('#console-info').text('OK');
+                $('#console-info').removeClass('w3-red')
+                $('#console-info').addClass('w3-green')
             }),
             error: ((xhr)=>{
-                $('#parse-info').text(xhr.responseText);
-                $('#parse-info-bar').removeClass('w3-green')
-                $('#parse-info-bar').addClass('w3-red')
+                $('#console-info').text(xhr.responseText);
+                $('#console-info').removeClass('w3-green')
+                $('#console-info').addClass('w3-red')
             })
         });
     }
-}
 
-class BWWorld extends World {
-    constructor(width, height, rootId, ruleSet) {
-        super(width, height, rootId, ruleSet);
-
-        this.automata.fill('w');
-
-        this.pallet = {
-            'w': 'rgba(255, 255, 255, 0.5)',
-            'b': 'rgba(255, 255, 255, 0.1)',
-        };
-
-        for (let x = 0; x<this.width; x++) {
-            for (let y = 0; y<this.height; y++) {
-                const id = '#' + this.root.attr('id') + '_cell';
-                $(id + '.c' + x + '.r' + y).click(()=>this.toggle(x, y));
-            }
-        }
-
-        this.drawTable();
+    canvasClick(event){
+        const x = Math.floor(event.offsetX * this.width / this.canvas.scrollWidth);
+        const y = Math.floor(event.offsetY * this.height / this.canvas.scrollHeight);
+        this.toggle(x, y);
     }
 
     toggle(x, y) {
-        this.automata.setCell(this.automata.getCell(x, y) == 'w' ? 'b' : 'w', x, y);
+        const a = this.colors[0];
+        const b = this.colors[1];
+        this.automata.setCell(this.automata.getCell(x, y) == a ? b : a, x, y);
         this.drawTable();
     }
 
     clear() {
-        this.automata.fill('w');
+        this.automata.fill(this.colors[0]);
         this.drawTable();
     }
 
     fill() {
-        this.automata.fill('b');
+        this.automata.fill(this.colors[1]);
         this.drawTable();
     }
 }
