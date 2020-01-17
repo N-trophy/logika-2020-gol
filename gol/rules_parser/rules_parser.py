@@ -9,6 +9,7 @@ import json
 
 
 Color = str
+BinaryIntOperator = Callable[[int, int], bool]
 
 
 class Selector:
@@ -30,17 +31,63 @@ class Selector:
 
 def _selector_or_number_webrepr(sel_or_num: Union[int, Selector]) \
         -> Dict[str, Any]:
-    if isinstance(sel_or_num, Selector):
-        return sel_or_num.web_repr()
-    return {
-        'className': 'ConstantSelector',
-        'args': [str(sel_or_num)]
-    }
+    if isinstance(sel_or_num, int):
+        return {
+            'className': 'ConstantSelector',
+            'args': [str(sel_or_num)]
+        }
+    return sel_or_num.web_repr()
+
 
 ###############################################################################
 
 
-BinaryIntOperator = Callable[[int, int], bool]
+NUMERIC_OPERATORS: Dict[str, BinaryIntOperator] = {
+    '+': operator.add,
+    '-': operator.sub,
+    '*': operator.mul,
+    '/': operator.floordiv,
+    '%': operator.mod,
+}
+
+
+class SelectorOperator:
+    def __init__(self, operator: str, operands: List[Union[Selector, int]]):
+        assert operator in NUMERIC_OPERATORS
+
+        self.operands = operands
+        self.operator = NUMERIC_OPERATORS[operator]
+        self.operator_text = operator
+
+    def __str__(self):
+        return '(' + (' '+self.operator_text+' ').\
+            join([str(op) for op in self.operands]) + ')'
+
+    def __repr__(self):
+        return 'SelectorOperator(' + (' '+self.operator_text+' ').\
+            join([repr(op) for op in self.operands]) + ')'
+
+    def web_repr(self):
+        return {
+            'className': 'OperatorSelector',
+            'args': ([self.operator_text] +
+                     [_selector_or_number_webrepr(op)
+                      for op in self.operands]),
+        }
+
+
+def _parse_selector_operator(p):
+    p_ = p[0]
+    if len(p_) == 1:
+        return p_
+
+    operands = [p_[i] for i in range(0, len(p_), 2)]
+    return SelectorOperator(p_[1], operands)
+
+
+###############################################################################
+
+
 COMPARES: Dict[str, BinaryIntOperator] = {
     '<=': operator.le,
     '>=': operator.ge,
@@ -51,9 +98,12 @@ COMPARES: Dict[str, BinaryIntOperator] = {
 }
 
 
+ComparisonTerm = Union[Selector, int, SelectorOperator]
+
+
 class Comparison:
-    def __init__(self, left: Union[Selector, int], operator: str,
-                 right: Union[Selector, int]):
+    def __init__(self, left: ComparisonTerm, operator: str,
+                 right: ComparisonTerm):
         assert operator in COMPARES
 
         self.operator_text = operator
@@ -96,8 +146,8 @@ class BoolOperator:
         self.operator_text = operator
 
     def __str__(self):
-        return (' '+self.operator_text+' ').\
-            join([str(op) for op in self.operands])
+        return '(' + (' '+self.operator_text+' ').\
+            join([str(op) for op in self.operands]) + ')'
 
     def __repr__(self):
         return 'BoolOperator(' + (' '+self.operator_text+' ').\
@@ -133,8 +183,8 @@ class Rule:
                 f'{str(self.else_rule)})')
 
     def __repr__(self):
-        return (f'Rule(if {str(self.bool_expr)}: {str(self.if_rule)} else:'
-                f' {str(self.else_rule)})')
+        return (f'Rule(if {repr(self.bool_expr)}: {repr(self.if_rule)} else:'
+                f' {repr(self.else_rule)})')
 
     def pretty_print(self, indent=0):
         prefix = '    '*indent
@@ -183,20 +233,32 @@ def parse(lines: str, allowed_colors: str = '') -> Union[Rule, Color]:
     if allowed_colors == '':
         allowed_colors = string.ascii_lowercase + string.ascii_uppercase
     color = Word(allowed_colors, exact=1)
+    integer = Word(string.digits).setParseAction(lambda t: int(t[0]))
 
     selector = Word(allowed_colors + '*', exact=1) * 9
     selector.setParseAction(lambda s: Selector(''.join(s)))
 
-    integer = Word(string.digits).setParseAction(lambda t: int(t[0]))
+    num_operation = infixNotation(
+        (selector | integer),
+        [
+            ('*', 2, opAssoc.LEFT, _parse_selector_operator),
+            ('/', 2, opAssoc.LEFT, _parse_selector_operator),
+            ('+', 2, opAssoc.LEFT, _parse_selector_operator),
+            ('-', 2, opAssoc.LEFT, _parse_selector_operator),
+            ('%', 2, opAssoc.LEFT, _parse_selector_operator),
+        ]
+    )
+
     operator = oneOf('>= <= != > < ==')
-    comparison = ((selector | integer) + operator + (selector | integer)).\
+    comparison_token = num_operation | selector | integer
+    comparison = (comparison_token + operator + comparison_token).\
         setParseAction(lambda t: Comparison(*t))
 
     bool_expr = infixNotation(
         comparison,
         [
-            ("or", 2, opAssoc.LEFT, _parse_bool_expr),
-            ("and", 2, opAssoc.LEFT, _parse_bool_expr),
+            ('and', 2, opAssoc.LEFT, _parse_bool_expr),
+            ('or', 2, opAssoc.LEFT, _parse_bool_expr),
         ]
     )
 
@@ -230,13 +292,18 @@ if __name__ == '__main__':
         sys.exit(1)
 
     web_print = '-w' in sys.argv
+    repr_print = '-r' in sys.argv
     if '-w' in sys.argv:
         sys.argv.remove('-w')
+    if '-r' in sys.argv:
+        sys.argv.remove('-r')
 
     with open(sys.argv[1]) as f:
         result = parse(f.read(), 'bw')
 
     if web_print:
         print(json.dumps(webrepr(result), indent=4))
+    elif repr_print:
+        print(repr(result))
     else:
         print(result)
