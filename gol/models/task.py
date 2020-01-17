@@ -4,8 +4,12 @@ from datetime import datetime
 
 
 class Task(models.Model):
+    CATEGORY = [('CONSTRUCTION', 'construction'), ('RULES', 'rules'),
+                ('PROOFS', 'proofs')]
+
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(default='', max_length=128)
+    category = models.CharField(max_length=16, choices=CATEGORY, default='1')
     max_points = models.PositiveIntegerField(default=1)
     intro_text = models.TextField(default='')
     config = models.TextField(default='{}')

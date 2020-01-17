@@ -5,7 +5,7 @@ from gol.models.post import Post
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    list_display = ('id', 'category', 'name')
 
 
 @admin.register(Post)
