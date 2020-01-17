@@ -1,10 +1,28 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+
+from gol.models import Task
+from gol.models import Post
 
 
 @login_required(login_url='/login')
 def index(request, *args, **kwargs):
-    return render(request, "index.html")
+    tasks = {
+        task.id: {
+            'id': task.id,
+            'name': task.name,
+            'category': task.category
+        }
+        for task in Task.objects.all()
+    }
+
+    context = {
+        'tasks': tasks,
+        'posts': (Post.objects.filter(published__lt=timezone.now()).
+                  order_by('-published')[:12]),
+    }
+    return render(request, "index.html", context)
 
 
 @login_required(login_url='/login')
