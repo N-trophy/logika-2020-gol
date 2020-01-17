@@ -3,7 +3,7 @@
 import operator
 from pyparsing import Forward, Word, oneOf, infixNotation, opAssoc
 import string
-from typing import Dict, Callable, Union, Any
+from typing import Dict, Callable, Union, Any, List
 import sys
 import json
 
@@ -88,36 +88,36 @@ BOOL_OPERATORS = {
 
 
 class BoolOperator:
-    def __init__(self, left: Comparison, operator: str, right: Comparison):
+    def __init__(self, operator: str, operands: List[Comparison]):
         assert operator in BOOL_OPERATORS
 
-        self.left = left
+        self.operands = operands
         self.operator = BOOL_OPERATORS[operator]
         self.operator_text = operator
-        self.right = right
 
     def __str__(self):
-        return f'({str(self.left)} {self.operator_text} {str(self.right)})'
+        return (' '+self.operator_text+' ').\
+            join([str(op) for op in self.operands])
 
     def __repr__(self):
-        return (f'BoolOperator({repr(self.left)} {self.operator_text} '
-                f'{repr(self.right)})')
+        return 'BoolOperator(' + (' '+self.operator_text+' ').\
+            join([str(op) for op in self.operands]) + ')'
 
     def web_repr(self):
         return {
             'className': 'BoolOperator',
-            'args': [
-                self.left.web_repr(),
-                self.right.web_repr(),
-                self.operator_text,
-            ],
+            'args': ([self.operator_text] +
+                     [op.web_repr() for op in self.operands]),
         }
 
 
 def _parse_bool_expr(p):
-    if isinstance(p[0], Comparison):
-        return p[0]
-    return BoolOperator(*p[0])
+    p_ = p[0]
+    if len(p_) == 1:
+        return p_
+
+    operands = [p_[i] for i in range(0, len(p_), 2)]
+    return BoolOperator(p_[1], operands)
 
 ###############################################################################
 
@@ -195,10 +195,10 @@ def parse(lines: str, allowed_colors: str = '') -> Union[Rule, Color]:
     bool_expr = infixNotation(
         comparison,
         [
-            ("or", 2, opAssoc.LEFT, lambda t: t),
-            ("and", 2, opAssoc.LEFT, lambda t: t),
+            ("or", 2, opAssoc.LEFT, _parse_bool_expr),
+            ("and", 2, opAssoc.LEFT, _parse_bool_expr),
         ]
-    ).setParseAction(_parse_bool_expr)
+    )
 
     rule = Forward()
     rule << ((Word('if') + bool_expr + Word(':') + rule + Word('else:') +
@@ -208,7 +208,6 @@ def parse(lines: str, allowed_colors: str = '') -> Union[Rule, Color]:
 
 
 def webrepr(rule_or_color: Union[Rule, Color]) -> Dict[str, Any]:
-    print(_rule_or_color_webrepr(rule_or_color))
     return _rule_or_color_webrepr(rule_or_color)
 
 ###############################################################################
@@ -226,9 +225,18 @@ print(_rule_or_color_webrepr(
 """
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        sys.stderr.write('Usage: gen-json.py rules.txt\n')
+    if len(sys.argv) < 2:
+        sys.stderr.write('Usage: gen-json.py rules.txt [-w]\n')
         sys.exit(1)
 
+    web_print = '-w' in sys.argv
+    if '-w' in sys.argv:
+        sys.argv.remove('-w')
+
     with open(sys.argv[1]) as f:
-        print(json.dumps(webrepr(parse(f.read(), 'bw')), indent=4))
+        result = parse(f.read(), 'bw')
+
+    if web_print:
+        print(json.dumps(webrepr(result), indent=4))
+    else:
+        print(result)
