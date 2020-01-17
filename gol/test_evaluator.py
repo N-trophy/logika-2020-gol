@@ -5,7 +5,7 @@ import sys
 if __name__ == '__main__':
     sys.path.append('..')
 
-from rules_parser.rules_parser import Selector, SelectorOperator, Comparison, \
+from gol.rules_parser import Selector, SelectorOperator, Comparison, \
     BoolOperator, Rule
 
 GRID = [
