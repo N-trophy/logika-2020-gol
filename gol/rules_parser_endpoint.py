@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 import pyparsing
 from contextlib import redirect_stdout
 from io import StringIO
+import time
 
 from gol.rules_parser.rules_parser import parse, webrepr, Rule
 from gol.models import Parse, Task
@@ -40,10 +41,11 @@ def parse_rules(request, *args, **kwargs):
         params=str(kwargs),
     )
 
+    start = time.time()
     try:
         parsed = parse(expr, colors)
         rules_ = webrepr(parsed)
-        parse_obj.report = 'ok'
+        parse_obj.state = 'ok'
 
         if isinstance(parsed, Rule):
             c_stdout = StringIO()
@@ -53,14 +55,18 @@ def parse_rules(request, *args, **kwargs):
         else:
             parse_obj.parsed = str(parsed)
     except pyparsing.ParseException as e:
-        parse_obj.report = 'Parse error: ' + str(e)
+        parse_obj.state = 'parse error'
+        parse_obj.report = str(e)
         return HttpResponseBadRequest(str(e))
     except Exception as e:
         exception_str = traceback.format_exc()
+        parse_obj.state = 'exception'
         parse_obj.report = exception_str
         print(exception_str, end='')
         return HttpResponseBadRequest(str(e))
     finally:
+        end = time.time()
+        parse_obj.evaluation_time = end-start
         parse_obj.save()
 
     return JsonResponse(rules_)
