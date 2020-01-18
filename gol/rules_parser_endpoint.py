@@ -30,7 +30,8 @@ def parse_rules(request, *args, **kwargs):
     except api_server.models.level.Level.DoesNotExist:
         return HttpResponseNotFound('Task not found')
 
-    colors = kwargs['colors'] if 'colors' in kwargs else ''
+    colors = kwargs['colors'] if 'colors' in kwargs else 'rgbk'
+    colors += colors.upper()
 
     parse_obj = Parse(
         user=request.user,

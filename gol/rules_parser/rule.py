@@ -71,6 +71,6 @@ def rule_or_color_webrepr(rule_or_col: Union[int, Selector]) \
 
 def parse_rule(p):
     if len(p) == 1:
-        return p[0]
+        return p[0].lower()
     _, bool_op, _, if_rule, _, else_rule = p
     return Rule(bool_op, if_rule, else_rule)
