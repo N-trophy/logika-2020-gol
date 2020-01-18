@@ -1,10 +1,7 @@
-from django.http import JsonResponse, HttpResponseForbidden, HttpResponseBadRequest
-from django.views import View
+from django.http import JsonResponse, HttpResponseBadRequest, \
+        HttpResponseNotFound
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied, ValidationError
-from django.utils import timezone
-from django.views.decorators.csrf import csrf_exempt
 import pyparsing
 from contextlib import redirect_stdout
 from io import StringIO
@@ -13,9 +10,7 @@ import time
 from gol.rules_parser.rules_parser import parse, webrepr, Rule
 from gol.models import Parse, Task
 
-import json
 import traceback
-from datetime import datetime
 
 
 @require_http_methods(['POST'])
@@ -28,7 +23,7 @@ def parse_rules(request, *args, **kwargs):
             task = Task.objects.get(id=kwargs['task'])
         else:
             task = None
-    except api_server.models.level.Level.DoesNotExist:
+    except Task.DoesNotExist:
         return HttpResponseNotFound('Task not found')
 
     colors = kwargs['colors'] if 'colors' in kwargs else 'rgbk'
