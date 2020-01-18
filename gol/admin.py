@@ -24,6 +24,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Parse)
 class ParseAdmin(admin.ModelAdmin):
     list_display = ('user', 'task', 'input_text', 'params', 'datetime',
-                    'state', 'report', 'evaluation_time', 'parsed')
-    list_filter = ('user', 'task', 'datetime', 'state', 'report')
+                    'state', 'evaluation_time', 'report', 'parsed')
+    list_filter = ('user', 'task', 'datetime', 'state', 'report',
+                   'evaluation_time')
     ordering = ['-datetime']
