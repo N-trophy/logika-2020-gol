@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import pyparsing
 from pyparsing import Forward, Word, oneOf, infixNotation, opAssoc
 import string
 from typing import Dict, Union, Any
@@ -16,6 +17,8 @@ from gol.rules_parser.rule import Rule, parse_rule, rule_or_color_webrepr
 from gol.rules_parser.comparison import Comparison
 
 from gol.common import Color
+
+pyparsing.ParserElement.enablePackrat()
 
 
 def strip_comments(lines: str) -> str:
