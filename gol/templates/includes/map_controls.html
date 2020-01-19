@@ -8,12 +8,24 @@
         <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.fill()">
             zaplnit
         </button>
+
+        <!-- Map type -->
+        <button id="plane-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchToPlane()">
+            rovina
+        </button>
+        <button id="torus-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchToTorus()">
+            torus
+        </button>
+
+        <!-- Load and save -->
         <button id="load-last" disabled class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.load()">
             načíst
         </button>
         <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.save()">
             uložit
         </button>
+
+        <!-- To and from files -->
         <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="document.getElementById('modal-upload').style.display='block';">
             ze souboru
         </button>
@@ -37,22 +49,6 @@
         </button>
         <button class = "color-btn k w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('k')">
             K
-        </button>
-    </div>
-
-    <!-- Map type -->
-    <div>
-        <button id="plane-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchTorus()">
-            rovina
-        </button>
-        <button id="torus-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchTorus()">
-            torus
-        </button>
-
-        <div class="w3-col w3-container s12 m12 l3 w3-padding w3-hide-small w3-hide-medium"></div>
-
-        <button id="torus-btn" class="w3-col w3-container s12 m12 l3 w3-padding w3-button" onclick="world.switchTorus()">
-            vložit mapu
         </button>
     </div>
 

@@ -17,8 +17,8 @@ class World {
 
         this.canvas.addEventListener('click', this.canvasClick.bind(this), false);
 
-        this.switchTorus();
-        this.selectColor('k');
+        this.switchToPlane();
+        this.selectColor('g');
 
         this.historyLength = 3;
     }
@@ -92,21 +92,24 @@ class World {
     }
 
     load() {
+        this.stop();
+
         if (this.levelBackup == null) return;
         this.automata.setTable(this.levelBackup);
         this.drawTable();
     }
 
-    switchTorus() {
-        this.automata.isTorus = !this.automata.isTorus;
+    switchToPlane() {
+        this.automata.isTorus = false;
+        $('#torus-btn').removeClass('selected');
+        $('#plane-btn').addClass('selected');
+    }
 
-        if (this.automata.isTorus){
-            $('#torus-btn').addClass('selected');
-            $('#plane-btn').removeClass('selected');
-        } else {
-            $('#torus-btn').removeClass('selected');
-            $('#plane-btn').addClass('selected');
-        }
+    switchToTorus() {
+        this.automata.isTorus = true;
+
+        $('#plane-btn').removeClass('selected');
+        $('#torus-btn').addClass('selected');
     }
 
     selectColor(c){
