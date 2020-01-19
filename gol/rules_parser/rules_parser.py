@@ -36,7 +36,7 @@ def parse(lines: str, allowed_colors: str = '') -> Union[Rule, Color]:
     color = Word(allowed_colors, exact=1)
     integer = Word(string.digits).setParseAction(lambda t: int(t[0]))
 
-    selector = Word(allowed_colors + '*', exact=1) * 9
+    selector = Word(allowed_colors + '-', exact=1) * 9
     selector.setParseAction(lambda s: Selector(''.join(s)))
 
     num_operation = infixNotation(
