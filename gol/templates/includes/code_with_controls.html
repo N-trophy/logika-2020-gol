@@ -1,0 +1,45 @@
+<div>
+    <!-- Console -->
+    <textarea id="console" class = "w3-col w3-container l12"></textarea>
+
+    <!-- First line -->
+    <div id="console-info" class = "w3-col w3-container s12 m12 l12 w3-padding">
+        Žádná pravidla nenačtena.
+    </div>
+
+    <script>
+        const editor = CodeMirror.fromTextArea(document.getElementById('console'), {
+            lineNumbers: true,
+            mode: 'python',
+            keyMap: 'sublime',
+        });
+
+        editor.on('change', (a,b)=>{
+            $('#console-info').text('Kód změněn.');
+            $('#console-info').addClass('warning');
+        })
+    </script>
+
+    <!-- Second line -->
+    <div>
+        <!-- Map resolution -->
+        <div>
+            <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
+                x:
+            </div>
+            <input id="width-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value=25></input>
+
+            <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
+                h:
+            </div>
+            <input id="height-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value=25></input>
+        </div>
+
+        <!-- Load button -->
+        <div id="load-btn" class = "w3-col w3-container s4 m4 l4 w3-button w3-padding" onclick="world.loadSource(editor)">
+            načíst
+        </div>
+    </div>
+</div>
+
+{% include "includes/code_controls_only.html" %}
