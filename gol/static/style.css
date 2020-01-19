@@ -139,6 +139,18 @@ input[type="text"], input[type="password"], textarea, select, button {
     background-color:rgb(42, 255, 42);
 }
 
+.w3-dropdown-content, .w3-sidebar, .w3-top, .w3-bottom {
+    z-index: 10;
+}
+
+.w3-modal {
+    z-index: 13;
+}
+
+.w3-overlay {
+    z-index: 12;
+}
+
 /* Matrix characters */
 #matrix-chars {
     width: 100vw;
