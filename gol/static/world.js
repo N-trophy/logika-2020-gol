@@ -40,6 +40,8 @@ class World {
     
     // Time controlling methods ------------------------------------------------------
     nextTick(){
+        this.stop();
+
         const table = this.automata.getCurrentTable();
         const level = Array(table.length);
         for (let x = 0; x < table.length; x++) {
@@ -58,6 +60,8 @@ class World {
     }
 
     prevTick(){
+        this.stop();
+
         if (this.levelHistory.length == 0) return;
         const level = this.levelHistory.pop();
         this.automata.setTable(level);
@@ -145,6 +149,8 @@ class World {
     }
 
     loadSource(editor) {
+        this.stop();
+
         $('#console-info').text('Zpracovávám...');
 
         const src = editor.getValue()
@@ -186,11 +192,15 @@ class World {
     }
 
     clear() {
+        this.stop();
+
         this.automata.fill('k');
         this.drawTable();
     }
 
     fill() {
+        this.stop();
+
         this.automata.fill(this.pickedColor);
         this.drawTable();
     }
@@ -199,6 +209,9 @@ class World {
         if (/*wrong input format*/ false) {
             info_elem.innerHTML = "<b>Chyba při načítání. (Špatný formát)</b><br><br>Pokud byste měli pocit, že váš soubor má správný formát, kontaktujte organizátory.";
         }
+
+        this.stop();
+
         info_elem.innerHTML = "Loaded:<br>";
         info_elem.innerHTML += input_text;
     }
