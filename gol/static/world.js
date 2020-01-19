@@ -153,7 +153,14 @@ class World {
 
         $('#console-info').text('Zpracovávám...');
 
-        const src = editor.getValue()
+        const src = editor.getValue();
+
+        if (src.trim().length == 0)
+        {
+            $('#console-info').text('Prázdný vstup');
+            $('#console-info').addClass('warning');
+            return;
+        }
         
         $.ajax({
             type: 'POST',
