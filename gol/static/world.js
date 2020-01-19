@@ -40,8 +40,6 @@ class World {
     
     // Time controlling methods ------------------------------------------------------
     nextTick(){
-        this.stop();
-
         const table = this.automata.getCurrentTable();
         const level = Array(table.length);
         for (let x = 0; x < table.length; x++) {
@@ -57,6 +55,11 @@ class World {
 
         this.automata.nextTick();
         this.drawTable();
+    }
+
+    oneTick(){
+        this.stop();
+        this.nextTick();
     }
 
     prevTick(){
