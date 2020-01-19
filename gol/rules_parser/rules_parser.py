@@ -6,6 +6,7 @@ import string
 from typing import Dict, Union, Any
 import sys
 import json
+import re
 
 if __name__ == '__main__':
     sys.path.append('../..')
@@ -64,14 +65,23 @@ def parse(lines: str, allowed_colors: str = '') -> Union[Rule, Color]:
     )
 
     rule = Forward()
-    rule << ((Word('if') + bool_expr + Word(':') + rule + Word('else:') +
-             rule) | color).setParseAction(parse_rule)
+    condition = (Word('if') + bool_expr + Word(':') + rule + Word('else:') +
+                 rule)
+    rule << (condition | color).setParseAction(parse_rule)
 
     return rule.parseString(lines, parseAll=True)[0]
 
 
 def webrepr(rule_or_color: Union[Rule, Color]) -> Dict[str, Any]:
     return rule_or_color_webrepr(rule_or_color)
+
+
+def nicer_parse_error_message(msg: str) -> str:
+    msg = re.sub(r'W:\((.*?)\)', r'\1', msg)
+    msg = msg.replace('rgbk...', 'rgbkRGBK')
+    msg = msg.replace('{{{if Forward: or term : : ...} else...} : ...}',
+                      'if ... : ... else: ...')
+    return msg
 
 ###############################################################################
 

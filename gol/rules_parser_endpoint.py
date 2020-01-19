@@ -7,7 +7,8 @@ from contextlib import redirect_stdout
 from io import StringIO
 import time
 
-from gol.rules_parser.rules_parser import parse, webrepr, Rule
+from gol.rules_parser.rules_parser import parse, webrepr, Rule, \
+    nicer_parse_error_message
 from gol.models import Parse, Task
 
 import traceback
@@ -51,14 +52,16 @@ def parse_rules(request, *args, **kwargs):
             parse_obj.parsed = str(parsed)
     except pyparsing.ParseException as e:
         parse_obj.state = 'parse error'
-        parse_obj.report = str(e)
-        return HttpResponseBadRequest(str(e))
+        nicer_msg = nicer_parse_error_message(str(e))
+        parse_obj.report = str(e) + '\n\n' + nicer_msg
+        return HttpResponseBadRequest(nicer_msg)
     except Exception as e:
         exception_str = traceback.format_exc()
         parse_obj.state = 'exception'
         parse_obj.report = exception_str
         print(exception_str, end='')
-        return HttpResponseBadRequest(str(e))
+        return HttpResponseBadRequest('Vnitřní výjimka parsovátka, kontaktujte'
+                                      ' organizátory!')
     finally:
         end = time.time()
         parse_obj.evaluation_time = end-start
