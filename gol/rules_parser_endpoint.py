@@ -53,7 +53,7 @@ def parse_rules(request, *args, **kwargs):
     except pyparsing.ParseException as e:
         parse_obj.state = 'parse error'
         nicer_msg = nicer_parse_error_message(str(e))
-        parse_obj.report = str(e) + '\n\n' + nicer_msg
+        parse_obj.report = nicer_msg + '\n\n' + str(e)
         return HttpResponseBadRequest(nicer_msg)
     except Exception as e:
         exception_str = traceback.format_exc()
