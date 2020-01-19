@@ -17,6 +17,10 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
+footer {
+    margin-top: 10px;
+}
+
 input[type="text"], input[type="password"], textarea, select, button { 
     outline: none;
 }

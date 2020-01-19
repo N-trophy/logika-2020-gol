@@ -22,42 +22,10 @@
         </script>
         <title>Klikátko</title>
         <meta charset="UTF-8">
-        <style>
-            body {
-                margin-top: 50px;
-            }
-        </style>
     </head>
     <body>
         <!-- Navbar -->
-        <div class="w3-top">
-            <div class="w3-bar black-background w3-card w3-left-align w3-large">
-                <a class="w3-bar-item button w3-hide-large w3-right w3-padding-large w3-large" onclick="toggleNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-                <a href="/#" class="w3-bar-item button w3-padding-large w3-padding-large"><i class="fa fa-home"></i></a>
-                <a href="/klikatko" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large">Klikátko</a>
-                <a href="/#rules" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large">Pravidla</a>
-                <a href="/#tasks" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large">Přehled úloh</a>
-                {% if user.is_authenticated %}
-                    <a href="/logout" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large w3-right">Odhlásit</a>
-                {% else %}
-                    <a href="/login" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large w3-right">Přihlásit se</a>
-                {% endif %}
-            <div class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-right dark-grey-background">{{ name }}</div>
-            </div>
-
-            <!-- Navbar on small screens -->
-            <div id="navDemo" class="w3-bar-block black-background w3-hide w3-hide-large w3-large">
-                <div class="w3-bar-item w3-padding-large dark-grey-background">{{ name }}</div>
-                <a href="/klikatko" class="w3-bar-item button w3-padding-large">Klikátko</a>
-                <a href="/#rules" class="w3-bar-item button w3-padding-large">Pravidla</a>
-                <a href="/#tasks" class="w3-bar-item button w3-padding-large">Přehled úloh</a>
-                {% if user.is_authenticated %}
-                    <a href="/logout" class="w3-bar-item button w3-padding-large w3-right">Odhlásit</a>
-                {% else %}
-                    <a href="/login" class="w3-bar-item button w3-padding-large w3-right">Přihlásit se</a>
-                {% endif %}
-            </div>
-        </div>
+        {% include "includes/navbar.html" %}
 
         <header class = "w3-container w3-center">
             <h2>KLIKÁTKO</h2>
