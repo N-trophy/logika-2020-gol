@@ -117,7 +117,7 @@ class GridSelector extends Selector {
 class ConstantSelector extends Selector {
     constructor(value){
         super()
-        this.value = value;
+        this.value = Number(value);
     }
 
     match_table(table, x, y, isTorus) {
@@ -125,7 +125,7 @@ class ConstantSelector extends Selector {
     }
 }
 
-class OperationSelector extends Selector {
+class OperatorSelector extends Selector {
     constructor(op, ...operands){
         super()
         this.op = this.getOperator(op);
@@ -135,15 +135,15 @@ class OperationSelector extends Selector {
     match_table(table, x, y, isTorus) {
         let results = this.operands.map(o=>o.match_table(table, x, y, isTorus))
         let first = results.shift()
-        return results.reduce(this.op, first)
+        return results.reduce(this.op, first);
     }
 
-    getOperator(op){
-        if (cmpName == '*') return (a,b)=>{a * b}
-        if (cmpName == '/') return (a,b)=>{a / b}
-        if (cmpName == '%') return (a,b)=>{a % b}
-        if (cmpName == '+') return (a,b)=>{a + b}
-        if (cmpName == '-') return (a,b)=>{a - b}
+    getOperator(opName){
+        if (opName == '*') return ((a,b)=>a * b);
+        if (opName == '/') return ((a,b)=>a / b);
+        if (opName == '%') return ((a,b)=>a % b);
+        if (opName == '+') return ((a,b)=>a + b);
+        if (opName == '-') return ((a,b)=>a - b);
     }
 }
 
@@ -191,9 +191,9 @@ class BoolOperator extends BoolExpr {
         return results.reduce(this.op, first)
     }
 
-    static getOperator(cmpName){
-        if (cmpName == "and") return ((x,y) => x && y);
-        if (cmpName == "or") return ((x,y) => x || y);
+    static getOperator(opName){
+        if (opName == "and") return ((x,y) => x && y);
+        if (opName == "or") return ((x,y) => x || y);
     }
 }
 
@@ -248,7 +248,7 @@ class ConditionalRule extends Rule {
 argsMap = {
     "GridSelector" : [false],
     "ConstantSelector" : [false],
-    "OperationSelector" : [false, true],
+    "OperatorSelector" : [false, true],
     "Comparator" : [false, true],
     "BoolOperator" : [false, true],
     "ConstantRule" : [false],
@@ -258,7 +258,7 @@ argsMap = {
 classMap = {
     "GridSelector" : GridSelector,
     "ConstantSelector" : ConstantSelector,
-    "OperationSelector" : OperationSelector,
+    "OperatorSelector" : OperatorSelector,
     "Comparator" : Comparator,
     "BoolOperator" : BoolOperator,
     "ConstantRule" : ConstantRule,
