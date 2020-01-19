@@ -21,6 +21,13 @@
         </canvas>
         <div class="w3-container w3-display-middle dark-grey-background">
             <h3 class="w3-center">Přihlášení</h3>
+            {% if form.errors %}
+                <div>
+                    <p class="w3-margin" style="max-width: 330px;">Zadané uživatelské jméno a heslo se neshodují.<br>
+                        Pokud by vaše potíže přetrvávaly, obraťte se <b>zdvořile</b> na organizátory.
+                    </p>
+                </div>
+            {% endif %}
             <form method="post" class="w3-center" >
                 {% csrf_token %}
                 <input class="w3-input w3-border" type="login" name="username" placeholder="Uživatelské jméno" autofocus required id="id_username">
