@@ -190,4 +190,12 @@ class World {
         this.automata.fill(this.pickedColor);
         this.drawTable();
     }
+
+    onLoadFile(input_text, info_elem) {
+        if (/*wrong input format*/ false) {
+            info_elem.innerHTML = "<b>Chyba při načítání. (Špatný formát)</b><br><br>Pokud byste měli pocit, že váš soubor má správný formát, kontaktujte organizátory.";
+        }
+        info_elem.innerHTML = "Loaded:<br>";
+        info_elem.innerHTML += input_text;
+    }
 }
