@@ -79,7 +79,7 @@
                             <input type="file" id="upload-file"><br>
                         </div>
                         <div class="w3-center">
-                            <button class="button w3-padding-large w3-margin-left w3-margin-right" onclick="parseUploadedFile('upload-file', 'loaded-info', world.onLoadFile)">Nahrát</button>
+                            <button class="button w3-padding-large w3-margin-left w3-margin-right" onclick="parseUploadedFile('upload-file', 'loaded-info', world.onLoadFile.bind(world))">Nahrát</button>
                             <button class="button w3-padding-large w3-margin-left w3-margin-right" onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('loaded-info').innerHTML = '';">Zrušit</button>
                         </div>
                         <div class="w3-content">
