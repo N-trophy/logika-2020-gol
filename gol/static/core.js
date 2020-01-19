@@ -1,9 +1,9 @@
 function toggleNav() {
-    var x = document.getElementById("navSmall");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
+    let nav_small = document.getElementById("navSmall");
+    if (nav_small.classList.contains("w3-show")) {
+        nav_small.classList.remove("w3-show");
     } else {
-        x.className = x.className.replace(" w3-show", "");
+        nav_small.classList.add("w3-show");
     }
 }
 

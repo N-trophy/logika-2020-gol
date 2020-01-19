@@ -158,10 +158,11 @@ class World {
                 const rules = Rule.deserialize(JSON.parse(data));
                 this.automata.setRules(rules);
                 $('#console-info').text('OK');
-                $('#console-info').removeAttr('style');
+                $('#console-info').removeClass('warning');
             }),
             error: ((xhr)=>{
                 $('#console-info').text(xhr.responseText);
+                $('#console-info').addClass('warning');
             })
         });
 

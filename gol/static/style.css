@@ -47,7 +47,7 @@ input[type="text"], input[type="password"], textarea, select, button {
 
 #console-info {
     overflow: hidden;
-    background-color: #555;
+    background-color: #333;
 }
 
 .CodeMirror, .CodeMirror-cursor, .CodeMirror-cursor, .CodeMirror-gutters {
@@ -67,6 +67,10 @@ input[type="text"], input[type="password"], textarea, select, button {
 
 .v-space {
     height: 30px;
+}
+
+.warning {
+    color: #f42420;
 }
 
 .black-background {

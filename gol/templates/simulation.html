@@ -158,7 +158,7 @@
                             <button class="button w3-padding-large w3-margin-left w3-margin-right" onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('loaded-info').innerHTML = '';">Zrušit</button>
                         </div>
                         <div class="w3-content">
-                            <p id="loaded-info" class="w3-padding" style="margin:8px 16px 0px 16px;"></p>
+                            <p id="loaded-info" class="w3-padding warning" style="margin:8px 16px 0px 16px;"></p>
                         </div>
                     </div>
                 </div>
@@ -174,10 +174,8 @@
         });
 
         editor.on('change', (a,b)=>{
-            $('#console-info').text('Kód změněn.')
-            $('#console-info').css({
-                color: "red",
-            })
+            $('#console-info').text('Kód změněn.');
+            $('#console-info').addClass('warning');
         })
     </script>
 

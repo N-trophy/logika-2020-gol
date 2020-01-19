@@ -128,10 +128,8 @@
         });
 
         editor.on('change', (a,b)=>{
-            $('#console-info').text('Kód změněn.')
-            $('#console-info').css({
-                color: "red",
-            })
+            $('#console-info').text('Kód změněn.');
+            $('#console-info').addClass('warning');
         })
     </script>
     <!-- Footer -->
