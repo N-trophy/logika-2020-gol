@@ -206,7 +206,15 @@ class Rule {
         const klass = classMap[className]
 
         object.args = object.args.map((arg, i)=>{
-            if ((i>=argsMap[className].length && argsMap[className][argsMap[className].length-1]) || argsMap[className][i]) {
+            if (!argsMap[className])
+            {
+                console.log('Martine, oprav to!');
+                return arg;
+            }
+            let arg_length = argsMap[className].length;
+            if (i>=arg_length && argsMap[className][arg_length-1]) {
+                return Rule.deserialize(arg);
+            } else if (i<arg_length && argsMap[className][i]) {
                 return Rule.deserialize(arg);
             } else {
                 return arg;
