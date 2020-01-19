@@ -1,6 +1,7 @@
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="static/core.js"></script>
         <script src="/static/automata.js"></script>
         <script src="/static/world.js"></script>
         <script src="/static/test.js"></script>
@@ -9,6 +10,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/python/python.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/keymap/sublime.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="/static/style.css">
 
         <script>
@@ -18,8 +20,45 @@
                 world = new World(25, 25, "automata", new ConstantRule('k'));
             });
         </script>
+        <title>{{ task.name }}</title>
+        <meta charset="UTF-8">
+        <style>
+            body {
+                margin-top: 50px;
+            }
+        </style>
     </head>
     <body>
+        <!-- Navbar -->
+        <div class="w3-top">
+            <div class="w3-bar black-background w3-card w3-left-align w3-large">
+                <a class="w3-bar-item button w3-hide-large w3-right w3-padding-large w3-large" onclick="toggleNav()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a href="/#" class="w3-bar-item button w3-padding-large w3-padding-large"><i class="fa fa-home"></i></a>
+                <a href="/klikatko" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large">Klikátko</a>
+                <a href="/#rules" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large">Pravidla</a>
+                <a href="/#tasks" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large">Přehled úloh</a>
+                {% if user.is_authenticated %}
+                    <a href="/logout" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large w3-right">Odhlásit</a>
+                {% else %}
+                    <a href="/login" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large w3-right">Přihlásit se</a>
+                {% endif %}
+            <div class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-right dark-grey-background">{{ name }}</div>
+            </div>
+
+            <!-- Navbar on small screens -->
+            <div id="navDemo" class="w3-bar-block black-background w3-hide w3-hide-large w3-large">
+                <div class="w3-bar-item w3-padding-large dark-grey-background">{{ name }}</div>
+                <a href="/klikatko" class="w3-bar-item button w3-padding-large">Klikátko</a>
+                <a href="/#rules" class="w3-bar-item button w3-padding-large">Pravidla</a>
+                <a href="/#tasks" class="w3-bar-item button w3-padding-large">Přehled úloh</a>
+                {% if user.is_authenticated %}
+                    <a href="/logout" class="w3-bar-item button w3-padding-large w3-right">Odhlásit</a>
+                {% else %}
+                    <a href="/login" class="w3-bar-item button w3-padding-large w3-right">Přihlásit se</a>
+                {% endif %}
+            </div>
+        </div>
+
         <header class = "w3-container w3-center">
             <h2>{{ task.name }}</h2>
             <p>
@@ -126,5 +165,9 @@
             })
         })
     </script>
+    <!-- Footer -->
+    <footer class="w3-container black-background w3-center w3-opacity">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </footer>
     </body>
 </html>

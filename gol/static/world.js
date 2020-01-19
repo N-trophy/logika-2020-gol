@@ -88,6 +88,7 @@ class World {
                 this.levelBackup[x][y] = table[x][y];
             }
         }
+        document.getElementById('load-last').disabled = false;
     }
 
     load() {

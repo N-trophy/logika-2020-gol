@@ -3,7 +3,9 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="static/style.css">
+        <script src="static/core.js"></script>
         <script src="static/matrix.js"></script>
         <script>
             CSRF_TOKEN = "{{ csrf_token }}"
@@ -17,16 +19,18 @@
     <body>
         <canvas id="matrix-chars">
         </canvas>
-        <div class="w3-content w3-container w3-display-middle">
-            <h3 class="w3-center black-background">Přihášení</h3>
+        <div class="w3-content w3-container w3-display-middle dark-grey-background">
+            <h3 class="w3-center">Přihášení</h3>
             <form method="post" class="w3-center" >
                 {% csrf_token %}
                 <input class="w3-input w3-border" type="login" name="username" placeholder="Uživatelské jméno" autofocus required id="id_username">
                 <input class="w3-input w3-border" type="password" name="password" placeholder="Heslo" required id="id_password">
-                <button class="w3-button w3-black w3-center w3-margin" type="submit">
-                PŘIHLÁSIT SE
-                </button>
+                <button class="button w3-center w3-margin" type="submit">PŘIHLÁSIT SE</button>
             </form>
         </div>
+        <!-- Footer -->
+        <footer class="w3-container black-background w3-center w3-opacity">
+            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+        </footer>
     </body>
 </html>

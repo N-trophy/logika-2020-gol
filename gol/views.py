@@ -8,12 +8,16 @@ from gol.models import Task, Post, TaskCategory
 
 @login_required(login_url='/admin')
 def simulation(request):
-    return render(request, "simulation.html")
+    context = {
+        'name': request.user.get_full_name() if request.user.is_authenticated else 'Anonymní Keporkak',
+    }
+    return render(request, "simulation.html", context)
 
 
 @login_required(login_url='/login')
 def index(request, *args, **kwargs):
     context = {
+        'name': request.user.get_full_name() if request.user.is_authenticated else 'Anonymní Keporkak',
         'categories': TaskCategory.objects.order_by('order').all(),
         'tasks': Task.objects.order_by('id').all(),
         'posts': (Post.objects.filter(published__lt=timezone.now()).
@@ -30,6 +34,7 @@ def task(request, *args, **kwargs):
         return HttpResponseNotFound('Task not found')
 
     context = {
+        'name': request.user.get_full_name() if request.user.is_authenticated else 'Anonymní Keporkak',
         'task': task,
     }
     return render(request, "task.html", context)
