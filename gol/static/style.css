@@ -9,16 +9,13 @@ h5, h6 {
     font-weight: 600;
 }
 
-p {
-    text-align: justify;
-}
-
 body {
     margin: 0;
     padding: 0;
     color: rgb(42, 255, 42);
     background-color: rgb(16, 17, 16);
     font-family: 'Courier New', Courier, monospace;
+    text-align: justify;
 }
 
 footer {
@@ -78,7 +75,15 @@ input[type="text"], input[type="password"], textarea, select, button {
 }
 
 .dark-grey-background {
-    background-color:rgb(16, 17, 16)!important;
+    background-color:rgb(16, 16, 16)!important;
+}
+
+.padding-8 {
+    padding: 8px!important;
+}
+
+.margin-8 {
+    margin: 8px!important;
 }
 
 .button {
