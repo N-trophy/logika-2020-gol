@@ -6,7 +6,7 @@ from django.utils import timezone
 from gol.models import Task, Post, TaskCategory
 
 
-@login_required(login_url='/admin')
+@login_required(login_url='/login')
 def simulation(request):
     context = {
         'name': request.user.get_full_name() if request.user.is_authenticated else 'Anonymní Keporkak',
