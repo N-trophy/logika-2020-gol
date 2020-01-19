@@ -107,12 +107,15 @@ class World {
     }
 
     switchToPlane() {
+        this.stop();
         this.automata.isTorus = false;
+
         $('#torus-btn').removeClass('selected');
         $('#plane-btn').addClass('selected');
     }
 
     switchToTorus() {
+        this.stop();
         this.automata.isTorus = true;
 
         $('#plane-btn').removeClass('selected');
