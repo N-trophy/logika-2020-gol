@@ -28,7 +28,7 @@ class World {
         this.height = height;
 
         this.automata = new Automata(width, height, rules);
-        this.automata.fill
+        this.automata.fill;
 
         this.clear();
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -37,7 +37,7 @@ class World {
         this.levelBackup = null;
         this.levelHistory = [];
     }
-    
+
     // Time controlling methods ------------------------------------------------------
     nextTick(){
         const table = this.automata.getCurrentTable();
@@ -127,12 +127,12 @@ class World {
         $('.color-btn').removeAttr('style')
         $('.color-btn.'+c).css({
             'background-color' : this.pallet[c],
-            'color' : c=='k' ? 'white' : 'black', 
+            'color' : c=='k' ? 'white' : 'black',
         });
     }
 
 
-    // Drawing methods ----------------------------------------------------------------    
+    // Drawing methods ----------------------------------------------------------------
     drawSquare(x, y, color){
         const px = x * this.canvas.width / this.width;
         const py = y * this.canvas.height / this.height;
@@ -142,7 +142,7 @@ class World {
         this.ctx.clearRect(px, py, dx-3, dy-3);
         this.ctx.fillRect(px, py, dx-3, dy-3);
     }
-    
+
     drawTable(){
         const table = this.automata.getCurrentTable()
 
@@ -167,7 +167,7 @@ class World {
             $('#console-info').addClass('warning');
             return;
         }
-        
+
         $.ajax({
             type: 'POST',
             url: '/rules/parse?colors=rgbk',
@@ -218,14 +218,61 @@ class World {
         this.drawTable();
     }
 
+    isColor(char) {
+        return this.pallet.hasOwnProperty(char);
+    }
+
+    readMapFromString(input) {
+    }
+
     onLoadFile(input_text, info_elem) {
-        if (/*wrong input format*/ false) {
-            info_elem.innerHTML = "<b>Chyba při načítání. (Špatný formát)</b><br><br>Pokud byste měli pocit, že váš soubor má správný formát, kontaktujte organizátory.";
+        let readLine = line => line.split("").filter(ch => ch.match(/\S/));
+        let lines = input_text.split('\n').map(readLine).filter(arr => arr.length > 0);
+
+        for (let x = 0; x < lines.length; x++) {
+            for (let y = 0; y < lines[x].length; y++) {
+                if (!this.isColor(lines[x][y])) {
+                    info_elem.innerHTML = "Unexpected symbol '" + lines[x][y] + "' in line " + (x + 1) + ", pos " + (y + 1);
+                    info_elem.classList.add("warning");
+                    return;
+                }
+            }
+        }
+
+        if (lines.length != this.height)
+        {
+            info_elem.innerHTML = "Wrong number of lines (expected " + this.height + ", but got " + lines.length + ")";
+            info_elem.classList.add("warning");
+            return;
+        }
+
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].length != this.width) {
+                info_elem.innerHTML = "Wrong number of letters in line " + (i + 1) + " (expected " + this.width + ", but got " + lines[i].length + ")";
+                info_elem.classList.add("warning");
+                return;
+            }
         }
 
         this.stop();
+        this.automata.setTableTransposed(lines);
+        this.drawTable();
 
-        info_elem.innerHTML = "Loaded:<br>";
-        info_elem.innerHTML += input_text;
+        info_elem.classList.remove("warning");
+        info_elem.innerHTML = "Load successful";
+    }
+
+    downloadMap() {
+        let mapStr = this.automata.getString();
+
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(mapStr));
+        element.setAttribute('download', "map.txt");
+
+        element.style.display = 'none';
+
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
     }
 }

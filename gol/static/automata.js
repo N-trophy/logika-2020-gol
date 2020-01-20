@@ -31,7 +31,7 @@ class Automata {
     fill(char){
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
-                this.tables[0][x][y] = this.tables[1][x][y] = char;
+                this.setCell(char, x, y);
             }
         }
     }
@@ -44,14 +44,19 @@ class Automata {
         return this.tables[this.tick % 2][x][y];
     }
 
-    writeOut(){
+    getString() {
+        let result = "";
         for (let y = 0; y < this.height; y++) {
-            let line = "";
             for (let x = 0; x < this.width; x++) {
-                line += this.tables[this.tick % 2][x][y];
+                result += this.getCell(x, y);
             }
-            console.log(line);
+            result += '\n';
         }
+        return result;
+    }
+
+    writeOut(){
+        console.log(this.getString());
     }
 
     getCurrentTable(){
@@ -62,6 +67,14 @@ class Automata {
         for (let y = 0; y < this.height; y++) {
             for (let x = 0; x < this.width; x++) {
                 this.tables[this.tick % 2][x][y] = table[x][y];
+            }
+        }
+    }
+
+    setTableTransposed(table){
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                this.tables[this.tick % 2][x][y] = table[y][x];
             }
         }
     }
