@@ -232,7 +232,8 @@ class World {
         for (let x = 0; x < lines.length; x++) {
             for (let y = 0; y < lines[x].length; y++) {
                 if (!this.isColor(lines[x][y])) {
-                    info_elem.innerHTML = "Unexpected symbol '" + lines[x][y] + "' in line " + (x + 1) + ", pos " + (y + 1);
+                    info_elem.innerHTML = "Unexpected symbol '" + lines[x][y] + "' in line " + (x + 1) + ", pos " + (y + 1) + ".";
+                    info_elem.innerHTML += "This is NOT counting empty lines and empty characters.";
                     info_elem.classList.add("warning");
                     return;
                 }
@@ -241,14 +242,15 @@ class World {
 
         if (lines.length != this.height)
         {
-            info_elem.innerHTML = "Wrong number of lines (expected " + this.height + ", but got " + lines.length + ")";
+            info_elem.innerHTML = "Wrong number of lines (expected " + this.height + ", but got " + lines.length + " non-empty lines)";
             info_elem.classList.add("warning");
             return;
         }
 
         for (let i = 0; i < lines.length; i++) {
             if (lines[i].length != this.width) {
-                info_elem.innerHTML = "Wrong number of letters in line " + (i + 1) + " (expected " + this.width + ", but got " + lines[i].length + ")";
+                info_elem.innerHTML = "Wrong number of letters in line " + (i + 1) + " (expected " + this.width + ", but got " + lines[i].length + ").";
+                info_elem.innerHTML += "This is NOT counting empty lines and empty characters.";
                 info_elem.classList.add("warning");
                 return;
             }
