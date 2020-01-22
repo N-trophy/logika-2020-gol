@@ -8,12 +8,15 @@ class TaskCategory(models.Model):
 
 
 class Task(models.Model):
+    GRID_TYPE = [('PLANE', 'plane'), ('TORUS', 'torus')]
+
     id = models.AutoField(primary_key=True)
     name = models.CharField(default='', max_length=128)
     category = models.ForeignKey(TaskCategory, on_delete=models.PROTECT)
     max_points = models.PositiveIntegerField(default=1)
     intro_text = models.TextField(default='')
 
+    grid_type = models.CharField(max_length=16, choices=GRID_TYPE, default='1')
     klikatko = models.BooleanField(default=True)
     klikatko_width = models.IntegerField(default=25)
     klikatko_height = models.IntegerField(default=25)
