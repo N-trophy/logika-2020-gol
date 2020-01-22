@@ -34,6 +34,8 @@ def _test_evaluator():
     assert Selector('---------')(GRID, (3, 1), config) == 0
     assert Selector('----b----')(GRID, (1, 4), config) == 1
     assert Selector('---------')(GRID, (0, 1), config) == 0
+
+    assert Selector('----b----')(GRID, (1, 4), {}) == 0
     # TODO: add more tests
 
 
