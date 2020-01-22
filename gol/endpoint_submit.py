@@ -11,8 +11,14 @@ from gol.common import Reporter
 import gol.evaluators as evaluators
 
 
-def no_evaluations(user: User, task: Task):
+def no_submissions(user: User, task: Task):
     return Submission.objects.filter(user=user, task=task).count()
+
+
+def submissions_remaining(user: User, task: Task):
+    if task.max_submissions == 0:
+        return -1
+    return task.max_submissions - no_submissions(user, task)
 
 
 @require_http_methods(['POST'])
@@ -30,8 +36,8 @@ def submit(request, *args, **kwargs):
     if not hasattr(evaluators, task.eval_function):
         return HttpResponseNotFound('Evaluator not found!')
 
-    done_evaluations = no_evaluations(request.user, task)
-    if task.max_evaluations > 0 and done_evaluations >= task.max_evaluations:
+    done_evaluations = no_submissions(request.user, task)
+    if task.max_submissions > 0 and done_evaluations >= task.max_submissions:
         return HttpResponseForbidden('Reached limit of submissions!')
 
     submission = Submission(
@@ -70,4 +76,5 @@ def submit(request, *args, **kwargs):
         'ok': ok,
         'points': points,
         'report': user_reporter.text(),
+        'submissions_remaining': submissions_remaining(request.user, task),
     })
