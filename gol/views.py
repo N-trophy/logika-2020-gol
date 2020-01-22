@@ -35,6 +35,9 @@ def task(request, *args, **kwargs):
     except Task.DoesNotExist:
         return HttpResponseNotFound('Task not found')
 
+    if not task.rules_public:
+        task.rules = ''  # prevent security vulnerabilities in template
+
     context = {
         'name': request.user.get_full_name() \
                 if request.user.is_authenticated else 'Anonymní Keporkak',
