@@ -55,7 +55,7 @@ def parse_rules(request, *args, **kwargs):
         nicer_msg = nicer_parse_error_message(str(e))
         parse_obj.report = nicer_msg + '\n\n' + str(e)
         return HttpResponseBadRequest(nicer_msg)
-    except Exception as e:
+    except Exception:
         exception_str = traceback.format_exc()
         parse_obj.state = 'exception'
         parse_obj.report = exception_str
