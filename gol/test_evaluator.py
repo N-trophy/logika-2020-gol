@@ -14,6 +14,10 @@ GRID = [
     'aaa',
 ]
 
+config = {
+    'torus': False,
+}
+
 
 def _test_evaluator():
     assert Selector('aaaaaaaaa')(GRID, (1, 1), {}) == 3
