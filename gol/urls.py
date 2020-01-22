@@ -18,7 +18,8 @@ from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
 from django.urls import path
 
-import gol.rules_parser_endpoint as rules_parser
+from gol.endpoint_parse import parse_rules
+from gol.endpoint_submit import submit
 import gol.views as views
 
 urlpatterns = [
@@ -27,7 +28,8 @@ urlpatterns = [
     path('login', auth_views.LoginView.as_view(), name='login'),
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
     path('accounts/profile/', lambda request: redirect('/', permanent=False)),
-    path('rules/parse', rules_parser.parse_rules),
+    path('rules/parse', parse_rules),
     path('klikatko', views.simulation),
     path('task/<int:id>', views.task),
+    path('task/<int:id>/submit', submit),
 ]

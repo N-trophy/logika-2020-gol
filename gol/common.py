@@ -23,3 +23,14 @@ def points_add(a: Point2D, b: Point2D) -> Point2D:
 
 def point_in_grid(p: Point2D, grid: Grid) -> bool:
     return p[0] >= 0 and p[1] >= 0 and p[0] < len(grid[0]) and p[1] < len(grid)
+
+
+class Reporter:
+    def __init__(self):
+        self.lines = []
+
+    def __call__(self, text: str) -> None:
+        self.lines.append(text)
+
+    def text(self) -> str:
+        return '\n'.join(self.lines)
