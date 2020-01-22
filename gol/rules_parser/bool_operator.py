@@ -39,12 +39,12 @@ class BoolOperator:
                  global_config: Dict[str, Any]) -> bool:
         if self.operator == operator.and_:
             for operand in self.operands:
-                if not self.operands[0](grid, pos, global_config):
+                if not operand(grid, pos, global_config):
                     return False
             return True
         elif self.operator == operator.or_:
             for operand in self.operands:
-                if self.operands[0](grid, pos, global_config):
+                if operand(grid, pos, global_config):
                     return True
             return False
 
