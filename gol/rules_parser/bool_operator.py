@@ -36,7 +36,7 @@ class BoolOperator:
         }
 
     def __call__(self, grid: Grid, pos: Point2D,
-                 global_config: Dict[str, Any]):
+                 global_config: Dict[str, Any]) -> bool:
         if self.operator == operator.and_:
             for operand in self.operands:
                 if not self.operands[0](grid, pos, global_config):

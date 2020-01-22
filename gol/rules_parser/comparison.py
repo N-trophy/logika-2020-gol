@@ -54,7 +54,7 @@ class Comparison:
         }
 
     def __call__(self, grid: Grid, pos: Point2D,
-                 global_config: Dict[str, Any]):
+                 global_config: Dict[str, Any]) -> bool:
         left = _eval(self.left, grid, pos, global_config)
         right = _eval(self.right, grid, pos, global_config)
         return self.operator(left, right)

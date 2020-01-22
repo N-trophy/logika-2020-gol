@@ -7,7 +7,7 @@ from gol.rules_parser.selector import Selector
 
 
 def _rule_eval_rec(rule, grid: Grid, pos: Point2D,
-                   global_config: Dict[str, Any]) -> bool:
+                   global_config: Dict[str, Any]) -> Color:
     if isinstance(rule, str):
         return rule
     if rule.bool_expr(grid, pos, global_config):
@@ -55,7 +55,7 @@ class Rule:
         }
 
     def __call__(self, grid: Grid, pos: Point2D,
-                 global_config: Dict[str, Any]):
+                 global_config: Dict[str, Any]) -> Color:
         return _rule_eval_rec(self, grid, pos, global_config)
 
 

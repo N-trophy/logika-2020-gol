@@ -48,7 +48,7 @@ class SelectorOperator:
         }
 
     def __call__(self, grid: Grid, pos: Point2D,
-                 global_config: Dict[str, Any]):
+                 global_config: Dict[str, Any]) -> int:
         result = _eval(self.operands[0], grid, pos, global_config)
         for operand in self.operands[1:]:
             result = self.operator(

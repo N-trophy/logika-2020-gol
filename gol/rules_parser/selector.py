@@ -20,7 +20,7 @@ class Selector:
         }
 
     def __call__(self, grid: Grid, pos: Point2D,
-                 global_config: Dict[str, Any]):
+                 global_config: Dict[str, Any]) -> int:
         assert len(self.text) == 9
 
         count = 0
