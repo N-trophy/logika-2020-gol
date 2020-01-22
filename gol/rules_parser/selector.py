@@ -30,7 +30,7 @@ class Selector:
                 y = y % len(grid)
                 x = x % len(grid[0])
             if point_in_grid((x, y), grid):
-                if colour == '-' or grid[y][x] == colour:
+                if colour != '-' and grid[y][x] == colour:
                     count += 1
         return count
 
