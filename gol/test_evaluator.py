@@ -46,29 +46,92 @@ def _test_selector_evaluator():
 
     assert SelectorOperator('+', [1, 1, 1])(GRID, (0, 0), {}) == 3
     assert SelectorOperator('-', [5, 2, 2])(GRID, (0, 0), {}) == 1
+    assert SelectorOperator('-', [5, 2, 2])(GRID, (0, 0), config) == 1
 
-    assert SelectorOperator('*', [Selector('aaaaaaaaa'), 2])\
-        (GRID, (1, 1), {}) == 6
+    assert SelectorOperator('*', [Selector('aaaaaaaaa'), 2]) \
+               (GRID, (1, 1), {}) == 6
+    assert SelectorOperator('*', [Selector('aaaaaaaaa'), 3]) \
+               (GRID, (1, 1), {}) == 9
+    assert SelectorOperator('*', [Selector('aaaaaaaaa'), 0]) \
+               (GRID, (1, 1), {}) == 0
+    assert SelectorOperator('+', [Selector('aaaaaaaaa'), 2]) \
+               (GRID, (1, 1), {}) == 5
+    assert SelectorOperator('+', [Selector('aaaaaaaaa'),
+                                  Selector('aaaaaaaaa')]) \
+               (GRID, (1, 1), {}) == 6
+    assert SelectorOperator('*', [Selector('aaaaaaaaa'),
+                                  Selector('aaaaaaaaa')]) \
+               (GRID, (1, 1), {}) == 9
+    assert SelectorOperator('%', [Selector('aaa---aaa'),
+                                  Selector('---aaaa-a')]) \
+               (GRID, (1, 1), {}) == 1
+    assert SelectorOperator('%', [Selector('----b---a'),
+                                  Selector('aaaaaaaaa')]) \
+               (GRID, (1, 1), {}) == 2
+    assert SelectorOperator('/', [Selector('ac--bb--a'),
+                                  Selector('------aaa')]) \
+               (GRID, (1, 1), {}) == 1
     # TODO: add more tests
 
 
 def _test_comparison_evaluator():
     assert Comparison(5, '<', 10)(GRID, (0, 0), {}) is True
     assert Comparison(5, '>', 10)(GRID, (0, 0), {}) is False
+    assert Comparison(5, '<=', 10)(GRID, (0, 0), {}) is True
+    assert Comparison(5, '>=', 10)(GRID, (0, 0), {}) is False
+    assert Comparison(5, '==', 10)(GRID, (0, 0), {}) is False
+    assert Comparison(5, '!=', 10)(GRID, (0, 0), {}) is True
+    assert Comparison(1, '<', 1)(GRID, (0, 0), {}) is False
+
     assert Comparison(Selector('cccaaaaaa'), '>=', 6)(GRID, (1, 1), {}) is True
     assert Comparison(Selector('cccaaaaaa'), '>=', 5)(GRID, (1, 1), {}) is True
-    assert Comparison(Selector('cccaaaaaa'), '>=', 7)(GRID, (1, 1), {}) is False
+    assert Comparison(Selector('cccaaaaaa'), '>=', 7)(GRID, (1, 1),
+                                                      {}) is False
     assert Comparison(Selector('cccaaaaaa'), '>', 6)(GRID, (1, 1), {}) is False
 
-    # TODO: add all operators & some SelectorOperators
+    assert Comparison(Selector('cccaaaaaa'), '>=',
+                      Selector('cccaaaaaa'))(GRID, (1, 1), {}) is True
+    assert Comparison(Selector('cccaaaaaa'), '==',
+                      Selector('cccaaaaaa'))(GRID, (1, 1), {}) is True
+    assert Comparison(Selector('cccaaaaaa'), '!=',
+                      Selector('cccaaaaaa'))(GRID, (1, 1), {}) is False
+    assert Comparison(Selector('cccaaaaaa'), '==',
+                      Selector('cccbbbbbb'))(GRID, (1, 1), {}) is True
+    assert Comparison(Selector('ccc---aaa'), '==',
+                      Selector('cccbbb---'))(GRID, (1, 1), {}) is True
+    assert Comparison(Selector('ccc---aaa'), '<',
+                      Selector('cccbbb---'))(GRID, (1, 1), {}) is False
+    # TODO: some SelectorOperators
 
 
 def _test_bool_op_evaluator():
-    assert BoolOperator('and', [Comparison(5, '<', 10), Comparison(0, '<', 1)]) is True
-    assert BoolOperator('and', [Comparison(5, '<', 10), Comparison(1, '<', 1)]) is False
-    assert BoolOperator('or', [Comparison(5, '<', 10), Comparison(0, '<', 1)]) is True
-    assert BoolOperator('or', [Comparison(5, '<', 10), Comparison(1, '<', 1)]) is True
-    assert BoolOperator('or', [Comparison(5, '>', 10), Comparison(1, '<', 1)]) is True
+    assert BoolOperator('and', [Comparison(5, '<', 10),
+                                Comparison(0, '<', 1)]) \
+               (GRID, (1, 1), {}) is True
+    assert BoolOperator('and', [Comparison(5, '<', 10),
+                                Comparison(1, '<', 1)]) \
+               (GRID, (1, 1), {}) is False
+    assert BoolOperator('or', [Comparison(5, '<', 10),
+                               Comparison(0, '<', 1)]) \
+               (GRID, (1, 1), {}) is True
+    assert BoolOperator('or', [Comparison(5, '<', 10),
+                               Comparison(1, '<', 1)]) \
+               (GRID, (1, 1), {}) is True
+    assert BoolOperator('or', [Comparison(5, '>', 10),
+                               Comparison(1, '<', 1)]) \
+               (GRID, (1, 1), {}) is False
+    """assert BoolOperator('or', [Comparison(Selector('ccc---aaa'), '<',
+                                          Selector('cccbbb---'))
+                               (GRID, (1, 1), {}),
+                               Comparison(1, '<', 1)]) \
+               (GRID, (1, 1), {}) is True"""
+    """assert BoolOperator('or', [Comparison(Selector('ccc---aaa'), '<',
+                                          Selector('cccbbb---'))
+                               (GRID, (1, 1), {}),
+                               Comparison(Selector('cccaaaaaa'), '!=',
+                                          Selector('cccaaaaaa'))
+                               (GRID, (1, 1), {})]) \
+               (GRID, (1, 1), {}) is False"""
 
 
 def _test_rule_evaluator():
@@ -85,4 +148,5 @@ if __name__ == '__main__':
     _test_evaluator()
     _test_selector_evaluator()
     _test_comparison_evaluator()
+    _test_bool_op_evaluator()
     _test_rule_evaluator()
