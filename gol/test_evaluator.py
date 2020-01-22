@@ -108,42 +108,58 @@ def _test_comparison_evaluator():
 
 def _test_bool_op_evaluator():
     assert BoolOperator('and', [Comparison(5, '<', 10),
-                                Comparison(0, '<', 1)]) \
-               (GRID, (1, 1), {}) is True
+                                Comparison(0, '<', 1)]
+                        )(GRID, (1, 1), {}) is True
     assert BoolOperator('and', [Comparison(5, '<', 10),
-                                Comparison(1, '<', 1)]) \
-               (GRID, (1, 1), {}) is False
+                                Comparison(1, '<', 1)]
+                        )(GRID, (1, 1), {}) is False
     assert BoolOperator('or', [Comparison(5, '<', 10),
-                               Comparison(0, '<', 1)]) \
-               (GRID, (1, 1), {}) is True
+                               Comparison(0, '<', 1)]
+                        )(GRID, (1, 1), {}) is True
     assert BoolOperator('or', [Comparison(5, '<', 10),
-                               Comparison(1, '<', 1)]) \
-               (GRID, (1, 1), {}) is True
+                               Comparison(1, '<', 1)]
+                        )(GRID, (1, 1), {}) is True
     assert BoolOperator('or', [Comparison(5, '>', 10),
-                               Comparison(1, '<', 1)]) \
-               (GRID, (1, 1), {}) is False
-    """assert BoolOperator('or', [Comparison(Selector('ccc---aaa'), '<',
-                                          Selector('cccbbb---'))
-                               (GRID, (1, 1), {}),
-                               Comparison(1, '<', 1)]) \
-               (GRID, (1, 1), {}) is True"""
-    """assert BoolOperator('or', [Comparison(Selector('ccc---aaa'), '<',
-                                          Selector('cccbbb---'))
-                               (GRID, (1, 1), {}),
+                               Comparison(1, '<', 1)]
+                        )(GRID, (1, 1), {}) is False
+    assert BoolOperator('or', [Comparison(Selector('ccc---aaa'), '<',
+                                          Selector('cccbbb---')),
+                               Comparison(1, '<', 1)]
+                        )(GRID, (1, 1), {}) is False
+    assert BoolOperator('or', [Comparison(Selector('ccc---aaa'), '<',
+                                          Selector('cccbbb---')),
                                Comparison(Selector('cccaaaaaa'), '!=',
-                                          Selector('cccaaaaaa'))
-                               (GRID, (1, 1), {})]) \
-               (GRID, (1, 1), {}) is False"""
+                                          Selector('cccaaaaaa'))]
+                        )(GRID, (1, 1), {}) is False
 
 
 def _test_rule_evaluator():
+    c1_f = Comparison(Selector('ccc---aaa'), '<', Selector('cccbbb---'))
+    c2_f = Comparison(1, '<', 1)
+    c3_f = Comparison(10, '<', 5)
+    c1_t = Comparison(1, '>', 0)
+    c2_t = Comparison(5, '<=', 10)
+    b1_f = BoolOperator('or', [c1_f, c2_f])
     assert Rule(Comparison(5, '<', 10), 'r', 'g')(GRID, (1, 1,), {}) == 'r'
     assert Rule(Comparison(5, '>', 10), 'r', 'g')(GRID, (1, 1,), {}) == 'g'
-    assert Rule(
-        Comparison(10, '<', 5),
-        'g',
-        Rule(Comparison(1, '>', 0), 'x', 'y'),
-    )(GRID, (1, 1), {}) == 'x'
+    assert Rule(c3_f, 'g', Rule(c1_t, 'x', 'y'))(GRID, (1, 1), {}) == 'x'
+    assert Rule(c3_f, 'g', Rule(c1_t, 'x', 'y'))(GRID, (1, 1), {}) == 'x'
+    assert Rule(b1_f, 'g', 'b')(GRID, (1, 1), {}) == 'b'
+    assert Rule(b1_f, 'g', Rule(c1_t, 'x', 'y'))(GRID, (1, 1), {}) == 'x'
+    assert Rule(b1_f, 'g', Rule(c1_t, Rule(c2_t, 'x', 'z'), 'y'),
+                )(GRID, (1, 1), {}) == 'x'
+    assert Rule(b1_f, 'g',
+                Rule(c1_t, Rule(c2_t, Rule(c2_f, 'v', 'x'), 'z'), 'y'),
+                )(GRID, (1, 1), {}) == 'x'
+    assert Rule(b1_f, 'g',
+                Rule(c1_t, Rule(c2_t, Rule(c2_f, 'v', 'x'), 'z'), 'y'),
+                )(GRID, (1, 1), {}) == 'x'
+    assert Rule(b1_f, 'g',
+                Rule(c1_t, Rule(c2_t, Rule(c2_f, 'v',
+                                           Rule(b1_f, 'a',
+                                                Rule(c3_f, 'b',
+                                                     'x'))), 'z'), 'y'),
+                )(GRID, (1, 1), config) == 'x'
 
 
 if __name__ == '__main__':
