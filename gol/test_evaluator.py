@@ -22,8 +22,8 @@ config = {
 def _test_evaluator():
     assert Selector('aaaaaaaaa')(GRID, (1, 1), {}) == 3
     assert Selector('aaaaaaaaa')(GRID, (0, 1), {}) == 2
-    assert Selector('*********')(GRID, (1, 1), {}) == 9
-    assert Selector('*********')(GRID, (0, 1), {}) == 6
+    assert Selector('---------')(GRID, (1, 1), {}) == 9
+    assert Selector('---------')(GRID, (0, 1), {}) == 6
     # TODO: add more tests
 
 
