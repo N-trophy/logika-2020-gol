@@ -162,9 +162,16 @@ def _test_rule_evaluator():
                 )(GRID, (1, 1), config) == 'x'
 
 
+def _test_rule_parser():
+    assert parse('g', '') == 'g'
+    assert parse('b', 'b') == 'b'
+    assert parse('b', 'abcd') == 'b'
+
+
 if __name__ == '__main__':
     _test_evaluator()
     _test_selector_evaluator()
     _test_comparison_evaluator()
     _test_bool_op_evaluator()
     _test_rule_evaluator()
+    _test_rule_parser()
