@@ -15,15 +15,25 @@ GRID = [
 ]
 
 config = {
-    'torus': False,
+    'torus': True,
 }
 
 
 def _test_evaluator():
     assert Selector('aaaaaaaaa')(GRID, (1, 1), {}) == 3
     assert Selector('aaaaaaaaa')(GRID, (0, 1), {}) == 2
-    assert Selector('---------')(GRID, (1, 1), {}) == 9
-    assert Selector('---------')(GRID, (0, 1), {}) == 6
+    assert Selector('---------')(GRID, (1, 1), {}) == 0
+    assert Selector('---------')(GRID, (0, 1), {}) == 0
+    assert Selector('--j------')(GRID, (1, 1), {}) == 0
+    assert Selector('aaacccbbb')(GRID, (1, 1), {}) == 0
+    assert Selector('----b----')(GRID, (1, 1), {}) == 1
+    assert Selector('----a----')(GRID, (1, 1), {}) == 0
+    assert Selector('ccccbcccc')(GRID, (1, 1), {}) == 4
+
+    assert Selector('aaaaaaaaa')(GRID, (4, 1), config) == 3
+    assert Selector('---------')(GRID, (3, 1), config) == 0
+    assert Selector('----b----')(GRID, (1, 4), config) == 1
+    assert Selector('---------')(GRID, (0, 1), config) == 0
     # TODO: add more tests
 
 
