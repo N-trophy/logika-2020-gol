@@ -13,7 +13,7 @@ COMPARES: Dict[str, BinaryIntOperator] = {
     '<': operator.lt,
     '>': operator.gt,
     '==': operator.eq,
-    '!=': not operator.eq,
+    '!=': lambda x, y: x != y,
 }
 
 
