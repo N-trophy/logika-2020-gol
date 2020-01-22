@@ -1,5 +1,5 @@
 from django.contrib import admin
-from gol.models import Task, Post, Parse, TaskCategory
+from gol.models import Task, Post, Parse, TaskCategory, Submission
 
 
 @admin.register(TaskCategory)
@@ -27,4 +27,12 @@ class ParseAdmin(admin.ModelAdmin):
                     'state', 'evaluation_time', 'report', 'parsed')
     list_filter = ('user', 'task', 'datetime', 'state', 'report',
                    'evaluation_time')
+    ordering = ['-datetime']
+
+
+@admin.register(Submission)
+class SubmissionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'task', 'datetime', 'ok', 'points',
+                    'user_report', 'int_report')
+    list_filter = ('user', 'task', 'ok', 'points', 'user_report', 'int_report')
     ordering = ['-datetime']
