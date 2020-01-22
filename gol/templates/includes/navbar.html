@@ -18,7 +18,7 @@
         {% else %}
             <a href="/login" class="w3-bar-item button w3-hide-small w3-hide-medium w3-padding-large w3-right">Přihlásit</a>
         {% endif %}
-    <div class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-right dark-grey-background">{{ name }}</div>
+    <div class="w3-bar-item w3-hide-small w3-hide-medium w3-padding-large w3-right dark-grey-background">{{ user.get_full_name }}</div>
     </div>
 
     <!-- Navbar on small screens -->
