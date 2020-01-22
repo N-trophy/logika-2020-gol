@@ -13,7 +13,15 @@ class Task(models.Model):
     category = models.ForeignKey(TaskCategory, on_delete=models.PROTECT)
     max_points = models.PositiveIntegerField(default=1)
     intro_text = models.TextField(default='')
-    config = models.TextField(default='{}')
+
+    klikatko = models.BooleanField(default=True)
+    klikatko_width = models.IntegerField(default=25)
+    klikatko_height = models.IntegerField(default=25)
+    allowed_colors = models.CharField(default='rgbk', max_length=64)
+    start_config = models.TextField(default='')
+    rules = models.TextField(default='')
+    rules_public = models.BooleanField(default=False)
+    eval_function = models.CharField(default='func_name', max_length=128)
 
     def __str__(self):
         return str(self.id)
