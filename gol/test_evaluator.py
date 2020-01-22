@@ -6,7 +6,7 @@ if __name__ == '__main__':
     sys.path.append('..')
 
 from gol.rules_parser import Selector, SelectorOperator, Comparison, \
-    BoolOperator, Rule
+    BoolOperator, Rule, parse
 
 GRID = [
     'ccc',
