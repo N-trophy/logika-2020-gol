@@ -1,13 +1,18 @@
 from django.http import JsonResponse, HttpResponseBadRequest, \
-        HttpResponseNotFound
+        HttpResponseNotFound, HttpResponseForbidden
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 import traceback
 import json
+from django.contrib.auth.models import User
 
 from gol.models import Submission, Task
 from gol.common import Reporter
 import gol.evaluators as evaluators
+
+
+def no_evaluations(user: User, task: Task):
+    return Submission.objects.filter(user=user, task=task).count()
 
 
 @require_http_methods(['POST'])
@@ -24,6 +29,10 @@ def submit(request, *args, **kwargs):
 
     if not hasattr(evaluators, task.eval_function):
         return HttpResponseNotFound('Evaluator not found!')
+
+    done_evaluations = no_evaluations(request.user, task)
+    if task.max_evaluations > 0 and done_evaluations >= task.max_evaluations:
+        return HttpResponseForbidden('Reached limit of submissions!')
 
     submission = Submission(
         user=request.user,
