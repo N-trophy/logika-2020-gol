@@ -37,7 +37,8 @@ def submit(request, *args, **kwargs):
         return HttpResponseNotFound('Evaluator not found!')
 
     done_evaluations = no_submissions(request.user, task)
-    if task.max_submissions > 0 and done_evaluations >= task.max_submissions:
+    if (task.max_submissions > 0 and done_evaluations >= task.max_submissions
+        and not request.user.is_superuser):
         return HttpResponseForbidden('Reached limit of submissions!')
 
     submission = Submission(
@@ -53,7 +54,7 @@ def submit(request, *args, **kwargs):
 
     try:
         ok, points = eval_function(
-            task, rules, grid, user_reporter, int_reporter
+            task, rules, grid, int_reporter, user_reporter
         )
 
         submission.ok = ok
