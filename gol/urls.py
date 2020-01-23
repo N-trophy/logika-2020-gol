@@ -18,9 +18,7 @@ from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
 from django.urls import path
 
-from gol.endpoint_parse import parse_rules
-from gol.endpoint_submit import submit
-from gol.endpoint_stepper import step
+from gol.endpoints import parse_rules, submit, step
 import gol.views as views
 
 urlpatterns = [
