@@ -38,7 +38,6 @@ class World {
         this.automata.fill;
 
         this.clear();
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawTable();
 
         this.levelBackup = null;
@@ -151,6 +150,7 @@ class World {
     }
 
     drawTable(){
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         const table = this.automata.getCurrentTable()
 
         for (let x = 0; x<this.width; x++) {
