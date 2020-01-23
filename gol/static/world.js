@@ -31,6 +31,8 @@ class World {
 
         if (mapConfig) this.onLoadFile(mapConfig, false);
 
+        this.loaded = false;
+
         this.loadSource(editor, false);
     }
 
@@ -49,22 +51,25 @@ class World {
     }
 
     // Time controlling methods ------------------------------------------------------
+    tableToString(){
+        const table = this.automata.getCurrentTable();
+        let data = ""
+        for (let j=0; j<this.height; j++){
+            for (let i=0; i<this.width; i++){
+                data += table[i][j]
+            }
+            data += '\n'
+        }
+        return data;
+    }
+
     nextTick(){
         if (this.isStepper) {
-            const table = this.automata.getCurrentTable();
-            let data = ""
-            for (let j=0; j<this.height; j++){
-                for (let i=0; i<this.width; i++){
-                    data += table[i][j]
-                }
-                data += '\n'
-            }
-
             $.ajax({
                 type: 'POST',
                 url: '/task/' + this.taskId + '/step',
                 data: JSON.stringify({
-                    grid: data,
+                    grid: this.tableToString(),
                 }),
                 contentType: "application/json",
                 dataType: "json",
@@ -203,7 +208,7 @@ class World {
         }
     }
 
-    loadSource(editor, resize=true) {
+    loadSource(editor, submit_info_elem, resize=true) {
         this.stop();
 
         $('#console-info').text('Zpracovávám...');
@@ -233,6 +238,10 @@ class World {
             success: ((data)=>{
                 const rules = Rule.deserialize(data);
                 this.automata.setRules(rules);
+                
+                $('#'+submit_info_elem).text = "Kód v textovém editoru se neshoduje s načteným kódem v simulaci. Bude odeslán kód z textového editoru.";
+                $('#'+submit_info_elem).addClass("warning");
+
                 $('#console-info').text('Kód načten.');
                 $('#console-info').removeClass('warning');
             }),
@@ -264,7 +273,6 @@ class World {
         const y = Math.floor(event.offsetY * this.height / this.canvas.scrollHeight);
         let col = this.automata.getCell(x, y);
         let col_index = (this.colors.indexOf(col) + 1) % this.colors.length;
-        console.log(this.colors);
         col = this.colors[col_index];
         this.automata.setCell(col, x, y);
         this.drawTable();
@@ -347,16 +355,31 @@ class World {
         document.body.removeChild(element);
     }
 
-    submit(info_id) {
-        let info_elem = document.getElementById(info_id);
-        if (true) {
-            if (info_elem) info_elem.innerHTML = "Odevzdávání není implementováno. Kontaktujte organizátory.";
-            if (info_elem) info_elem.classList.add("warning");
-            console.log("Odevzdávání není implementováno. Kontaktujte organizátory.");
-            return;
-        }
-        if (info_elem) info_elem.innerHTML = "Odevzdávání proběhlo v pořádku.";
-        if (info_elem) info_elem.classList.remove("warning");
-        console.log("Odevzdávání proběhlo v pořádku.");
+    submit(info_id, editor) {
+        let info_elem = $('#' + info_id);
+        
+        $.ajax({
+            type: 'POST',
+            url: '/task/' + this.taskId + '/submit',
+            data: JSON.stringify({
+                rules: editor.getValue(),
+                grid: this.tableToString(),
+            }),
+            contentType: "application/json",
+            dataType: "json",
+            headers: {
+                "X-CSRFToken": CSRF_TOKEN,
+            },
+            success: ((data)=>{
+                info_elem.text("Odevzdávání proběhlo v pořádku.");
+                info_elem.removeClass("warning");
+            }),
+            error: ((xhr)=>{
+                info_elem.text("Při odevzdání nastala chyba.");
+                info_elem.addClass("warning");
+            })
+        });
+
+        
     }
 }

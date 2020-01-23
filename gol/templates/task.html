@@ -35,12 +35,15 @@
                 <h2>{{ task.name }}</h2>
                 <p>
                     Maximální počet bodů: {{ task.max_points }}
+                    Zbývající počet odevzdání: <a id="submission_number">{{ remaining_submissions }}</a>
                 </p>
                     {{ task.intro_text |safe }}
             </div>
+            {% if task.should_submit %}
             <div class="w3-center">
                 <button class="w3-button w3-margin w3-center w3-padding-large w3-red" onclick="document.getElementById('modal-submit').style.display='block';">Odeslat řešení</button>
             </div>
+            {% endif %}
         </div>
 
         {% if task.klikatko %}
@@ -60,7 +63,9 @@
         </div>
         {% endif %}
 
-        {% include "includes/modal_submit.html" %}
+        {% if task.should_submit %}
+            {% include "includes/modal_submit.html" %}
+        {% endif %}
 
         <!-- Footer -->
         <footer class="w3-container black-background w3-center w3-opacity">

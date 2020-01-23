@@ -39,8 +39,11 @@ def task(request, *args, **kwargs):
 
     task.start_config = task.start_config.replace("\r\n", "\\n")
 
+    task.should_submit = True
+
     context = {
         'user': request.user,
         'task': task,
+        'remaining_submissions': task.max_submissions,
     }
     return render(request, "task.html", context)

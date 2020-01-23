@@ -18,6 +18,9 @@
         editor.on('change', (a,b)=>{
             $('#console-info').text('Kód změněn.');
             $('#console-info').addClass('warning');
+
+            $('#submit-info').text("Kód v textovém editoru se neshoduje s načteným kódem v simulaci. Bude odeslán kód z textového editoru.");
+            $('#submit-info').addClass("warning");
         })
     </script>
 
@@ -37,7 +40,7 @@
         </div>
 
         <!-- Load button -->
-        <div id="load-btn" class = "w3-col w3-container s4 m4 l4 w3-button w3-padding" onclick="world.loadSource(editor)">
+        <div id="load-btn" class = "w3-col w3-container s4 m4 l4 w3-button w3-padding" onclick="world.loadSource(editor, 'submit-info')">
             načíst
         </div>
     </div>
