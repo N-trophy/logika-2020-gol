@@ -21,11 +21,13 @@ class Task(models.Model):
     klikatko_width = models.IntegerField(default=25)
     klikatko_height = models.IntegerField(default=25)
     allowed_colors = models.CharField(default='rgbk', max_length=64)
-    start_config = models.TextField(default='')
-    rules = models.TextField(default='')
+    start_config = models.TextField(default='', blank=True)
+    rules = models.TextField(default='', blank=True)
     rules_public = models.BooleanField(default=False)
-    eval_function = models.CharField(default='func_name', max_length=128)
-    stepper_function = models.CharField(default='', max_length=128)
+    eval_function = models.CharField(default='func_name', max_length=128,
+                                     blank=True)
+    stepper_function = models.CharField(default='', max_length=128,
+                                        blank=True)
     max_submissions = models.PositiveIntegerField(default=0)
 
     def __str__(self):
