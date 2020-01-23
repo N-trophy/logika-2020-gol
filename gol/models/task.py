@@ -24,8 +24,7 @@ class Task(models.Model):
     start_config = models.TextField(default='', blank=True)
     rules = models.TextField(default='', blank=True)
     rules_public = models.BooleanField(default=False)
-    eval_function = models.CharField(default='func_name', max_length=128,
-                                     blank=True)
+    eval_function = models.CharField(default='', max_length=128, blank=True)
     stepper_function = models.CharField(default='', max_length=128,
                                         blank=True)
     max_submissions = models.PositiveIntegerField(default=0)
