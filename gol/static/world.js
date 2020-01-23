@@ -1,5 +1,5 @@
 class World {
-    constructor(rootId, width=25, height=25, rules='k', type='PLANE', colors='rgbk', map_config=undefined) {
+    constructor(rootId, width=25, height=25, rules='k', type='PLANE', colors='rgbk', map_config=undefined, taskId=undefined) {
         this.pallet = {
             'r': '#f00f',
             'g': '#0f0f',
@@ -7,6 +7,8 @@ class World {
             'k': '#555',
         };
         this.colors = colors;
+
+        this.taskId = taskId;
 
         this.canvas = document.getElementById(rootId);
         this.canvas.height = this.canvas.width = 500;
@@ -177,16 +179,21 @@ class World {
 
         $.ajax({
             type: 'POST',
-            url: '/rules/parse?colors='+this.colors,
-            data: src,
-            dataType: 'text',
+            url: '/rules/parse',
+            data: JSON.stringify({
+                expr: src,
+                color: this.colors,
+                task: this.taskId,
+            }),
+            contentType: "application/json",
+            dataType: "json",
             headers: {
                 "X-CSRFToken": CSRF_TOKEN,
             },
             success: ((data)=>{
-                const rules = Rule.deserialize(JSON.parse(data));
+                const rules = Rule.deserialize(data);
                 this.automata.setRules(rules);
-                $('#console-info').text('OK');
+                $('#console-info').text('Kód načten.');
                 $('#console-info').removeClass('warning');
             }),
             error: ((xhr)=>{

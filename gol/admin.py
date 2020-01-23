@@ -10,7 +10,7 @@ class TaskCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'category', 'name')
+    list_display = ('id', 'category', 'name', 'max_submissions', 'max_points', 'grid_type', 'allowed_colors', 'rules_public')
     ordering = ['id']
 
 

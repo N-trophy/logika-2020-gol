@@ -19,7 +19,7 @@
 
             {% if task.klikatko %}
                 $(()=>{
-                    world = new World("automata", {{ task.klikatko_width }}, {{ task.klikatko_height }}, undefined, "{{ task.grid_type }}", "{{ task.allowed_colors }}", "{{ task.start_config }}");
+                    world = new World("automata", {{ task.klikatko_width }}, {{ task.klikatko_height }}, undefined, "{{ task.grid_type }}", "{{ task.allowed_colors }}", "{{ task.start_config }}", {{ task.id }});
                 });
             {% endif %}
         </script>

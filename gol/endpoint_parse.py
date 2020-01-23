@@ -18,13 +18,16 @@ from gol.models import Parse, Task
 @login_required()
 def parse_rules(request, *args, **kwargs):
     data = json.loads(request.body.decode('utf-8'))
+    print(data)
     expr = data['expr']
-    task = data['task'] if 'task' in data else None
+    task_id = data['task'] if 'task' in data else None
     colors = data['colors'] if 'colors' in data else 'rgbk'
 
+    task = None
+
     try:
-        if task:
-            task = Task.objects.get(id=kwargs['task'])
+        if task_id:
+            task = Task.objects.get(id=task_id)
     except Task.DoesNotExist:
         return HttpResponseNotFound('Task not found')
 
