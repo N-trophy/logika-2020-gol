@@ -1,5 +1,5 @@
 class World {
-    constructor(rootId, width=25, height=25, rules='k', type='PLANE', colors='rgbk', map_config=undefined, taskId=undefined) {
+    constructor(rootId, width=25, height=25, rules='k', type='PLANE', colors='rgbk', mapConfig=undefined, taskId=undefined, isStepper=false) {
         this.pallet = {
             'r': '#f00f',
             'g': '#0f0f',
@@ -9,6 +9,8 @@ class World {
         this.colors = colors;
 
         this.taskId = taskId;
+
+        this.isStepper = isStepper;
 
         this.canvas = document.getElementById(rootId);
         this.canvas.height = this.canvas.width = 500;
@@ -27,7 +29,7 @@ class World {
 
         this.historyLength = 3;
 
-        if (map_config) this.onLoadFile(map_config, false);
+        if (mapConfig) this.onLoadFile(mapConfig, false);
 
         this.loadSource(editor, false);
     }
@@ -48,21 +50,59 @@ class World {
 
     // Time controlling methods ------------------------------------------------------
     nextTick(){
-        const table = this.automata.getCurrentTable();
-        const level = Array(table.length);
-        for (let x = 0; x < table.length; x++) {
-            level[x] = Array(table[x].length);
-            for (let y = 0; y < table[x].length; y++) {
-                level[x][y] = table[x][y];
+        if (this.isStepper) {
+            const table = this.automata.getCurrentTable();
+            let data = ""
+            for (let j=0; j<this.height; j++){
+                for (let i=0; i<this.width; i++){
+                    data += table[i][j]
+                }
+                data += '\n'
             }
-        }
-        this.levelHistory.push(level);
-        if (this.levelHistory.length > this.historyLength) {
-            this.levelHistory.shift()
-        }
 
-        this.automata.nextTick();
-        this.drawTable();
+            $.ajax({
+                type: 'POST',
+                url: '/task/' + this.taskId + '/step',
+                data: JSON.stringify({
+                    grid: data,
+                }),
+                contentType: "application/json",
+                dataType: "json",
+                headers: {
+                    "X-CSRFToken": CSRF_TOKEN,
+                },
+                success: ((response)=>{
+                    let grid_pure_text = response.grid.replace('\n', '');
+                    for (let j=0; j<this.height; j++){
+                        for (let i=0; i<this.width; i++){
+                            this.automata.setCell(i, j, grid_pure_text[i + this.width * j]);
+                        }
+                    }
+                    $('#console-info').text('Krok proveden.');
+                    $('#console-info').removeClass('warning');
+                }),
+                error: ((xhr)=>{
+                    $('#console-info').text(xhr.responseText);
+                    $('#console-info').addClass('warning');
+                })
+            });
+        } else {
+            const table = this.automata.getCurrentTable();
+            const level = Array(table.length);
+            for (let x = 0; x < table.length; x++) {
+                level[x] = Array(table[x].length);
+                for (let y = 0; y < table[x].length; y++) {
+                    level[x][y] = table[x][y];
+                }
+            }
+            this.levelHistory.push(level);
+            if (this.levelHistory.length > this.historyLength) {
+                this.levelHistory.shift()
+            }
+    
+            this.automata.nextTick();
+            this.drawTable();
+        }
     }
 
     oneTick(){

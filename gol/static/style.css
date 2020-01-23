@@ -51,6 +51,11 @@ input[type="text"], input[type="password"], textarea, select, button {
     max-width: 700px;
     text-align: left;
     margin: auto;
+    margin-bottom: 100px;
+}
+
+.klikatko-container {
+    margin: 50px;
 }
 
 .CodeMirror, .CodeMirror-cursor, .CodeMirror-cursor, .CodeMirror-gutters {

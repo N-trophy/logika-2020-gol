@@ -19,7 +19,7 @@
 
             {% if task.klikatko %}
                 $(()=>{
-                    world = new World("automata", {{ task.klikatko_width }}, {{ task.klikatko_height }}, undefined, "{{ task.grid_type }}", "{{ task.allowed_colors }}", "{{ task.start_config }}", {{ task.id }});
+                    world = new World("automata", {{ task.klikatko_width }}, {{ task.klikatko_height }}, undefined, "{{ task.grid_type }}", "{{ task.allowed_colors }}", "{{ task.start_config }}", {{ task.id }}, {{ task.is_stepper |yesno:"true,false"}});
                 });
             {% endif %}
         </script>
@@ -30,7 +30,7 @@
         <!-- Navbar -->
         {% include "includes/navbar.html" %}
 
-        <header class="w3-container">
+        <div class="w3-container">
             <div id="task-header">
                 <h2>{{ task.name }}</h2>
                 <p>
@@ -38,10 +38,13 @@
                 </p>
                     {{ task.intro_text |safe }}
             </div>
-        </header>
+            <div class="w3-center">
+                <button id="submit-btn" class="w3-button w3-margin w3-center w3-padding-large w3-red">Odeslat řešení</button>
+            </div>
+        </div>
 
         {% if task.klikatko %}
-        <div class = "w3-row">
+        <div class = "w3-row klikatko-container">
             <div class = "w3-col w3-container l6">
                 {% include "includes/code_with_controls.html" with rules_src=task.rules width=task.klikatko_width height=task.klikatko_height %}
 
