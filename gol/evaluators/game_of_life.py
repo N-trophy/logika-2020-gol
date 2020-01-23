@@ -1,55 +1,24 @@
 from typing import Tuple
 
 from gol.models import Task
-from gol.common import Grid, Reporter, recolor_grid, random_grid
+from gol.common import Grid, Reporter
 from gol.rules_parser import parse
 import gol.rules_parser.comparison
-from .common import Ok, Points, Rules, test_rules_eq
-
-TESTGRIDS = [
-    Grid.fromstr("""
-        -X-
-        -X-
-        -X-
-    """),
-    Grid.fromstr("""
-        ---
-        XXX
-        ---
-    """),
-    Grid.fromstr("""
-        -X-
-        XXX
-        -X-
-    """),
-    Grid.fromstr("""
-        -XX--------X---
-        -XX-------X-X--
-        -----------X---
-        ---------------
-        ----X-----X----
-        ---X-X----X----
-        ----XX----X----
-        ---------------
-        ---------------
-    """),
-]
-
-RECOLOR_MAP = {
-    '-': 'k',
-    'X': 'g',
-}
+from .common import Ok, Points, Rules, tick_pos, all_neighbors
 
 
 def _eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
                   user_reporter: Reporter) -> Tuple[Ok, Points]:
     author_rules = parse(task.rules)
     participant_rules = parse(rules)
-    random_grids = [random_grid('k', 'g') for _ in range(5)]
-    for grid in TESTGRIDS+random_grids:
-        proper_colored = recolor_grid(grid, RECOLOR_MAP)
-        if not test_rules_eq(proper_colored, participant_rules,
-                             author_rules, {}):
+
+    out_grida = Grid.fromfill(3, 3)
+    out_gridb = Grid.fromfill(3, 3)
+    for grid in all_neighbors(task.allowed_colors):
+        tick_pos(grid, out_grida, participant_rules, (1, 1), {})
+        tick_pos(grid, out_gridb, author_rules, (1, 1), {})
+
+        if out_grida[1][1] != out_gridb[1][1]:
             int_reporter(f'[ERR] Selhalo na mřížce: {grid}')
             user_reporter('[ERR] Vámi zadaná pravidla nejsou pravidla '
                           'Game of Life!')

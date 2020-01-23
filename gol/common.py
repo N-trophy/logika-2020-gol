@@ -44,6 +44,11 @@ class Grid:
         array = [[default for _ in range(width)] for _ in range(height)]
         return cls(array)
 
+    @classmethod
+    def fromlist(cls, lst: List[str], width: int) -> 'Grid':
+        array = [lst[x:x+width] for x in range(0, len(lst), width)]
+        return cls(array)
+
     @property
     def width(self):
         return len(self.array[0])
