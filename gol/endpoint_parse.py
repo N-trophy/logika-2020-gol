@@ -18,7 +18,6 @@ from gol.models import Parse, Task
 @login_required()
 def parse_rules(request, *args, **kwargs):
     data = json.loads(request.body.decode('utf-8'))
-    print(data)
     expr = data['expr']
     task_id = data['task'] if 'task' in data else None
     colors = data['colors'] if 'colors' in data else 'rgbk'
