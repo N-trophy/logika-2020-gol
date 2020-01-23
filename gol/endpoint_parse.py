@@ -6,28 +6,28 @@ import pyparsing
 from contextlib import redirect_stdout
 from io import StringIO
 import time
+import traceback
+import json
 
 from gol.rules_parser.rules_parser import parse, webrepr, Rule, \
     nicer_parse_error_message
 from gol.models import Parse, Task
 
-import traceback
-
 
 @require_http_methods(['POST'])
 @login_required()
 def parse_rules(request, *args, **kwargs):
-    expr = request.body.decode('utf-8')
+    data = json.loads(request.body.decode('utf-8'))
+    expr = data['expr']
+    task = data['task'] if 'task' in data else None
+    colors = data['colors'] if 'colors' in data else 'rgbk'
 
     try:
-        if 'task' in kwargs:
+        if task:
             task = Task.objects.get(id=kwargs['task'])
-        else:
-            task = None
     except Task.DoesNotExist:
         return HttpResponseNotFound('Task not found')
 
-    colors = kwargs['colors'] if 'colors' in kwargs else 'rgbk'
     colors += colors.upper()
 
     parse_obj = Parse(
