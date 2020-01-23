@@ -6,7 +6,7 @@ class World {
             'b': '#00ff',
             'k': '#555',
         };
-        this.colors = colors
+        this.colors = colors;
 
         this.canvas = document.getElementById(rootId);
         this.canvas.height = this.canvas.width = 500;
@@ -16,7 +16,8 @@ class World {
 
         this.loopSet = false;
 
-        this.canvas.addEventListener('click', this.canvasClick.bind(this), false);
+        this.canvas.addEventListener('click', this.canvasClick.bind(this));
+        this.canvas.addEventListener('contextmenu', this.canvasRightClick.bind(this));
 
         if (type=='TORUS') this.switchToTorus();
         else this.switchToPlane();
@@ -24,7 +25,7 @@ class World {
 
         this.historyLength = 3;
 
-        if (map_config) this.onLoadFile(map_config);
+        if (map_config) this.onLoadFile(map_config, false);
 
         this.loadSource(editor, false);
     }
@@ -207,6 +208,18 @@ class World {
         const x = Math.floor(event.offsetX * this.width / this.canvas.scrollWidth);
         const y = Math.floor(event.offsetY * this.height / this.canvas.scrollHeight);
         this.automata.setCell(this.pickedColor, x, y);
+        this.drawTable();
+    }
+
+    canvasRightClick(event){
+        event.preventDefault();
+        const x = Math.floor(event.offsetX * this.width / this.canvas.scrollWidth);
+        const y = Math.floor(event.offsetY * this.height / this.canvas.scrollHeight);
+        let col = this.automata.getCell(x, y);
+        let col_index = (this.colors.indexOf(col) + 1) % this.colors.length;
+        console.log(this.colors);
+        col = this.colors[col_index];
+        this.automata.setCell(col, x, y);
         this.drawTable();
     }
 
