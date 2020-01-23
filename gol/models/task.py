@@ -30,3 +30,6 @@ class Task(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def is_stepper(self) -> bool:
+        return self.stepper_function != ''

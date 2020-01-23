@@ -20,6 +20,7 @@ from django.urls import path
 
 from gol.endpoint_parse import parse_rules
 from gol.endpoint_submit import submit
+from gol.endpoint_stepper import step
 import gol.views as views
 
 urlpatterns = [
@@ -32,4 +33,5 @@ urlpatterns = [
     path('klikatko', views.simulation),
     path('task/<int:id>', views.task),
     path('task/<int:id>/submit', submit),
+    path('task/<int:id>/step', step),
 ]
