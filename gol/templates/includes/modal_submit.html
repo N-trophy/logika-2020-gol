@@ -1,0 +1,33 @@
+<!-- The Modal Submit -->
+<div id="modal-submit" class="w3-modal" style="display: none;">
+    <div class="w3-modal-content dark-grey-background" style="width: 600px">
+        <div class="w3-container w3-padding-large">
+            <span onclick="document.getElementById('modal-submit').style.display='none'; document.getElementById('submit-info').innerHTML = '';"
+                class="button w3-display-topright">&times;</span>
+            <div class="w3-content" style="margin-top: 26px;">
+                <div class="w3-panel w3-light-green">
+                    <p>
+                        Tento formulář neslouží k odevzdávání pdf souboru!
+                        Pro odevzdání pdf souboru využijte
+                        <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárnu</a>.
+                    </p>
+                </div>
+
+                <div class="w3-content w3-padding">
+                    <p>
+                        Tady byste měli najít popis toho, jakým způsobem máte řešení nahrát.
+                        Pokud tomu tak není, kontaktujete organizátory.
+                    </p>
+                </div>
+
+                <div class="w3-center">
+                    <button class="button w3-padding-large w3-margin-left w3-margin-right" onclick="world.submit('submit-info');">Odeslat řešení</button>
+                    <button class="button w3-padding-large w3-margin-left w3-margin-right" onclick="document.getElementById('modal-upload').style.display='none'; document.getElementById('submit-info').innerHTML = '';">Zrušit</button>
+                </div>
+                <div class="w3-content">
+                    <p id="submit-info" class="w3-padding warning" style="margin:8px 16px 0px 16px;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

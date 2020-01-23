@@ -346,4 +346,17 @@ class World {
         element.click();
         document.body.removeChild(element);
     }
+
+    submit(info_id) {
+        let info_elem = document.getElementById(info_id);
+        if (true) {
+            if (info_elem) info_elem.innerHTML = "Odevzdávání není implementováno. Kontaktujte organizátory.";
+            if (info_elem) info_elem.classList.add("warning");
+            console.log("Odevzdávání není implementováno. Kontaktujte organizátory.");
+            return;
+        }
+        if (info_elem) info_elem.innerHTML = "Odevzdávání proběhlo v pořádku.";
+        if (info_elem) info_elem.classList.remove("warning");
+        console.log("Odevzdávání proběhlo v pořádku.");
+    }
 }
