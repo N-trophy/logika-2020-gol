@@ -1,26 +1,32 @@
 class World {
-    constructor(width, height, rootId, rules) {
+    constructor(rootId, width=25, height=25, rules='k', type='PLANE', colors='rgbk', map_config=undefined) {
         this.pallet = {
             'r': '#f00f',
             'g': '#0f0f',
             'b': '#00ff',
             'k': '#555',
         };
+        this.colors = colors
 
         this.canvas = document.getElementById(rootId);
         this.canvas.height = this.canvas.width = 500;
         this.ctx = this.canvas.getContext('2d');
 
-        this.init(width, height, rules);
+        this.init(width, height, new ConstantRule('k'));
 
         this.loopSet = false;
 
         this.canvas.addEventListener('click', this.canvasClick.bind(this), false);
 
-        this.switchToPlane();
+        if (type=='TORUS') this.switchToTorus();
+        else this.switchToPlane();
         this.selectColor('g');
 
         this.historyLength = 3;
+
+        if (map_config) this.onLoadFile(map_config);
+
+        this.loadSource(editor, false);
     }
 
     init(width, height, rules){
@@ -75,7 +81,7 @@ class World {
     run() {
         if (this.loopSet) return;
 
-        this.loop = setInterval(this.nextTick.bind(this), 200);
+        this.loop = setInterval(this.nextTick.bind(this), 100);
         this.loopSet = true;
     }
 
@@ -139,8 +145,8 @@ class World {
         const dx = this.canvas.width / this.width;
         const dy = this.canvas.height / this.height;
         this.ctx.fillStyle = color;
-        this.ctx.clearRect(px, py, dx-3, dy-3);
-        this.ctx.fillRect(px, py, dx-3, dy-3);
+        this.ctx.clearRect(px, py, 0.9*dx, 0.9*dy);
+        this.ctx.fillRect(px, py, 0.9*dx, 0.9*dy);
     }
 
     drawTable(){
@@ -154,7 +160,7 @@ class World {
         }
     }
 
-    loadSource(editor) {
+    loadSource(editor, resize=true) {
         this.stop();
 
         $('#console-info').text('Zpracovávám...');
@@ -170,7 +176,7 @@ class World {
 
         $.ajax({
             type: 'POST',
-            url: '/rules/parse?colors=rgbk',
+            url: '/rules/parse?colors='+this.colors,
             data: src,
             dataType: 'text',
             headers: {
@@ -191,7 +197,7 @@ class World {
         const newWidth = Math.floor($('#width-input').val());
         const newHeight = Math.floor($('#height-input').val());
 
-        if (newWidth != this.width || newHeight != this.height){
+        if (resize && (newWidth != this.width || newHeight != this.height)){
             this.init(newWidth, newHeight, this.automata.rules);
             this.drawTable();
         }
@@ -232,9 +238,10 @@ class World {
         for (let x = 0; x < lines.length; x++) {
             for (let y = 0; y < lines[x].length; y++) {
                 if (!this.isColor(lines[x][y])) {
-                    info_elem.innerHTML = "Unexpected symbol '" + lines[x][y] + "' in line " + (x + 1) + ", pos " + (y + 1) + ".";
-                    info_elem.innerHTML += "This is NOT counting empty lines and empty characters.";
-                    info_elem.classList.add("warning");
+                    if (info_elem) info_elem.innerHTML = "Unexpected symbol '" + lines[x][y] + "' in line " + (x + 1) + ", pos " + (y + 1) + ".";
+                    if (info_elem) info_elem.innerHTML += "This is NOT counting empty lines and empty characters.";
+                    if (info_elem) info_elem.classList.add("warning");
+                    console.log("Unexpected symbol '" + lines[x][y] + "' in line " + (x + 1) + ", pos " + (y + 1) + ".");
                     return;
                 }
             }
@@ -242,16 +249,18 @@ class World {
 
         if (lines.length != this.height)
         {
-            info_elem.innerHTML = "Wrong number of lines (expected " + this.height + ", but got " + lines.length + " non-empty lines)";
-            info_elem.classList.add("warning");
+            if (info_elem) info_elem.innerHTML = "Wrong number of lines (expected " + this.height + ", but got " + lines.length + " non-empty lines)";
+            if (info_elem) info_elem.classList.add("warning");
+            console.log("Wrong number of lines (expected " + this.height + ", but got " + lines.length + " non-empty lines)");
             return;
         }
 
         for (let i = 0; i < lines.length; i++) {
             if (lines[i].length != this.width) {
-                info_elem.innerHTML = "Wrong number of letters in line " + (i + 1) + " (expected " + this.width + ", but got " + lines[i].length + ").";
-                info_elem.innerHTML += "This is NOT counting empty lines and empty characters.";
-                info_elem.classList.add("warning");
+                if (info_elem) info_elem.innerHTML = "Wrong number of letters in line " + (i + 1) + " (expected " + this.width + ", but got " + lines[i].length + ").";
+                if (info_elem) info_elem.innerHTML += "This is NOT counting empty lines and empty characters.";
+                if (info_elem) info_elem.classList.add("warning");
+                console.log("Wrong number of letters in line " + (i + 1) + " (expected " + this.width + ", but got " + lines[i].length + ").");
                 return;
             }
         }
@@ -260,8 +269,8 @@ class World {
         this.automata.setTableTransposed(lines);
         this.drawTable();
 
-        info_elem.classList.remove("warning");
-        info_elem.innerHTML = "Load successful";
+        if (info_elem) info_elem.classList.remove("warning");
+        if (info_elem) info_elem.innerHTML = "Load successful";
     }
 
     downloadMap() {

@@ -1,9 +1,6 @@
 <div>
     <!-- Console -->
-    <textarea id="console" class = "w3-col w3-container l12">if (----g----) > 0:
-	k
-else:
-	g
+    <textarea id="console" class = "w3-col w3-container l12">{{ rules_src }}
 </textarea>
 
     <!-- First line -->
@@ -31,12 +28,12 @@ else:
             <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
                 x:
             </div>
-            <input id="width-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value=25></input>
+            <input id="width-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value={{ width }}></input>
 
             <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
-                h:
+                y:
             </div>
-            <input id="height-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value=25></input>
+            <input id="height-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value={{ height }}></input>
         </div>
 
         <!-- Load button -->

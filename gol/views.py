@@ -2,6 +2,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+import re
 
 from gol.models import Task, Post, TaskCategory
 
@@ -35,6 +36,8 @@ def task(request, *args, **kwargs):
 
     if not task.rules_public:
         task.rules = ''  # prevent security vulnerabilities in template
+
+    task.start_config = task.start_config.replace("\r\n", "\\n")
 
     context = {
         'user': request.user,

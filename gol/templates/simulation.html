@@ -18,7 +18,7 @@
             CSRF_TOKEN = "{{ csrf_token }}"
 
             $(()=>{
-                world = new World(25, 25, "automata", new ConstantRule('k'));
+                world = new World("automata");
             });
         </script>
         <title>Klikátko</title>
@@ -34,7 +34,7 @@
 
         <div class = "w3-row">
             <div class = "w3-col w3-container l6">
-                {% include "includes/code_with_controls.html" %}
+                {% include "includes/code_with_controls.html" with width=25 height=25%}
 
                 <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space-large"></div>
 

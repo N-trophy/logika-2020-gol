@@ -185,7 +185,7 @@ class MatrixText {
         this.pointers.forEach((yPts, x) => {
             yPts.forEach((y, index) =>{
                 // generate a random character
-                const text = String.fromCharCode(Math.random() * (255-20) + 20);
+                const text = '0123456789ABCDEF'[Math.floor(Math.random() * 16)];
             
                 // x coordinate of the column, y coordinate is already given
                 const xPos = x * this.colWidth;

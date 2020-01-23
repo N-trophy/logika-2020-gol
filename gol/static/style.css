@@ -47,6 +47,12 @@ input[type="text"], input[type="password"], textarea, select, button {
     background-color: #333;
 }
 
+#task-header {
+    max-width: 700px;
+    text-align: left;
+    margin: auto;
+}
+
 .CodeMirror, .CodeMirror-cursor, .CodeMirror-cursor, .CodeMirror-gutters {
     background-color: rgba(255, 255, 255, 0.1) !important;
     border-color: rgba(255, 255, 255, 0.3) !important;

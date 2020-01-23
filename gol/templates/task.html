@@ -17,9 +17,11 @@
         <script>
             CSRF_TOKEN = "{{ csrf_token }}"
 
-            $(()=>{
-                world = new World(25, 25, "automata", new ConstantRule('k'));
-            });
+            {% if task.klikatko %}
+                $(()=>{
+                    world = new World("automata", {{ task.klikatko_width }}, {{ task.klikatko_height }}, undefined, "{{ task.grid_type }}", "{{ taks.allowed_colors }}", "{{ task.start_config }}");
+                });
+            {% endif %}
         </script>
         <title>{{ task.name }}</title>
         <meta charset="UTF-8">
@@ -28,17 +30,20 @@
         <!-- Navbar -->
         {% include "includes/navbar.html" %}
 
-        <header class = "w3-container w3-center">
-            <h2>{{ task.name }}</h2>
-            <p>
-                Maximální počet bodů: {{ task.max_points }}
-            </p>
-            {{ task.intro_text |safe }}
+        <header class="w3-container">
+            <div id="task-header">
+                <h2>{{ task.name }}</h2>
+                <p>
+                    Maximální počet bodů: {{ task.max_points }}
+                </p>
+                    {{ task.intro_text |safe }}
+            </div>
         </header>
 
+        {% if task.klikatko %}
         <div class = "w3-row">
             <div class = "w3-col w3-container l6">
-                {% include "includes/code_with_controls.html" %}
+                {% include "includes/code_with_controls.html" with rules_src=task.rules width=task.klikatko_width height=task.klikatko_height %}
 
                 <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space-large"></div>
 
@@ -50,6 +55,7 @@
                 <canvas id="automata"></canvas>
             </div>
         </div>
+        {% endif %}
 
         <!-- Footer -->
         <footer class="w3-container black-background w3-center w3-opacity">
