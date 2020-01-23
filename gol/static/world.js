@@ -357,7 +357,9 @@ class World {
 
     submit(info_id, editor) {
         let info_elem = $('#' + info_id);
-        
+        info_elem.text("Zpracovávám...");
+        info_elem.removeClass("warning");
+
         $.ajax({
             type: 'POST',
             url: '/task/' + this.taskId + '/submit',
@@ -371,11 +373,17 @@ class World {
                 "X-CSRFToken": CSRF_TOKEN,
             },
             success: ((data)=>{
-                info_elem.text("Odevzdávání proběhlo v pořádku.");
-                info_elem.removeClass("warning");
+                if (data.ok) {
+                    info_elem.removeClass("warning");
+                } else {
+                    info_elem.addClass("warning");
+                }
+                console.log(data)
+                $('.remaining_submissions').text(data.submissions_remaining)
+                info_elem.text(data.report);
             }),
             error: ((xhr)=>{
-                info_elem.text("Při odevzdání nastala chyba.");
+                info_elem.text(xhr.responseText);
                 info_elem.addClass("warning");
             })
         });

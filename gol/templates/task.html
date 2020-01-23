@@ -34,8 +34,8 @@
             <div id="task-header">
                 <h2>{{ task.name }}</h2>
                 <p>
-                    Maximální počet bodů: {{ task.max_points }}
-                    Zbývající počet odevzdání: <a id="submission_number">{{ remaining_submissions }}</a>
+                    Maximální počet bodů: {{ task.max_points }} </br>
+                    Zbývající počet odevzdání: <a class="remaining_submissions">{{ remaining_submissions }}</a>
                 </p>
                     {{ task.intro_text |safe }}
             </div>
