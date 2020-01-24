@@ -98,3 +98,11 @@ def random_grid(background: str, colors: str) -> Grid:
         x, y = random.randint(0, width-1), random.randint(0, height-1)
         grid[y][x] = random.choice(colors)
     return grid
+
+
+def grid_colors_valid(grid: Grid, allowed_colors: str) -> bool:
+    for y in range(grid.height):
+        for x in range(grid.width):
+            if grid[y][x] not in allowed_colors:
+                return False
+    return True

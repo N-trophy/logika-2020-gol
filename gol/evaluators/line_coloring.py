@@ -1,7 +1,7 @@
 from typing import Tuple
 
 from gol.models import Task
-from gol.common import Grid, Reporter
+from gol.common import Grid, Reporter, grid_colors_valid
 from gol.rules_parser import parse
 from .common import Ok, Score, Rules, tick
 
@@ -15,6 +15,14 @@ def eval_line_coloring(task: Task, rules: Rules, grid: Grid,
                        user_reporter: Reporter) -> Tuple[Ok, Score]:
     rules = parse(task.rules)
     grid = Grid.fromstr(grid)
+
+    if grid.width != grid.height != 12:
+        user_reporter('[ERR] Mřížka nemá zadané rozměry!')
+        return (False, 0)
+
+    if not grid_colors_valid(grid, task.allowed_colors):
+        user_reporter('[ERR] Použili jste nepovolenou barvu!')
+        return (False, 0)
 
     for y in range(grid.height-1):
         for x in range(grid.width):
