@@ -56,3 +56,8 @@ def task(request, *args, **kwargs):
         'remaining_submissions': submissions_remaining(request.user, task),
     }
     return render(request, "task.html", context)
+
+
+@login_required(login_url='/login')
+def help(request, *args, **kwargs):
+    return render(request, "help.html")

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+     crossorigin="anonymous">
+    <script src="/static/core.js"></script>
+    <script>
+        CSRF_TOKEN = "{{ csrf_token }}"
+    </script>
+    <title>Popis systému – Kvalifikace logika N-trophy X</title>
+    <link rel="shortcut icon" type="image/png" href="/static/img/logo.png"/>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% include "includes/navbar.html" %}
+
+<div id="info" class="w3-container w3-center">
+<div class="w3-content">
+<h1>Popis systému</h1>
+<p>TODO</p>
+</div>
+</div>
+
+{% include "includes/footer.html" %}
+</body>
+</html>
