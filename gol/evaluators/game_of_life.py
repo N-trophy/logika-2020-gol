@@ -1,4 +1,5 @@
 from typing import Tuple
+import pyparsing
 
 from gol.models import Task
 from gol.common import Grid, Reporter
@@ -10,12 +11,18 @@ from .common import Ok, Score, Rules, tick_pos, all_neighbors
 def _eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
                   user_reporter: Reporter) -> Tuple[Ok, Score]:
     author_rules = parse(task.rules)
-    participant_rules = parse(rules)
+
+    try:
+        participant_rules = parse(task.rules)
+    except pyparsing.ParseException as e:
+        user_reporter(f'[ERR] Napodařilo se načíst pravidla: {str(e)}')
+        return (False, 0)
 
     out_grida = Grid.fromfill(3, 3)
     out_gridb = Grid.fromfill(3, 3)
     for grid in all_neighbors(task.allowed_colors):
-        tick_pos(grid, out_grida, participant_rules, (1, 1), task.global_config())
+        tick_pos(grid, out_grida, participant_rules, (1, 1),
+                 task.global_config())
         tick_pos(grid, out_gridb, author_rules, (1, 1), task.global_config())
 
         if out_grida[1][1] != out_gridb[1][1]:
