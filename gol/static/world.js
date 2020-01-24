@@ -383,7 +383,7 @@ class World {
                 info_elem.text(data.report);
             }),
             error: ((xhr)=>{
-                info_elem.text(xhr.responseText);
+                info_elem.text(xhr.responseText + "<br>Pokud si myslíte, že by tu tato chyba neměla být, kontaktujte organizátory.");
                 info_elem.addClass("warning");
             })
         });
