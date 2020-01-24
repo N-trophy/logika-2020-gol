@@ -16,7 +16,7 @@ def no_submissions(user: User, task: Task):
 
 
 def submissions_remaining(user: User, task: Task):
-    if task.max_submissions == 0:
+    if task.max_submissions == 0 or user.is_superuser:
         return -1
     return task.max_submissions - no_submissions(user, task)
 

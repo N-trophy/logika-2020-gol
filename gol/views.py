@@ -5,6 +5,7 @@ from django.utils import timezone
 import re
 
 from gol.models import Task, Post, TaskCategory
+from gol.endpoints.submit import submissions_remaining
 
 
 @login_required(login_url='/login')
@@ -44,6 +45,6 @@ def task(request, *args, **kwargs):
     context = {
         'user': request.user,
         'task': task,
-        'remaining_submissions': task.max_submissions,
+        'remaining_submissions': submissions_remaining(request.user, task),
     }
     return render(request, "task.html", context)
