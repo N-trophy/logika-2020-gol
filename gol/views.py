@@ -5,7 +5,7 @@ from django.utils import timezone
 import re
 
 from gol.models import Task, Post, TaskCategory
-from gol.models.submission import submissions_remaining
+from gol.models.submission import submissions_remaining, submitted_ok
 
 
 @login_required(login_url='/login')
@@ -18,10 +18,18 @@ def simulation(request):
 
 @login_required(login_url='/login')
 def index(request, *args, **kwargs):
+    tasks = Task.objects.order_by('id').all()
+    submitted = submitted_ok(request.user)
+    for task in tasks:
+        if task.id in submitted:
+            task.submitted = 'ok' if submitted[task.id] else 'nok'
+        else:
+            task.submitted = 'no'
+
     context = {
         'user': request.user,
         'categories': TaskCategory.objects.order_by('order').all(),
-        'tasks': Task.objects.order_by('id').all(),
+        'tasks': tasks,
         'posts': (Post.objects.filter(published__lt=timezone.now()).
                   order_by('-published')[:12]),
     }

@@ -65,7 +65,7 @@
                     {% if task.category == category %}
                         <a href="/task/{{ task.id }}">
                             <div class="w3-padding-large w3-large">
-                                <div class="w3-center w3-container">{{ task.name }}</div>
+                                <div class="w3-center w3-container">{{ task.name }} ({{ task.submitted }})</div>
                             </div>
                         </a>
                     {% endif %}

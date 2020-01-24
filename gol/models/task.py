@@ -16,7 +16,8 @@ class Task(models.Model):
     max_points = models.PositiveIntegerField(default=1)
     intro_text = models.TextField(default='')
 
-    grid_type = models.CharField(max_length=16, choices=GRID_TYPE, default='PLANE')
+    grid_type = models.CharField(max_length=16, choices=GRID_TYPE,
+                                 default='PLANE')
     klikatko = models.BooleanField(default=True)
     klikatko_width = models.IntegerField(default=25)
     klikatko_height = models.IntegerField(default=25)
