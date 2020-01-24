@@ -5,7 +5,7 @@ from django.utils import timezone
 import re
 
 from gol.models import Task, Post, TaskCategory
-from gol.endpoints.submit import submissions_remaining
+from gol.models.submission import submissions_remaining
 
 
 @login_required(login_url='/login')

@@ -7,18 +7,9 @@ import json
 from django.contrib.auth.models import User
 
 from gol.models import Submission, Task
+from gol.models.submission import no_submissions, submissions_remaining
 from gol.common import Reporter
 import gol.evaluators as evaluators
-
-
-def no_submissions(user: User, task: Task):
-    return Submission.objects.filter(user=user, task=task).count()
-
-
-def submissions_remaining(user: User, task: Task):
-    if task.max_submissions == 0 or user.is_superuser:
-        return -1
-    return task.max_submissions - no_submissions(user, task)
 
 
 @require_http_methods(['POST'])
