@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 from gol.models import Submission, Task
 from gol.models.submission import no_submissions, submissions_remaining
-from gol.common import Reporter
+from gol.common import Reporter, Grid
 import gol.evaluators as evaluators
 
 
@@ -45,7 +45,7 @@ def submit(request, *args, **kwargs):
 
     try:
         ok, score = eval_function(
-            task, rules, grid, int_reporter, user_reporter
+            task, rules, Grid.fromstr(grid), int_reporter, user_reporter
         )
 
         submission.ok = ok

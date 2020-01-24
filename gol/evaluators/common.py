@@ -3,7 +3,7 @@ import copy
 import itertools
 
 from gol.models import Task
-from gol.common import Grid, Reporter, Color, Point2D
+from gol.common import Grid, Reporter, Color, Point2D, grid_colors_valid
 from gol.rules_parser import Rule
 
 Ok = bool
@@ -54,3 +54,23 @@ def all_neighbors(colors: str):
         Grid.fromlist(neigh, 3)
         for neigh in itertools.product(colors, repeat=9)
     ]
+
+
+def validate_grid_colors(func):
+    def wrapper(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
+                user_reporter: Reporter) -> Tuple[Ok, Score]:
+        if not grid_colors_valid(grid, task.allowed_colors):
+            user_reporter('[ERR] Použili jste nepovolenou barvu!')
+            return (False, 0)
+        return func(task, rules, grid, int_reporter, user_reporter)
+    return wrapper
+
+
+def validate_grid_size(func):
+    def wrapper(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
+                user_reporter: Reporter) -> Tuple[Ok, Score]:
+        if grid.width != task.klikatko_width or grid.height != task.klikatko_height:
+            user_reporter('[ERR] Mřížka nemá správné rozměry!')
+            return (False, 0)
+        return func(task, rules, grid, int_reporter, user_reporter)
+    return wrapper
