@@ -4,11 +4,11 @@ from gol.models import Task
 from gol.common import Grid, Reporter
 from gol.rules_parser import parse
 import gol.rules_parser.comparison
-from .common import Ok, Points, Rules, tick_pos, all_neighbors
+from .common import Ok, Score, Rules, tick_pos, all_neighbors
 
 
 def _eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
-                  user_reporter: Reporter) -> Tuple[Ok, Points]:
+                  user_reporter: Reporter) -> Tuple[Ok, Score]:
     author_rules = parse(task.rules)
     participant_rules = parse(rules)
 
@@ -35,7 +35,7 @@ def _eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
 
 
 def eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
-                 user_reporter: Reporter) -> Tuple[Ok, Points]:
+                 user_reporter: Reporter) -> Tuple[Ok, Score]:
     ok, compares = _eval_gol_min(
         task, rules, grid, int_reporter, user_reporter
     )
@@ -46,5 +46,5 @@ def eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
 
 
 def eval_gol(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
-             user_reporter: Reporter) -> Tuple[Ok, Points]:
+             user_reporter: Reporter) -> Tuple[Ok, Score]:
     return _eval_gol_min(task, rules, grid, int_reporter, user_reporter)

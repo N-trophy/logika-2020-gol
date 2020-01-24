@@ -22,7 +22,7 @@ class Submission(models.Model):
 
     ok = models.BooleanField(default=False)
     int_status = models.CharField(default='', max_length=64, blank=True)
-    points = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    score = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     int_report = models.TextField(default='', blank=True)
     user_report = models.TextField(default='', blank=True)
 

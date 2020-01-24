@@ -7,14 +7,14 @@ from gol.common import Grid, Reporter, Color, Point2D
 from gol.rules_parser import Rule
 
 Ok = bool
-Points = float
+Score = float
 Rules = str
 Evaluator = Callable[[Task, Rules, Grid, Reporter, Reporter],
-                     Tuple[Ok, Points]]
+                     Tuple[Ok, Score]]
 
 
 def eval_empty(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
-               user_reporter: Reporter) -> Tuple[Ok, Points]:
+               user_reporter: Reporter) -> Tuple[Ok, Score]:
     return (True, 1)
 
 

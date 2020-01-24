@@ -44,13 +44,13 @@ def submit(request, *args, **kwargs):
     eval_function = getattr(evaluators, task.eval_function)
 
     try:
-        ok, points = eval_function(
+        ok, score = eval_function(
             task, rules, grid, int_reporter, user_reporter
         )
 
         submission.ok = ok
         submission.int_status = 'ok'
-        submission.points = points
+        submission.score = score
         submission.int_report = int_reporter.text()
         submission.user_report = user_reporter.text()
     except Exception:
@@ -66,7 +66,6 @@ def submit(request, *args, **kwargs):
 
     return JsonResponse({
         'ok': ok,
-        'points': points,
         'report': user_reporter.text(),
         'submissions_remaining': submissions_remaining(request.user, task),
     })
