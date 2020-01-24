@@ -33,11 +33,14 @@
         <div class="w3-container">
             <div id="task-header">
                 <h2>{{ task.name }}</h2>
-                <p>
-                    Maximální počet bodů: {{ task.max_points }} </br>
-                    Zbývající počet odevzdání: <a class="remaining_submissions">{{ remaining_submissions }}</a>
-                </p>
-                    {{ task.intro_text |safe }}
+                {{ task.intro_text |safe }}
+                <h3>Technická specifikace úlohy</h3>
+                <ol>
+                    <li>Povolené barvy: {{ task.allowed_colors }}</li>
+                    <li>Typ mřížky: {{ task.grid_type }}</li>
+                    <li>Zbývající počet odevzdání: <a class="remaining_submissions">{{ remaining_submissions }}</a></li>
+                </ol>
+
             </div>
             {% if task.should_submit %}
             <div class="w3-center">
