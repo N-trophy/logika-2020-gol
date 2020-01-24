@@ -106,8 +106,8 @@ class World {
             }
     
             this.automata.nextTick();
-            this.drawTable();
         }
+        this.drawTable();
     }
 
     oneTick(){
