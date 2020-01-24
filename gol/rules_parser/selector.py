@@ -27,8 +27,8 @@ class Selector:
         for i, colour in enumerate(self.text):
             x, y = points_add(NEIGHBOURHOOD[i], pos)
             if global_config.get('torus', False):
-                y = y % len(grid)
-                x = x % len(grid[0])
+                y = y % grid.height
+                x = x % grid.width
             if point_in_grid((x, y), grid):
                 if colour != '-' and grid[y][x] == colour:
                     count += 1

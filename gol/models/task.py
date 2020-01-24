@@ -1,3 +1,4 @@
+from typing import Dict, Any
 from django.db import models
 
 
@@ -35,3 +36,8 @@ class Task(models.Model):
 
     def is_stepper(self) -> bool:
         return self.stepper_function != ''
+
+    def global_config(self) -> Dict[str, Any]:
+        return {
+            'torus': self.grid_type == 'TORUS'
+        }

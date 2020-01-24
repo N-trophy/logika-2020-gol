@@ -15,8 +15,8 @@ def _eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
     out_grida = Grid.fromfill(3, 3)
     out_gridb = Grid.fromfill(3, 3)
     for grid in all_neighbors(task.allowed_colors):
-        tick_pos(grid, out_grida, participant_rules, (1, 1), {})
-        tick_pos(grid, out_gridb, author_rules, (1, 1), {})
+        tick_pos(grid, out_grida, participant_rules, (1, 1), task.global_config())
+        tick_pos(grid, out_gridb, author_rules, (1, 1), task.global_config())
 
         if out_grida[1][1] != out_gridb[1][1]:
             int_reporter(f'[ERR] Selhalo na mřížce: {grid}')
