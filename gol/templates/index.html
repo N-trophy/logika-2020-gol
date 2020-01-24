@@ -1,83 +1,143 @@
 <!DOCTYPE html>
 <html lang="cs">
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" type="text/css" href="/static/style.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-        <script src="/static/core.js"></script>
-        <script src="/static/matrix.js"></script>
-        <script>
-            CSRF_TOKEN = "{{ csrf_token }}"
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <script src="/static/core.js"></script>
+    <script src="/static/matrix.js"></script>
+    <script>
+        CSRF_TOKEN = "{{ csrf_token }}"
 
-            $(()=>{
-                // matrix = new MatrixText('matrix-chars'); // TODO
-            })
-        </script>
-        <title>Kvalifikace logika N-trophy X</title>
-        <link rel="shortcut icon" type="image/png" href="/static/img/logo.png"/>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <!-- <canvas id='matrix-chars'></canvas> TODO -->
-        <!-- Navbar -->
-        {% include "includes/navbar.html" %}
+        $(()=>{
+            // matrix = new MatrixText('matrix-chars'); // TODO
+        })
+    </script>
+    <title>Kvalifikace logika N-trophy X</title>
+    <link rel="shortcut icon" type="image/png" href="/static/img/logo.png"/>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- <canvas id='matrix-chars'></canvas> TODO -->
+    <!-- Navbar -->
+    {% include "includes/navbar.html" %}
 
-        <!-- Reminder -->
-        <div class="w3-center">
-            <p class="w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Nezapomeňte odevzdat pdf soubor do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p>
-        </div>
+    <!-- Reminder -->
+    <div class="w3-center">
+        <p class="w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Nezapomeňte odevzdat pdf soubor do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p>
+    </div>
 
-        <!-- News -->
-        <div id="news" class="w3-container w3-center">
-            <div class="w3-content">
-                <h1>Novinky</h1>
-                {% for post in posts %}
-                <div class="w3-container w3-padding black-background w3-margin">
-                    <h6 class="post-head">
-                        {{ post.published }}
-                    </h6>
-                    <div class="post">
-                        {{ post.text | safe }}
-                    </div>
+    <!-- News -->
+    <div id="news" class="w3-container w3-center">
+        <div class="w3-content">
+            <h1>Novinky</h1>
+            {% for post in posts %}
+            <div class="w3-container w3-padding black-background w3-margin">
+                <h6 class="post-head">
+                    {{ post.published }}
+                </h6>
+                <div class="post">
+                    {{ post.text | safe }}
                 </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Rules -->
+    <div id="rules" class="w3-row-padding w3-padding-64 w3-container w3-center">
+        <div class="w3-content">
+            <h1>Základní informace</h1>
+
+            <p>Letošní kvalifikační úloha z logiky je zaměřena na prozkoumávání
+            dvourozměrných <a
+            href="https://en.wikipedia.org/wiki/Cellular_automaton">celulárních
+            automatů</a>. Typickým příkladem takového automatu je <a
+            href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Game
+            of Life</a>. Kvalifikační úloha se skládá z několika menších úloh,
+            celkový počet získaných bodů se počítá jako součet bodů za dílčí
+            podúlohy. Úlohy můžete řešit v libovolném pořadí, avšak
+            doporučujeme postupovat v pořadí, ve kterém jsou na webu (od
+            jednodušších ke složitějším).</p>
+
+            <p>Úlohy jsou různých typů a obtížností. V každé úloze budete pracovat:
+            <ul>
+            <li>S dvourozměrnou mřížkou složenou z buněk, každá buňka může
+            mít právě jednu barvu (červená, zelená, modrá, šedá).</li>
+            <li>S pravidly, které určují, jak se vytváří nové generace mřížky.</li>
+            </ul></p>
+
+            <p>Příklad pravidla: “když mám alespoň 3 zelené sousedy a jsem
+            zelená, zůstávám zelená, jinak se stávám šedou”. Toto pravidlo
+            se použije na každou buňku v mřížce a vznikne nová mřížka – nová
+            <i>generace</i>. Pravidla platí pro všechny buňky v mřížce
+            stejně a uplatňují se zároveň.</p>
+
+            <p>Naše prostředí se v mnohých faktorech od klasického Game of Life
+            liší. V jednotlivých úlohách se setkáte s různými pravidly, počty
+            barev, počátečními stavy atp.</p>
+
+            <p>Úlohy jsou rozděleny do třech kategorií:
+            <ol>
+            <li>V první kategorii budete znát pravidla, podle kterých simulace
+            funguje. Vaším úkolem bude správně rozmístit buňky do mřížky tak,
+            abyste splnili zadání.</li>
+            <li>U druhé kategorie budete pravidla sami tvořit a zapisovat, a to
+            na základě zadání a testování v přiložené simulaci.</li>
+            <li>V poslední kategorii bude vaším úkolem ukázat, že za daných
+            pravidel nelze vytvořit námi zadanou konfiguraci.</li>
+            </ol></p>
+
+            <p>Maximální bodový zisk jednotlivých úloh je různý v závislosti na
+            jejich náročnosti. Co přesně se u jednotlivých úloh hodnotí je
+            popsáno u každé úlohy zvlášť. Svá dílčí řešení (popis pravidel,
+            počáteční konfigurace) odevzdáváte přímo do jednotlivých úloh,
+            slovní popis řešení pro úlohy, které ho vyžadují, odevzdejte
+            v jednom dokumentu pro všechny části společně do <a
+            href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny
+            N-trophy webu</a>. Svá řešení pište výstižně, stručně, ale na nic
+            nezapomeňte. Body dostanete za logickou argumentaci, nikoliv za
+            omáčku okolo.</p>
+
+            <p>Zde na webu naleznete <a href="/klikatko">cvičný simulátor (tzv.
+            <i>klikátko</i>)</a>, ve kterém si můžete zkoušet, jak simulace
+            funguje pro různá pravidla a konfigurace, a <a href="/help">
+            detailní popis, jak funguje simulace a jakým způsobem se zapisují
+            pravidla</a>.</p>
+
+            <p>Tato úloha má web proto, aby vám usnadnila studium celulárních
+            automatů. Web není určen k tomu, abyste řešení úloh zjistili
+            crackováním.  Při řešení úloh se řidťe zásadou <i>fair play</i>.
+            Kdybyste narazili na libovolný problém, ozvěte se na <a
+            href="mailto:logika@ntrophy.cz">logika@ntrophy.cz</a>.</p>
+        </div>
+    </div>
+
+    <!-- Tasks -->
+    <div id="tasks" class="w3-container">
+        <div class="w3-content w3-center">
+            <h1>Úlohy</h1>
+            {% for category in categories %}
+            <div class="w3-third">
+                <h2>{{ category.name }}</h2>
+                {% for task in tasks %}
+                {% if task.category == category %}
+                    <a href="/task/{{ task.id }}">
+                        <div class="w3-padding-large w3-large">
+                            <div class="w3-center w3-container">{{ task.name }} ({{ task.submitted }})</div>
+                        </div>
+                    </a>
+                {% endif %}
                 {% endfor %}
             </div>
+            {% endfor %}
         </div>
+    </div>
 
-        <!-- Rules -->
-        <div id="rules" class="w3-row-padding w3-padding-64 w3-container w3-center">
-            <div class="w3-content">
-                <h1>Pravidla hry</h1>
-
-                <p>Pdf soubor odevzdávejte do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p>
-            </div>
-        </div>
-
-        <!-- Tasks -->
-        <div id="tasks" class="w3-container">
-            <div class="w3-content w3-center">
-                <h1>Úlohy</h1>
-                {% for category in categories %}
-                <div class="w3-third">
-                    <h2>{{ category.name }}</h2>
-                    {% for task in tasks %}
-                    {% if task.category == category %}
-                        <a href="/task/{{ task.id }}">
-                            <div class="w3-padding-large w3-large">
-                                <div class="w3-center w3-container">{{ task.name }} ({{ task.submitted }})</div>
-                            </div>
-                        </a>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="w3-container black-background w3-center w3-opacity">
-            <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-        </footer>
-    </body>
+    <!-- Footer -->
+    <footer class="w3-container black-background w3-center w3-opacity">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+    </footer>
+</body>
 </html>
