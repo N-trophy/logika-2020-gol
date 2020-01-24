@@ -10,7 +10,7 @@ from .common import Ok, Score, Rules, tick_pos, all_neighbors
 
 def _eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
                   user_reporter: Reporter) -> Tuple[Ok, Score]:
-    author_rules = parse(task.rules)
+    author_rules = parse(task.rules, task.allowed_colors)
 
     try:
         participant_rules = parse(task.rules)

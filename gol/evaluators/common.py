@@ -69,7 +69,8 @@ def validate_grid_colors(func):
 def validate_grid_size(func):
     def wrapper(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
                 user_reporter: Reporter) -> Tuple[Ok, Score]:
-        if grid.width != task.klikatko_width or grid.height != task.klikatko_height:
+        if (grid.width != task.klikatko_width or
+                grid.height != task.klikatko_height):
             user_reporter('[ERR] Mřížka nemá správné rozměry!')
             return (False, 0)
         return func(task, rules, grid, int_reporter, user_reporter)

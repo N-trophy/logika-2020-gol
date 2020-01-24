@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 import traceback
 import json
 
+from gol.common import Grid
 from gol.models import Task
 import gol.steppers as steppers
 
@@ -29,7 +30,7 @@ def step(request, *args, **kwargs):
     step_function = getattr(steppers, task.stepper_function)
 
     try:
-        new_grid = step_function(task, grid)
+        new_grid = step_function(task, Grid.fromstr(grid))
     except Exception:
         exception_str = traceback.format_exc()
         print(exception_str, end='')
@@ -37,5 +38,5 @@ def step(request, *args, **kwargs):
                                       'kontaktujte organizátory!')
 
     return JsonResponse({
-        'grid': new_grid,
+        'grid': new_grid.webrepr(),
     })

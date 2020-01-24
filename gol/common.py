@@ -72,6 +72,9 @@ class Grid:
     def __repr__(self) -> str:
         return 'Grid(' + str(self) + ')'
 
+    def webrepr(self) -> str:
+        return '\n'.join([''.join(line) for line in self.array])
+
 
 def points_add(a: Point2D, b: Point2D) -> Point2D:
     return (a[0]+b[0], a[1]+b[1])

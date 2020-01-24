@@ -16,7 +16,7 @@ def _red_top_count(grid: Grid):
 def eval_line_coloring(task: Task, rules: Rules, grid: Grid,
                        int_reporter: Reporter,
                        user_reporter: Reporter) -> Tuple[Ok, Score]:
-    rules = parse(task.rules)
+    rules = parse(task.rules, task.allowed_colors)
 
     for y in range(grid.height-1):
         for x in range(grid.width):
