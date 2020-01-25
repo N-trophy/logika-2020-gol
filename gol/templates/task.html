@@ -29,49 +29,55 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <!-- Navbar -->
-        {% include "includes/navbar.html" %}
+        <div id="page-container">
+            <div id="page-content">
 
-        <div class="w3-container">
-            <div id="task-header">
-                <h2>{{ task.name }}</h2>
-                {{ task.intro_text |safe }}
-                <h3>Technická specifikace úlohy</h3>
-                <ol>
-                    <li>Povolené barvy: {{ task.allowed_colors }}</li>
-                    <li>Typ mřížky: {{ task.grid_type }}</li>
-                    <li>Zbývající počet odevzdání: <a class="remaining_submissions">{{ remaining_submissions }}</a></li>
-                </ol>
+                <!-- Navbar -->
+                {% include "includes/navbar.html" %}
+        
+                <div class="w3-container">
+                    <div id="task-header">
+                        <h2>{{ task.name }}</h2>
+                        {{ task.intro_text |safe }}
+                        <h3>Technická specifikace úlohy</h3>
+                        <ol>
+                            <li>Povolené barvy: {{ task.allowed_colors }}</li>
+                            <li>Typ mřížky: {{ task.grid_type }}</li>
+                            <li>Zbývající počet odevzdání: <a class="remaining_submissions">{{ remaining_submissions }}</a></li>
+                        </ol>
+        
+                    </div>
+                    {% if task.should_submit %}
+                    <div class="w3-center">
+                        <button class="w3-button w3-margin w3-center w3-padding-large w3-red" onclick="document.getElementById('modal-submit').style.display='block';">Odevzdat řešení</button>
+                    </div>
+                    {% endif %}
+                </div>
+        
+                {% if task.klikatko %}
+                <div class = "w3-row klikatko-container">
+                    <div class = "w3-col w3-container l6">
+                        {% include "includes/code_with_controls.html" with rules_src=task.rules width=task.klikatko_width height=task.klikatko_height %}
+        
+                        <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space-large"></div>
+        
+                        {% include "includes/map_controls.html" %}
+                    </div>
+        
+                    <!-- Map -->
+                    <div class = "w3-col w3-container l6">
+                        <canvas id="automata"></canvas>
+                    </div>
+                </div>
+                {% endif %}
+        
+                {% if task.should_submit %}
+                    {% include "includes/modal_submit.html" %}
+                {% endif %}
+            </div>
 
-            </div>
-            {% if task.should_submit %}
-            <div class="w3-center">
-                <button class="w3-button w3-margin w3-center w3-padding-large w3-red" onclick="document.getElementById('modal-submit').style.display='block';">Odevzdat řešení</button>
-            </div>
-            {% endif %}
+    
+            {% include "includes/footer.html" %}
         </div>
-
-        {% if task.klikatko %}
-        <div class = "w3-row klikatko-container">
-            <div class = "w3-col w3-container l6">
-                {% include "includes/code_with_controls.html" with rules_src=task.rules width=task.klikatko_width height=task.klikatko_height %}
-
-                <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space-large"></div>
-
-                {% include "includes/map_controls.html" %}
-            </div>
-
-            <!-- Map -->
-            <div class = "w3-col w3-container l6">
-                <canvas id="automata"></canvas>
-            </div>
-        </div>
-        {% endif %}
-
-        {% if task.should_submit %}
-            {% include "includes/modal_submit.html" %}
-        {% endif %}
-
-        {% include "includes/footer.html" %}
     </body>
 </html>

@@ -18,8 +18,20 @@ body {
     text-align: justify;
 }
 
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+#page-content {
+    padding-bottom: 100px;
+}
+
 footer {
     margin-top: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 input[type="text"], input[type="password"], textarea, select, button { 
@@ -29,6 +41,17 @@ input[type="text"], input[type="password"], textarea, select, button {
 #width-input, #height-input {
     border: none !important;
     outline: none;
+}
+
+.task-ok {
+}
+
+.task-nok {
+    color: red;
+}
+
+.task-no {
+    color: orange;
 }
 
 #console {
@@ -66,6 +89,7 @@ input[type="text"], input[type="password"], textarea, select, button {
 
 #automata {
     width: 100%;
+    max-width: 500px;
 }
 
 .selected {

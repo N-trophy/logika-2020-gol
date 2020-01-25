@@ -65,6 +65,8 @@ class World {
 
     nextTick(){
         if (this.isStepper) {
+            $('#console-info').text('Počítám další krok...');
+            $('#console-info').removeClass('warning');
             $.ajax({
                 type: 'POST',
                 url: '/task/' + this.taskId + '/step',
@@ -77,14 +79,16 @@ class World {
                     "X-CSRFToken": CSRF_TOKEN,
                 },
                 success: ((response)=>{
-                    let grid_pure_text = response.grid.replace('\n', '');
+                    let grid_pure_text = response.grid;
+
                     for (let j=0; j<this.height; j++){
                         for (let i=0; i<this.width; i++){
-                            this.automata.setCell(i, j, grid_pure_text[i + this.width * j]);
+                            this.automata.setCell(grid_pure_text[i + (this.width+1) * j], i, j);
                         }
                     }
                     $('#console-info').text('Krok proveden.');
                     $('#console-info').removeClass('warning');
+                    this.drawTable();
                 }),
                 error: ((xhr)=>{
                     $('#console-info').text(xhr.responseText);
@@ -106,8 +110,8 @@ class World {
             }
     
             this.automata.nextTick();
+            this.drawTable();
         }
-        this.drawTable();
     }
 
     oneTick(){
