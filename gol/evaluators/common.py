@@ -1,10 +1,12 @@
 from typing import Callable, Tuple, Dict, Any, Union
 import copy
 import itertools
+import pyparsing
 
 from gol.models import Task
 from gol.common import Grid, Reporter, Color, Point2D, grid_colors_valid
-from gol.rules_parser import Rule
+from gol.rules_parser import Rule, parse
+import gol.rules_parser.comparison
 
 Ok = bool
 Score = float
@@ -16,6 +18,40 @@ Evaluator = Callable[[Task, Rules, Grid, Reporter, Reporter],
 def eval_empty(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
                user_reporter: Reporter) -> Tuple[Ok, Score]:
     return (True, 1)
+
+
+def eval_same_func(task: Task, rules: Rules, grid: Grid,
+                   int_reporter: Reporter,
+                   user_reporter: Reporter) -> Tuple[Ok, Score]:
+    author_rules = parse(task.rules, task.allowed_colors)
+
+    try:
+        participant_rules = parse(rules, task.allowed_colors)
+    except pyparsing.ParseException as e:
+        user_reporter(f'[ERR] Napodařilo se načíst pravidla: {str(e)}')
+        return (False, 0)
+
+    out_grida = Grid.fromfill(3, 3)
+    out_gridb = Grid.fromfill(3, 3)
+    for grid in all_neighbors(task.allowed_colors):
+        tick_pos(grid, out_grida, participant_rules, (1, 1),
+                 task.global_config())
+        tick_pos(grid, out_gridb, author_rules, (1, 1), task.global_config())
+
+        if out_grida[1][1] != out_gridb[1][1]:
+            int_reporter(f'[ERR] Selhalo na mřížce: {grid}')
+            return (False, 0)
+
+    return (True, 0)
+
+
+def compares_count(rules: Rules) -> int:
+    comparisons_cnt = sum([
+        rules.count(comparator)
+        for comparator in gol.rules_parser.comparison.COMPARES.keys()
+    ])
+
+    return comparisons_cnt
 
 
 def tick_pos(grid: Grid, new_grid: Grid, rule: Union[Rule, Color],
