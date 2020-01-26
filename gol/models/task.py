@@ -22,7 +22,6 @@ class Task(models.Model):
     klikatko = models.BooleanField(default=True)
     klikatko_width = models.IntegerField(default=25)
     klikatko_height = models.IntegerField(default=25)
-    rules_editor = models.BooleanField(default=True)
     allowed_colors = models.CharField(default='rgbk', max_length=64)
     start_config = models.TextField(default='', blank=True)
     rules = models.TextField(default='', blank=True)
