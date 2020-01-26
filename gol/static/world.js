@@ -16,7 +16,7 @@ class World {
         this.canvas.height = this.canvas.width = 500;
         this.ctx = this.canvas.getContext('2d');
 
-        this.init(width, height, new ConstantRule('k'));
+        this.init(width, height, new ConstantRule(this.colors[0]));
 
         this.loopSet = false;
 
@@ -27,7 +27,7 @@ class World {
         else this.switchToPlane();
         this.selectColor('r');
 
-        this.historyLength = 3;
+        this.historyLength = 10;
 
         this.mapConfig = mapConfig;
         if (mapConfig) this.onLoadFile(mapConfig, false);
@@ -35,6 +35,9 @@ class World {
         this.loaded = false;
 
         this.loadSource(editor, false);
+        this.stop();
+
+        this.mightTick = true;
     }
 
     init(width, height, rules){
@@ -65,6 +68,9 @@ class World {
     }
 
     nextTick(){
+        if (!this.mightTick) return false;
+        this.mightTick = false;
+        
         const table = this.automata.getCurrentTable();
         const level = Array(table.length);
         for (let x = 0; x < table.length; x++) {
@@ -103,6 +109,8 @@ class World {
                     $('#console-info').text('Krok proveden.');
                     $('#console-info').removeClass('warning');
                     this.drawTable();
+
+                    this.mightTick = true;
                 }),
                 error: ((xhr)=>{
                     $('#console-info').text(xhr.responseText);
@@ -112,7 +120,10 @@ class World {
         } else {
             this.automata.nextTick();
             this.drawTable();
+
+            this.mightTick = true;
         }
+        return true;
     }
 
     oneTick(){
@@ -130,18 +141,30 @@ class World {
         this.drawTable();
     }
 
+    toggleRun() {
+        if (!this.run()) this.stop();
+    }
+
     run() {
-        if (this.loopSet) return;
+        if (this.loopSet) return false;
+        $('#run-btn').addClass('warning');
+        $('#run-btn').text('zastavit');
 
         this.loop = setInterval(this.nextTick.bind(this), 100);
         this.loopSet = true;
+
+        return true;
     }
 
     stop() {
-        if (!this.loopSet) return;
+        if (!this.loopSet) return false;
+        $('#run-btn').removeClass('warning');
+        $('#run-btn').text('spustit');
 
         clearInterval(this.loop);
         this.loopSet = false;
+
+        return true;
     }
 
     save() {
