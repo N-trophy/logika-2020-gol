@@ -1,5 +1,5 @@
 class World {
-    constructor(rootId, width=25, height=25, rules='k', type='PLANE', colors='rgbk', mapConfig=undefined, taskId=undefined, isStepper=false) {
+    constructor(rootId, width=25, height=25, rules='k', type='PLANE', colors='krgb', mapConfig=undefined, taskId=undefined, isStepper=false) {
         this.pallet = {
             'r': '#f00f',
             'g': '#0f0f',
@@ -70,7 +70,7 @@ class World {
     nextTick(){
         if (!this.mightTick) return false;
         this.mightTick = false;
-        
+
         const table = this.automata.getCurrentTable();
         const level = Array(table.length);
         for (let x = 0; x < table.length; x++) {

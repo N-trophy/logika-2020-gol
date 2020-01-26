@@ -77,8 +77,14 @@ input[type="text"], input[type="password"], textarea, select, button {
     margin-bottom: 100px;
 }
 
-.klikatko-container {
-    margin: 50px;
+.klikatko-container  {
+    margin: 50px 0;
+}
+
+@media (min-width: 992px){
+    .klikatko-container  {
+        margin: 50px;
+    }
 }
 
 .CodeMirror, .CodeMirror-cursor, .CodeMirror-cursor, .CodeMirror-gutters {
@@ -90,6 +96,10 @@ input[type="text"], input[type="password"], textarea, select, button {
 #automata {
     width: 100%;
     max-width: 500px;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
 }
 
 .selected {

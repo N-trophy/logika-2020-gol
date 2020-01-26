@@ -1,6 +1,6 @@
 <div>
     <!-- Console -->
-    <textarea id="console" class = "w3-col w3-container l12">{% firstof rules_src "k" %}
+    <textarea id="console" class = "w3-col w3-container l12">{% firstof rules_src task.allowed_colors.0 "k" %}
 </textarea>
 
     <!-- First line -->
@@ -28,20 +28,20 @@
     <div>
         <!-- Map resolution -->
         <div>
-            <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
+            <div class = "w3-col w3-container s2 m1 l1 w3-white w3-padding">
                 x:
             </div>
-            <input {% if task %} disabled {% endif %} id="width-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value={{ width }}></input>
+            <input {% if task %} disabled {% endif %} id="width-input" type="number" class = "w3-col w3-container s4 m3 l3 w3-white w3-input w3-padding" value={{ width }}></input>
 
-            <div class = "w3-col w3-container s1 m1 l1 w3-white w3-padding">
+            <div class = "w3-col w3-container s2 m1 l1 w3-white w3-padding">
                 y:
             </div>
-            <input {% if task %} disabled {% endif %} id="height-input" type="number" class = "w3-col w3-container s3 m3 l3 w3-white w3-input w3-padding" value={{ height }}></input>
+            <input {% if task %} disabled {% endif %} id="height-input" type="number" class = "w3-col w3-container s4 m3 l3 w3-white w3-input w3-padding" value={{ height }}></input>
         </div>
 
         <!-- Load button -->
-        <div id="load-btn" class = "w3-col w3-container s4 m4 l4 w3-button w3-padding" onclick="world.loadSource(editor, 'submit-info')">
-            načíst
+        <div id="load-btn" class = "w3-col w3-container s12 m4 l4 w3-button w3-padding" onclick="world.loadSource(editor, 'submit-info')">
+            načíst kód
         </div>
     </div>
 </div>

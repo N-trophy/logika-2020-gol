@@ -2,34 +2,34 @@
 <div>
     <!-- General -->
     <div>
-        <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.clear()">
+        <button class = "w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.clear()">
             vyčistit
         </button>
-        <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.fill()">
+        <button class = "w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.fill()">
             zaplnit
         </button>
 
         <!-- Map type -->
-        <button {% if task %} disabled {% endif %} id="plane-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchToPlane()">
+        <button {% if task %} disabled {% endif %} id="plane-btn" class="w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.switchToPlane()">
             rovina
         </button>
-        <button {% if task %} disabled {% endif %} id="torus-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchToTorus()">
+        <button {% if task %} disabled {% endif %} id="torus-btn" class="w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.switchToTorus()">
             torus
         </button>
 
         <!-- Load and save -->
-        <button id="load-last" disabled class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.load()">
+        <button id="load-last" disabled class = "w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.load()">
             načíst
         </button>
-        <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.save()">
+        <button class = "w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.save()">
             uložit
         </button>
 
         <!-- To and from files -->
-        <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="document.getElementById('modal-upload').style.display='block';">
+        <button class = "w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="document.getElementById('modal-upload').style.display='block';">
             ze souboru
         </button>
-        <button class = "w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.downloadMap();">
+        <button class = "w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.downloadMap();">
             do souboru
         </button>
     </div>
@@ -38,16 +38,16 @@
 
     <!-- Colors -->
     <div>
-        <button {% if "r" not in task.allowed_colors %} disabled {% endif %} class = "color-btn r w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('r')">
+        <button {% if "r" not in task.allowed_colors %} disabled {% endif %} class = "color-btn r w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.selectColor('r')">
             R
         </button>
-        <button {% if "g" not in task.allowed_colors %} disabled {% endif %} class = "color-btn g w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('g')">
+        <button {% if "g" not in task.allowed_colors %} disabled {% endif %} class = "color-btn g w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.selectColor('g')">
             G
         </button>
-        <button {% if "b" not in task.allowed_colors %} disabled {% endif %} class = "color-btn b w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('b')">
+        <button {% if "b" not in task.allowed_colors %} disabled {% endif %} class = "color-btn b w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.selectColor('b')">
             B
         </button>
-        <button {% if "k" not in task.allowed_colors %} disabled {% endif %} class = "color-btn k w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('k')">
+        <button {% if "k" not in task.allowed_colors %} disabled {% endif %} class = "color-btn k w3-col w3-container s6 m3 l3 w3-padding w3-button" onclick="world.selectColor('k')">
             K
         </button>
     </div>
