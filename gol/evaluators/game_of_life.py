@@ -13,7 +13,7 @@ def _eval_gol_min(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
     author_rules = parse(task.rules, task.allowed_colors)
 
     try:
-        participant_rules = parse(task.rules)
+        participant_rules = parse(rules, task.allowed_colors)
     except pyparsing.ParseException as e:
         user_reporter(f'[ERR] Napodařilo se načíst pravidla: {str(e)}')
         return (False, 0)
