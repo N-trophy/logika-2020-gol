@@ -32,7 +32,7 @@ class Task(models.Model):
     max_submissions = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return str(self.id)
+        return self.name
 
     def is_stepper(self) -> bool:
         return self.stepper_function != ''
