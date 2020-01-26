@@ -67,7 +67,7 @@ class World {
         return data;
     }
 
-    nextTick(){
+    nextTick(stepper){
         if (!this.mightTick) return false;
         this.mightTick = false;
 
@@ -84,7 +84,7 @@ class World {
             this.levelHistory.shift()
         }
 
-        if (this.isStepper) {
+        if (stepper) {
             $('#console-info').text('Počítám další krok...');
             $('#console-info').removeClass('warning');
             $.ajax({
@@ -126,9 +126,9 @@ class World {
         return true;
     }
 
-    oneTick(){
+    oneTick(stepper){
         this.stop();
-        this.nextTick();
+        this.nextTick(stepper);
     }
 
     prevTick(){
