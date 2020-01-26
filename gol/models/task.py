@@ -7,6 +7,9 @@ class TaskCategory(models.Model):
     name = models.CharField(max_length=128)
     order = models.IntegerField(unique=True, default=0)
 
+    def __str__(self):
+        return self.name
+
 
 class Task(models.Model):
     GRID_TYPE = [('PLANE', 'plane'), ('TORUS', 'torus')]
