@@ -10,10 +10,10 @@
         </button>
 
         <!-- Map type -->
-        <button id="plane-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchToPlane()">
+        <button {% if task %} disabled {% endif %} id="plane-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchToPlane()">
             rovina
         </button>
-        <button id="torus-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchToTorus()">
+        <button {% if task %} disabled {% endif %} id="torus-btn" class="w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.switchToTorus()">
             torus
         </button>
 
@@ -38,16 +38,16 @@
 
     <!-- Colors -->
     <div>
-        <button class = "color-btn r w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('r')">
+        <button {% if "r" not in task.allowed_colors %} disabled {% endif %} class = "color-btn r w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('r')">
             R
         </button>
-        <button class = "color-btn g w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('g')">
+        <button {% if "g" not in task.allowed_colors %} disabled {% endif %} class = "color-btn g w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('g')">
             G
         </button>
-        <button class = "color-btn b w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('b')">
+        <button {% if "b" not in task.allowed_colors %} disabled {% endif %} class = "color-btn b w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('b')">
             B
         </button>
-        <button class = "color-btn k w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('k')">
+        <button {% if "k" not in task.allowed_colors %} disabled {% endif %} class = "color-btn k w3-col w3-container s12 m6 l3 w3-padding w3-button" onclick="world.selectColor('k')">
             K
         </button>
     </div>

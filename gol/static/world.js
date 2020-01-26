@@ -25,10 +25,11 @@ class World {
 
         if (type=='TORUS') this.switchToTorus();
         else this.switchToPlane();
-        this.selectColor('g');
+        this.selectColor('r');
 
         this.historyLength = 3;
 
+        this.mapConfig = mapConfig;
         if (mapConfig) this.onLoadFile(mapConfig, false);
 
         this.loaded = false;
@@ -64,6 +65,19 @@ class World {
     }
 
     nextTick(){
+        const table = this.automata.getCurrentTable();
+        const level = Array(table.length);
+        for (let x = 0; x < table.length; x++) {
+            level[x] = Array(table[x].length);
+            for (let y = 0; y < table[x].length; y++) {
+                level[x][y] = table[x][y];
+            }
+        }
+        this.levelHistory.push(level);
+        if (this.levelHistory.length > this.historyLength) {
+            this.levelHistory.shift()
+        }
+
         if (this.isStepper) {
             $('#console-info').text('Počítám další krok...');
             $('#console-info').removeClass('warning');
@@ -96,19 +110,6 @@ class World {
                 })
             });
         } else {
-            const table = this.automata.getCurrentTable();
-            const level = Array(table.length);
-            for (let x = 0; x < table.length; x++) {
-                level[x] = Array(table[x].length);
-                for (let y = 0; y < table[x].length; y++) {
-                    level[x][y] = table[x][y];
-                }
-            }
-            this.levelHistory.push(level);
-            if (this.levelHistory.length > this.historyLength) {
-                this.levelHistory.shift()
-            }
-    
             this.automata.nextTick();
             this.drawTable();
         }
@@ -180,6 +181,10 @@ class World {
     }
 
     selectColor(c){
+        if (this.colors.indexOf(c) == -1) {
+            this.selectColor(this.colors[0]);
+            return;
+        }
         this.pickedColor = c;
         $('.color-btn').removeAttr('style')
         $('.color-btn.'+c).css({
@@ -285,7 +290,11 @@ class World {
     clear() {
         this.stop();
 
-        this.automata.fill('k');
+        if (this.mapConfig) {
+            this.onLoadFile(this.mapConfig, false)
+        } else {
+            this.automata.fill(this.colors[0]);
+        }
         this.drawTable();
     }
 

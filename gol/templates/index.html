@@ -130,7 +130,15 @@
                             <a class="w3-button" href="/task/{{ task.id }}">
                                 <div class="w3-padding-large w3-large">
                                     {{ task.name }}
-                                    <div class="task-{{ task.submitted }}">({{ task.submitted }})</div>
+                                    <div class="task-{{ task.submitted }}">
+                                        {% if task.submitted == "ok" %}
+                                        odevzdáno úspěšně
+                                        {% elif task.submitted == "nok" %}
+                                        odevzdáno neúspěšně
+                                        {% else %}
+                                        zatím neodevzdáno
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </a>
                         {% endif %}
