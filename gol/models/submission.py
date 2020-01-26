@@ -42,5 +42,6 @@ def submissions_remaining(user: User, task: Task):
 def submitted_ok(user: User) -> Dict[int, bool]:
     return {
         res['task']: res['ok']
-        for res in Submission.objects.values('task').annotate(ok=Max('ok'))
+        for res in Submission.objects.filter(user=user).
+                   values('task').annotate(ok=Max('ok'))
     }
