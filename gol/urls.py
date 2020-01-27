@@ -18,7 +18,7 @@ from django.contrib.auth import views as auth_views
 from django.shortcuts import redirect
 from django.urls import path
 
-from gol.endpoints import parse_rules, submit, step
+from gol.endpoints import parse_rules, submit, step, user_create
 import gol.views as views
 
 urlpatterns = [
@@ -33,4 +33,5 @@ urlpatterns = [
     path('task/<int:id>/submit', submit),
     path('task/<int:id>/step', step),
     path('help', views.help),
+    path('usercreate', user_create),
 ]
