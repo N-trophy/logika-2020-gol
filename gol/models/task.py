@@ -44,3 +44,6 @@ class Task(models.Model):
         return {
             'torus': self.grid_type == 'TORUS'
         }
+
+    def should_submit(self) -> bool:
+        return self.eval_function != ''

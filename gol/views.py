@@ -49,8 +49,6 @@ def task(request, *args, **kwargs):
     task.allowed_colors = task.allowed_colors.lower()
     task.start_config = task.start_config.replace("\r\n", "\\n")
 
-    task.should_submit = True
-
     context = {
         'user': request.user,
         'task': task,
