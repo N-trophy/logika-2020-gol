@@ -129,8 +129,8 @@
                         {% if task.category == category %}
                             <a class="w3-button" href="/task/{{ task.id }}">
                                 <div class="w3-padding-large w3-large">
-                                    {{ task.name }}
-                                    <div class="task-{{ task.submitted }}">
+                                    <div>{{ task.name }}</div>
+                                    <div class="task-status task-{{ task.submitted }}">
                                         {% if task.submitted == "ok" %}
                                         odevzdáno úspěšně
                                         {% elif task.submitted == "nok" %}

@@ -44,14 +44,23 @@ input[type="text"], input[type="password"], textarea, select, button {
 }
 
 .task-ok {
+    color: green;
 }
 
 .task-nok {
     color: red;
 }
 
-.task-no, .task-not {
+.task-no {
     color: orange;
+}
+
+.task-not {
+    color: grey;
+}
+
+.task-status {
+    font-size: small;
 }
 
 #console {
