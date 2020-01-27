@@ -135,6 +135,8 @@
                                         odevzdáno úspěšně
                                         {% elif task.submitted == "nok" %}
                                         odevzdáno neúspěšně
+                                        {% elif task.submitted == "not" %}
+                                        neodevzdává se přes web
                                         {% else %}
                                         zatím neodevzdáno
                                         {% endif %}

@@ -21,10 +21,13 @@ def index(request, *args, **kwargs):
     tasks = Task.objects.order_by('id').all()
     submitted = submitted_ok(request.user)
     for task in tasks:
-        if task.id in submitted:
-            task.submitted = 'ok' if submitted[task.id] else 'nok'
+        if task.should_submit():
+            if task.id in submitted:
+                task.submitted = 'ok' if submitted[task.id] else 'nok'
+            else:
+                task.submitted = 'no'
         else:
-            task.submitted = 'no'
+            task.submitted = 'not'
 
     context = {
         'user': request.user,

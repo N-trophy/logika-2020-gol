@@ -50,7 +50,7 @@ input[type="text"], input[type="password"], textarea, select, button {
     color: red;
 }
 
-.task-no {
+.task-no, .task-not {
     color: orange;
 }
 
