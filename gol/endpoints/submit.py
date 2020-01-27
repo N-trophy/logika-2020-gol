@@ -4,7 +4,6 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 import traceback
 import json
-from django.contrib.auth.models import User
 
 from gol.models import Submission, Task
 from gol.models.submission import no_submissions, submissions_remaining
@@ -29,7 +28,7 @@ def submit(request, *args, **kwargs):
 
     done_evaluations = no_submissions(request.user, task)
     if (task.max_submissions > 0 and done_evaluations >= task.max_submissions
-        and not request.user.is_superuser):
+            and not request.user.is_superuser):
         return HttpResponseForbidden('Reached limit of submissions!')
 
     submission = Submission(

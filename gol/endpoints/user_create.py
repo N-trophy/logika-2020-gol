@@ -20,7 +20,7 @@ def user_create(request, *args, **kwargs):
             email=email,
             is_active=True,
         )
-        u.pwd = User.objects.make_random_password()
+        u.pwd = (User.objects.make_random_password(), )
         u.set_password(u.pwd[0])
         users.append(u)
 
