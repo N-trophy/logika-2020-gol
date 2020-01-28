@@ -1,74 +1,82 @@
 <!DOCTYPE html>
 <html lang="cs">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
-     crossorigin="anonymous">
-    <script src="/static/core.js"></script>
-    <script>
-        CSRF_TOKEN = "{{ csrf_token }}"
-    </script>
-    <title>Popis systému – Kvalifikace logika N-trophy X</title>
-    <link rel="shortcut icon" type="image/png" href="/static/img/logo.png"/>
-    <meta charset="UTF-8">
-</head>
-<body>
-    <div id="page-container">
-        <div id="page-content">
-            {% include "includes/navbar.html" %}
-            
-            <div id="info" class="w3-container">
-                <div class="w3-content">
-                    <h1 class="w3-center">Popis systému</h1>
-                    <h2>Klikátko</h2>
-                    <h3>Prostor pro zápis pravidel</h3>
-                    <ul>
-                        <li>Prostor pro zápis pravidel se nachází na levé straně. Zapisujete do něj vždy <i>právě jedno</i> přechodové pravidlo. (O způsobu zápisu pravidel se dočtete dále.)</li>
-                        <li>Simulaci můžete spouštět buďto souvisle, anebo po krocích (po jednotlivých iteracích).</li>
-                        <li>Před jejím spuštěním je potřeba kód načíst. K tomu slouží tlačítko "načíst kód" vpravo dole.</li>
-                        <li>Nad ním se vám budou objevovat chybové hlášky. Doporučujeme je číst, mohou vám ušetřit spoustu času.</li>
-                        <li>Můžete zde také měnit velikost mřížky.</li>
-                    </ul>
-                    <h3>Mřížka</h3>
-                    <ul>
-                        <li>Mřížka se nachází napravo od Prostoru pro zápis pravidel, pod kterým najdete tlačítka pro její ovládání.</li>
-                        <li>Její počáteční konfiguraci si můžete vyklikat ručně, načíst ze souboru, nebo obnovit dříve uloženou (tlačítko načíst). Stejně tak si můžete aktuální konfiguraci uložit - ať už do souboru, nebo pouze pro tuto chvíli (tlačítko uložit). Před zadáváním si nezapomeňte zvolit barvu.</li>
-                        <li>Mřížka může, ale nemusí fungovat jako torus (co to znamená se dočtete v úlohách, které s ním pracují). Tuto její vlastnost si můžete nastavit pomocí tlačítek torus/rovina.</li>
-                    </ul>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+         integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+         crossorigin="anonymous">
+        <script src="/static/core.js"></script>
+        <script>
+            CSRF_TOKEN = "{{ csrf_token }}"
+        </script>
+        <title>Popis systému – Kvalifikace logika N-trophy X</title>
+        <link rel="shortcut icon" type="image/png" href="/static/img/logo.png"/>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <div id="page-container">
+            <div id="page-content">
+                {% include "includes/navbar.html" %}
+
+                <div id="info" class="w3-container">
+                    <div class="w3-content">
+                        <h1 class="w3-center">Popis systému</h1>
+                        <h2>Klikátko</h2>
+                        <h3>Prostor pro zápis pravidel</h3>
+                        <ul>
+                            <li>Prostor pro zápis pravidel se nachází na levé straně. Zapisujete do něj vždy <i>právě jedno</i> přechodové pravidlo. (O způsobu zápisu pravidel se dočtete dále.)</li>
+                            <li>Simulaci můžete spouštět buďto souvisle, anebo po krocích (po jednotlivých iteracích).</li>
+                            <li>Před jejím spuštěním je potřeba kód načíst. K tomu slouží tlačítko "načíst kód" vpravo dole.</li>
+                            <li>Nad ním se vám budou objevovat chybové hlášky. Doporučujeme je číst, mohou vám ušetřit spoustu času.</li>
+                            <li>Můžete zde také měnit velikost mřížky.</li>
+                        </ul>
+                        <h3>Mřížka</h3>
+                        <ul>
+                            <li>Mřížka se nachází napravo od Prostoru pro zápis pravidel, pod kterým najdete tlačítka pro její ovládání.</li>
+                            <li>Její počáteční konfiguraci si můžete vyklikat ručně, načíst ze souboru, nebo obnovit dříve uloženou (tlačítko načíst). Stejně tak si můžete aktuální konfiguraci uložit - ať už do souboru, nebo pouze pro tuto chvíli (tlačítko uložit). Před zadáváním si nezapomeňte zvolit barvu.</li>
+                            <li>Mřížka může, ale nemusí fungovat jako torus (co to znamená se dočtete v úlohách, které s ním pracují). Tuto její vlastnost si můžete nastavit pomocí tlačítek torus/rovina.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="rules" class="w3-container">
+                    <div class="w3-content">
+                        <h2>Zápis pravidel</h2>
+                        <p>Přechodové pravidlo popisuje chování každé buňky pro každý další krok simulace (pro každou další iteraci) na základě její barvy a barev okolních 8 buněk v aktuálním kroku (v aktuální konfiguraci). Zadáváte pouze <i>jedno</i> přechodové pravidlo, které se skládá ze dvou větví (if/else; každá z nich zakončená dvojtečkou).</p>
+                        <p><i>If větev</i> obsahuje podmínku, která se může skládat i z více výrazů spojených logickými spojkami (OR, AND).</p>
+                        <p>Pokud je podmínka splněna (je vyhodnocena jako pravdivá), provede se kód, který za ní následuje (začíná na následujícím řádku za odsazením). Jinak se provde kód ve větvi else - opět začínající na následujícím řádku za odsazením. Tímto kódem může být buďto písmeno značící barvu, nebo další podmínka (která se bude opět skládat ze dvou větví - if/else).</p>
+                        <p>Podmínka, respektive výraz v ní, se skládá ze 3 částí: Selektor, Porovnávací operátor, jiný selektor/číslo</p>
+                        <p>Selektor se skládá z 9 symbolů. Těmito symboly mohou být písmena pro označení jednotlivých barev, nebo pomlčka "-". Těchto 9 symbolů popisuje po řádcích bezprostřední okolí daného políčka (představte si tabulku 3x3 - popisované políčko se nachází v jejím středu).</p>
+                        <p>Příklad - zápis (bbb--r--b) značí následující rozložení:</p>
+                        <table id="selector_table">
+                            <tr><td>b</td><td>b</td><td>b</td></tr>
+                            <tr><td>-</td><td id="center_cell">-</td><td>r</td></tr>
+                            <tr><td>-</td><td>-</td><td>b</td></tr>
+                        </table>
+                        <p>Povolené barvy jsou: <font color="red">r - červená</font>, <font color="blue">b - modrá</font>, <font color="green">g - zelená</font>, <font color="grey">k - šedá</font></p>
+                        <p>"-" označuje políčko libovolné barvy, které v konkrétním pravidle neuvažujeme.</p>
+                        <p>Selektor představuje číslo značící počet polí, která se shodují s reálnou konfigurací. Pole s "-" se nepočítají.</p>
+                        <p>Porovnávací operátory jsou: <, <=, >, >=, ==, !=</p>
+                        <p>Dále můžete využívat násobení (*), sčítání (+), dělení (/), odčítání (-) a modulo (%).</p>
+                        <p>Vytvářejte vždy pouze <i>jedno</i> pravidlo (jednu hlavní podmínku if) s libovolným počtem vnořených podmínek. Pro ty, kteří již mají nějaké zkušenosti s programováním - větve typu elif/ else if zde nepoužívejte.</p>
+                    </div>
+                    <div id="rule_example" class="w3-content">
+                        <h3>Příklad pravidla</h3>
+                        <p class="rule_example_description">Pravidlo zkoumá, jestli je v horním řádku alespoň 1 modrá nebo jsou alespoň 2 modré ve spodním řádku. Pokud ano (tedy platí alespoň jedna z podmínek), tak zjišťuje, jestli je celkem alespoň 5 šedých. Když platí obě pravidla, tak bude prostřední buňka modrá. Pokud platí pouze první pravidlo, tak bude šedá. Pokud neplatí ani první pravidlo, prostřední buňka bude modrá.</p>
+                        <p class="zero_indent"> if (bbb------ >= 1) or (------bbb >= 2):</p>
+                        <p class="first_indent">if (kkkkkkkkk >= 5):</p>
+                        <p class="second_indent">b</p>
+                        <p class="first_indent">else:</p>
+                        <p class="second_indent">k</p>
+                        <p class="zero_indent">else:</p>
+                        <p class="first_indent">b</p>
+                    </div>
                 </div>
             </div>
-
-            <div id="rules" class="w3-container">
-                <div class="w3-content">
-                    <h2>Zápis pravidel</h2>
-                    <p>Přechodové pravidlo popisuje chování každé buňky pro každý další krok simulace (pro každou další iteraci) na základě její barvy a barev okolních 8 buněk v aktuálním kroku (v aktuální konfiguraci). Zadáváte pouze <i>jedno</i> přechodové pravidlo, které se skládá ze dvou větví (if/else; každá z nich zakončená dvojtečkou).</p>
-                    <p><i>If větev</i> obsahuje podmínku, která se může skládat i z více výrazů spojených logickými spojkami (OR, AND).</p>
-                    <p>Pokud je podmínka splněna (je vyhodnocena jako pravdivá), provede se kód, který za ní následuje (začíná na následujícím řádku za odsazením). Jinak se provde kód ve větvi else - opět začínající na následujícím řádku za odsazením. Tímto kódem může být buďto písmeno značící barvu, nebo další podmínka (která se bude opět skládat ze dvou větví - if/else).</p>
-                    <p>Podmínka, respektive výraz v ní, se skládá ze 3 částí: Selektor, Porovnávací operátor, jiný selektor/číslo</p>
-                    <p>Selektor se skládá z 9 symbolů. Těmito symboly mohou být písmena pro označení jednotlivých barev, nebo pomlčka "-". Těchto 9 symbolů popisuje po řádcích bezprostřední okolí daného políčka (představte si tabulku 3x3 - popisované políčko se nachází v jejím středu).</p>
-                    <p>Příklad - zápis (bbb--r--b) značí následující rozložení:</p>
-                    <table id="selector_table">
-                        <tr><td>b</td><td>b</td><td>b</td></tr>
-                        <tr><td>-</td><td id="center_cell">-</td><td>r</td></tr>
-                        <tr><td>-</td><td>-</td><td>b</td></tr>
-
-                    </table>
-                    <p>Povolené barvy jsou: <font color="red">r - červená</font>, <font color="blue">b - modrá</font>, <font color="green">g - zelená</font>, <font color="grey">k - šedá</font></p>
-                    <p>"-" označuje políčko libovolné barvy, které v konkrétním pravidle neuvažujeme.</p>
-                    <p>Selektor představuje číslo značící počet polí, která se shodují s reálnou konfigurací. Pole s "-" se nepočítají.</p>
-                    <p>Porovnávací operátory jsou: <, <=, >, >=, ==, !=</p>
-                    <p>Dále můžete využívat násobení (*), sčítání (+), dělení (/), odčítání (-) a modulo (%).</p>
-                    <p>Vytvářejte vždy pouze <i>jedno</i> pravidlo (jednu hlavní podmínku if) s libovolným počtem vnořených podmínek. Pro ty, kteří již mají nějaké zkušenosti s programováním - větve typu elif/ else if zde nepoužívejte.</p>
-                </div>
-            </div>
-
+            {% include "includes/footer.html" %}
         </div>
-        {% include "includes/footer.html" %}
-    </div>
-
-</body>
+    </body>
 </html>
