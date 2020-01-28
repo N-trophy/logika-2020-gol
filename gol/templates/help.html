@@ -254,6 +254,47 @@ else:
     Pokud platí pouze první pravidlo, tak bude šedá. Pokud neplatí ani první
     pravidlo, prostřední buňka bude modrá.</p>
 
+
+    <h3>Pro pokročilé: gramatika jazyka pravidel</h3>
+
+    <p>Pokud byste měli nějaké nejasnosti, můžete nahlédnout do gramatiky
+    jazyka pro zápis přechodových pravidel tak, jak ji akceptuje nástoj
+    <code>pyparsing</code>.</p>
+
+<code><pre>
+color = Word(allowed_colors, exact=1)
+integer = Word(string.digits)
+
+selector = Word(allowed_colors + '-', exact=1) * 9
+
+num_operation = infixNotation(
+    (selector | integer),
+    [
+        ('*', 2, opAssoc.LEFT),
+        ('/', 2, opAssoc.LEFT),
+        ('+', 2, opAssoc.LEFT),
+        ('-', 2, opAssoc.LEFT),
+        ('%', 2, opAssoc.LEFT),
+    ]
+)
+
+operator = oneOf('&gt;= &lt;= != &gt; &lt; ==')
+comparison_token = num_operation | selector | integer
+comparison = (comparison_token + operator + comparison_token)
+
+bool_expr = infixNotation(
+    comparison,
+    [
+        ('and', 2, opAssoc.LEFT),
+        ('or', 2, opAssoc.LEFT),
+    ]
+)
+
+rule = Forward()
+condition = Word('if') + bool_expr + Word(':') + rule + Word('else:') + rule
+rule &lt;&lt; (condition | color)
+</pre></code>
+
 </div>
 </div>
 {% include "includes/footer.html" %}
