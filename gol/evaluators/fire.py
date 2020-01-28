@@ -6,7 +6,7 @@ from gol.rules_parser import parse
 from .common import Ok, Score, Rules, tick, validate_grid_colors, \
                     validate_grid_size
 
-ITER_LIMIT = 100
+ITER_LIMIT = 50
 
 
 @validate_grid_colors
