@@ -15,7 +15,7 @@ def eval_loop(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
 
     grid2 = tick(grid, rules, task.global_config())
     if grid2 == grid:
-        user_reporter('[ERR] Konfigurace ve po 2. kroku je stejná jako '
+        user_reporter('[ERR] Konfigurace po 2. kroku je stejná jako '
                       'počáteční konfigurace!')
         return (False, 0)
 
