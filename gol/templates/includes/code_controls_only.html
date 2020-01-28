@@ -1,23 +1,23 @@
 <!-- Code controls -->
 <div>
     {% if task.is_stepper %}
-        <button class = "w3-col w3-container s3 m3 l3 w3-padding w3-button" onclick="world.prevTick()">
+        <button class="w3-col w3-container s3 m3 l3 w3-padding w3-button" onclick="world.prevTick()">
             zpět
         </button>
-        <button id="run-btn" class = "w3-col w3-container s3 m3 l3 w3-padding w3-button" onclick="world.toggleRun()">
+        <button id="run-btn" class="w3-col w3-container s3 m3 l3 w3-padding w3-button" onclick="world.toggleRun()">
             spustit
         </button>
-        <button class = "w3-col w3-container s3 m3 l3 w3-padding w3-button" onclick="world.oneTick()">
+        <button class="w3-col w3-container s3 m3 l3 w3-padding w3-button" onclick="world.oneTick()">
             další
         </button>
-        <button class = "w3-col w3-container s3 m3 l3 w3-padding w3-button" onclick="world.oneTick(true)">
+        <button class="w3-col w3-container s3 m3 l3 w3-padding w3-button" onclick="world.oneTick(true)">
             další – tajné
         </button>
     {% else %}
-        <button class = "w3-col w3-container s4 m4 l4 w3-padding w3-button" onclick="world.prevTick()">
+        <button class="w3-col w3-container s4 m4 l4 w3-padding w3-button" onclick="world.prevTick()">
             zpět
         </button>
-        <button id="run-btn" class = "w3-col w3-container s4 m4 l4 w3-padding w3-button" onclick="world.toggleRun()">
+        <button id="run-btn" class="w3-col w3-container s4 m4 l4 w3-padding w3-button" onclick="world.toggleRun()">
             spustit
         </button>
         <button class = "w3-col w3-container s4 m4 l4 w3-padding w3-button" onclick="world.oneTick()">
