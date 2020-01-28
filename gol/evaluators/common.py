@@ -45,9 +45,10 @@ def eval_same_func(task: Task, rules: Rules, grid: Grid,
     return (True, 0)
 
 
-def compares_count(rules: Rules) -> int:
+def compares_count(rules: str) -> int:
+    rules_ = rules.replace('>=', '>').replace('<=', '<')
     comparisons_cnt = sum([
-        rules.count(comparator)
+        rules_.count(comparator)
         for comparator in gol.rules_parser.comparison.COMPARES.keys()
     ])
 
