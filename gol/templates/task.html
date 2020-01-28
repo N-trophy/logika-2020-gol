@@ -34,7 +34,7 @@
 
                 <!-- Navbar -->
                 {% include "includes/navbar.html" %}
-        
+
                 <div class="w3-container">
                     <div id="task-header">
                         <h2>{{ task.name }}</h2>
@@ -47,7 +47,7 @@
                             <li>Zbývající počet odevzdání: <a class="remaining_submissions">{{ remaining_submissions }}</a></li>
                             {% endif %}
                         </ol>
-        
+
                     </div>
                     {% if task.should_submit %}
                     <div class="w3-center">
@@ -55,30 +55,30 @@
                     </div>
                     {% endif %}
                 </div>
-        
+
                 {% if task.klikatko %}
                 <div class = "w3-row klikatko-container">
                     <div class = "w3-col w3-container l6">
                         {% include "includes/code_with_controls.html" with rules_src=task.rules width=task.klikatko_width height=task.klikatko_height %}
-        
+
                         <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
-        
+
                         {% include "includes/map_controls.html" %}
                     </div>
-        
+
                     <!-- Map -->
                     <div class = "w3-col w3-container l6">
                         <canvas id="automata"></canvas>
                     </div>
                 </div>
                 {% endif %}
-        
+
                 {% if task.should_submit %}
                     {% include "includes/modal_submit.html" %}
                 {% endif %}
             </div>
 
-    
+
             {% include "includes/footer.html" %}
         </div>
     </body>

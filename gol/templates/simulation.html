@@ -32,20 +32,20 @@
 
                 <!-- Navbar -->
                 {% include "includes/navbar.html" %}
-    
+
                 <header class = "w3-container w3-center">
                     <h2>Klikátko</h2>
                 </header>
-    
+
                 <div class = "w3-row">
                     <div class = "w3-col w3-container l6">
                         {% include "includes/code_with_controls.html" with width=25 height=25%}
-    
+
                         <div class = "w3-col w3-container s12 m12 l12 w3-padding v-space"></div>
-    
+
                         {% include "includes/map_controls.html" %}
                     </div>
-    
+
                     <!-- Map -->
                     <div class = "w3-col w3-container l6">
                         <canvas id="automata"></canvas>
