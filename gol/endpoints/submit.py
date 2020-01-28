@@ -2,12 +2,13 @@ from django.http import JsonResponse, HttpResponseBadRequest, \
         HttpResponseNotFound, HttpResponseForbidden
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 import traceback
 import json
 
 from gol.models import Submission, Task
 from gol.models.submission import no_submissions, submissions_remaining
-from gol.common import Reporter, Grid
+from gol.common import Reporter, Grid, QUALIFICATION_END
 import gol.evaluators as evaluators
 
 
@@ -17,6 +18,9 @@ def submit(request, *args, **kwargs):
     data = json.loads(request.body.decode('utf-8'))
     rules = data['rules']
     grid = data['grid']
+
+    if timezone.now() >= QUALIFICATION_END and not request.user.is_superuser:
+        return HttpResponseForbidden('Qualification ended!')
 
     try:
         task = Task.objects.get(id=kwargs['id'])
