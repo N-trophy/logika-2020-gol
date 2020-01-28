@@ -25,6 +25,9 @@ def eval_fire(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
             if author_grid[y][x] == 'g' and grid[y][x] == 'k':
                 user_reporter(f'[ERR] Zelená pole nelze přebarvovat na šedo!')
                 return (False, 0)
+            if author_grid[y][x] == 'b' and grid[y][x] != 'b':
+                user_reporter(f'[ERR] Modrá pole nelze přebarvovat!')
+                return (False, 0)
             if grid[y][x] == 'r':
                 if author_grid[y][x] != 'g':
                     user_reporter('[ERR] Na červeno lze přebarvit jen zelené '
