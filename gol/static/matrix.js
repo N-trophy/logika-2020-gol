@@ -1,7 +1,7 @@
 class MatrixText {
     constructor(canvasId){
         this.canvasId = canvasId
-        
+
         this.pallet = {
             black: '#000',
             black_filter: '#0001',
@@ -9,30 +9,8 @@ class MatrixText {
             red: '#f00',
         }
 
-        this.numbers = {
-            1: [
-                [0,0,1,1,0],
-                [0,1,1,1,0],
-                [1,1,1,1,0],
-                [1,0,1,1,0],
-                [0,0,1,1,0],
-                [0,0,1,1,0],
-                [0,0,1,1,0],
-                [0,0,1,1,0],
-                [0,1,1,1,1],
-            ],
-            2: [
-                [0,1,1,1,0],
-                [1,1,1,1,1],
-                [1,1,0,1,1],
-                [0,0,0,1,1],
-                [0,0,0,1,1],
-                [0,0,1,1,1],
-                [1,1,1,1,0],
-                [1,1,0,0,0],
-                [1,1,1,1,1],
-            ],
-            ntrophy: [
+        this.pictures = {
+            'ntrophy': [
                 [0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,
                  ,],[0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,
                  ,],[0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,
@@ -106,47 +84,60 @@ class MatrixText {
                  ,],[0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,
                  ,],[0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,
                  ,],[0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,
-                 ,],[0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,],]                
+                 ,],[0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,],]
         }
 
         // Get the canvas node and the drawing context
-        this.canvas = document.getElementById(canvasId);
+        this.canvas = document.getElementById(this.canvasId);
         this.ctx = this.canvas.getContext('2d');
-        
+
+        this.reload();
+    }
+
+    reload() {
         // set the width and height of the canvas
         this.width = this.canvas.width = document.body.offsetWidth;
         this.height = this.canvas.height = document.body.offsetHeight;
-        
+
         // draw a black rectangle of width and height same as that of the canvas
         this.ctx.fillStyle = this.pallet.black;
         this.ctx.fillRect(0, 0, this.width, this.height);
-        
+
+        // set matrix rows and cols
+        if (this.width > this.height) {
+            this.matrixRows = 80;
+            this.matrixCols = Math.floor(this.matrixRows *  this.width / this.height);
+        }
+        else {
+            this.matrixCols = 80;
+            this.matrixRows = Math.floor(this.matrixCols * this.height / this.width);
+        }
+
         // init character pointers
-        this.cols = 150;
-        this.colWidth  = this.width / this.cols;
-        this.pointers = Array(this.cols);
-        this.ptrNum = 5
-        for (let i=0; i<this.cols; i++) {
-            this.pointers[i] = Array();
+        this.colWidth  = this.width / this.matrixCols;
+        this.pointers = Array(this.matrixCols);
+        this.ptrNum = Math.floor(this.matrixRows / 16);
+        for (let i=0; i<this.matrixCols; i++) {
+            this.pointers[i] = Array(this.ptrNum);
             for (let j=0; j<this.ptrNum; j++){
-                this.pointers[i].push(Math.floor(Math.random() * 50));
+                this.pointers[i][j] = Math.floor(Math.random() * this.matrixRows);
             }
         }
 
         // init color mapping for characters
-        this.colorMap = Array(this.cols);
-        for (let i=0; i<this.cols; i++) {
-            this.colorMap[i] = Array(100);
-            for (let j=0; j<this.cols; j++) {
+        this.colorMap = Array(this.matrixCols);
+        for (let i=0; i<this.colorMap.length; i++) {
+            this.colorMap[i] = Array(this.matrixRows);
+            for (let j=0; j<this.colorMap[i].length; j++) {
                 this.colorMap[i][j] = this.pallet.green;
             }
         }
 
-        this.addButton(35, 6, 'ntrophy');
+        this.addPictureInCenter('ntrophy');
 
         this.run()
     }
-    
+
     run() {
         if (this.matrixRunning) return;
         this.matrixRunning = true;
@@ -162,31 +153,48 @@ class MatrixText {
         window.clearInterval(this.interval);
     }
 
-    addButton(x, y, number) {
-        const numberWidth = this.numbers[number][0].length;
-        const numberheight = this.numbers[number].length;
-        for (let i=0; i<numberWidth; i++) {
-            for (let j=0; j<numberheight; j++) {
-                this.colorMap[x+i][y+j] = this.numbers[number][j][i] ? this.pallet.red : this.pallet.green;
-            }    
+    addPicture(x, y, picName) {
+        let pictureWidth = this.pictures[picName][0].length;
+        let pictureHeight = this.pictures[picName].length;
+        for (let i=0; i<pictureWidth && x+i<this.colorMap.length; i++) {
+            if (x+i<0) continue;
+            for (let j=0; j<pictureHeight && y+j<this.colorMap[x+i].length; j++) {
+                if (y+j<0) continue;
+                if (this.pictures[picName][j][i])
+                {
+                    this.colorMap[x+i][y+j] = this.pallet.red;
+                }
+            }
         }
+    }
+
+    addPictureInCenter(picName) {
+        let pictureWidth = this.pictures[picName][0].length;
+        let pictureHeight = this.pictures[picName].length;
+        let mapWidth = this.colorMap.length;
+        let mapHeight = this.colorMap[0].length;
+
+        let posX = Math.floor((mapWidth - pictureWidth) / 2);
+        let posY = Math.floor((mapHeight - pictureHeight) / 2);
+
+        this.addPicture(posX, posY, picName);
     }
 
     matrixLoop() {
         // Draw a semitransparent black rectangle on top of previous drawing
         this.ctx.fillStyle = this.pallet.black_filter;
         this.ctx.fillRect(0, 0, this.width, this.height);
-      
+
         // Set font to 15pt monospace in the drawing context
         const fontSize = this.colWidth * 0.6 * (1 + .4 * Math.random());
         this.ctx.font = fontSize + 'pt monospace';
-      
+
         // for each column put a random character at the end
         this.pointers.forEach((yPts, x) => {
             yPts.forEach((y, index) =>{
                 // generate a random character
                 const text = '0123456789ABCDEF'[Math.floor(Math.random() * 16)];
-            
+
                 // x coordinate of the column, y coordinate is already given
                 const xPos = x * this.colWidth;
                 const yPos = (y+1) * this.colWidth;
@@ -197,12 +205,12 @@ class MatrixText {
                 //     this.ctx.fillStyle = this.pallet.black;
                 // }
                 this.ctx.fillText(text, xPos, yPos);
-            
-                // randomly reset the end of the column if it's at least 100px high
-                if (y > 5 + Math.min(Math.random() * 5000, 80)) this.pointers[x][index] = 0;
-                // otherwise just move the y coordinate for the column 20px down,
+
+                // randomly reset the end of the column if it's at least 5 chars high
+                if (y > 5 + Math.min(Math.random() * 50 * this.matrixRows, this.matrixRows)) this.pointers[x][index] = 0;
+                // otherwise just move the y coordinate for the column 1 char down,
                 else this.pointers[x][index] = y + 1;
             })
         });
     }
-}    
+}
