@@ -132,7 +132,11 @@
                                     <div>{{ task.name }}</div>
                                     <div class="task-status task-{{ task.submitted }}">
                                         {% if task.submitted == "ok" %}
+                                        {% if task.best_submission.score %}
+                                        odevzdáno se skóre {{task.best_submission.score}}
+                                        {% else %}
                                         odevzdáno úspěšně
+                                        {% endif %}
                                         {% elif task.submitted == "nok" %}
                                         odevzdáno neúspěšně
                                         {% elif task.submitted == "not" %}
