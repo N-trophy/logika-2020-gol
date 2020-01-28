@@ -11,5 +11,5 @@ if [ $? -eq 0 ]; then
 	OUTPUT+=$(touch ../deploy.sh 2>&1)$'\n\n'
 fi
 
-echo "$OUTPUT" | mail "logika@ntrophy.cz" -s "[ntrophy-web] Deploy status"
+echo "$OUTPUT" | mail "me@apophis.cz" -s "[ntrophy-web] Deploy status"
 
