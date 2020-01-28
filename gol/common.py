@@ -80,7 +80,7 @@ class Grid:
         return 'Grid(' + str(self) + ')'
 
     def webrepr(self) -> str:
-        return self.charrepr(self)
+        return self.charrepr()
 
     def charrepr(self) -> str:
         return '\n'.join([''.join(line) for line in self.array])
