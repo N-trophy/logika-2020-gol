@@ -39,7 +39,7 @@ def eval_same_func(task: Task, rules: Rules, grid: Grid,
         tick_pos(grid, out_gridb, author_rules, (1, 1), task.global_config())
 
         if out_grida[1][1] != out_gridb[1][1]:
-            int_reporter(f'[ERR] Selhalo na mřížce: {grid}')
+            int_reporter(f'[ERR] Selhalo na mřížce:\n {grid.charrepr()}')
             return (False, 0)
 
     return (True, 0)

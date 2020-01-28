@@ -146,7 +146,7 @@ def _eval_guess(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
         if student_grid != teacher_grid:
             user_reporter('[ERR] Vámi zadaná pravidla se nechovají stejně'
                           ' na některé ze zadaných mřížek!')
-            int_reporter(f'[ERR] Selhalo na mřížce: {grid}')
+            int_reporter(f'[ERR] Selhalo na mřížce:\n {grid.charrepr()}')
             return (False, 0)
 
     user_reporter('[OK] Vámi zadaná pravidla se chovají korektně.')
