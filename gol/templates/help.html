@@ -33,23 +33,23 @@
     <p>Účelem klikátka je umožnit vám vyzkoušet si, jak se chová vámi vytvořený
     celulární automat. Celulární automat definujete vytvořením
     <ul>
-    <li>pravidel,</li>
+    <li>pravidla,</li>
     <li>počáteční konfigurací (stavem mřížky).</li>
     </ul>
 
     <p>Celulární automat funguje tak, že vždy vezme nějaký stav mřížky,
-    aplikuje na každou buňku pravidla, což vytvoří mřížku novou. Tento proces
-    se opakuje pořád dokola dokud uživatel simulaci nezastaví. Příklad
-    pravidla: “když mám alespoň 3 zelené sousedy a jsem zelená, zůstávám
-    zelená, jinak se stávám šedou”.</p>
+    aplikuje na každou buňku pravidlo (na všechny buňky zároveň), což vytvoří
+    mřížku novou. Tento proces se opakuje pořád dokola, dokud uživatel simulaci
+    nezastaví. Příklad pravidla: “když mám alespoň 3 zelené sousedy a jsem
+    zelená, zůstávám zelená, jinak se stávám šedou”.</p>
 
     <p>Klikátko obsahuje 3 části:</p>
 
-    <h3>Prostor pro zápis pravidel</h3>
+    <h3>Prostor pro zápis pravidla</h3>
     <ul>
-        <li>Prostor pro zápis pravidel se nachází na levé straně nahoře.
+        <li>Prostor pro zápis pravidla se nachází na levé straně nahoře.
         Zapisujete do něj vždy <i>právě jedno</i> přechodové pravidlo.
-        (O způsobu zápisu pravidel se dočtete dále.)</li>
+        (O způsobu zápisu pravidla se dočtete dále.)</li>
         <li>Po zapsání přechodového pravidla je třeba kliknout na tlačítko
         <i>Načíst kód</i>. Po úspěšném načtení se vámi zapsaná pravidla
         použijí při spuštění simulace.</li>
@@ -81,11 +81,11 @@
     <h3>Mřížka</h3>
     <ul>
         <li>Mřížka se nachází na pravé straně.</li>
-        <li>Její konfiguraci si můžete vyklikat ručně, načíst ze souboru, nebo
-        obnovit dříve uloženou (tlačítko <i>načíst</i>). Stejně tak si můžete
-        aktuální konfiguraci uložit – ať už do souboru, nebo pouze pro tuto
-        chvíli (tlačítko <i>uložit</i>). Před zadáváním si nezapomeňte zvolit
-        barvu.</li>
+        <li>Její konfiguraci si můžete vyklikat ručně, načíst ze souboru
+        (tlačítko <i>ze souboru</i>), nebo obnovit dříve uloženou (tlačítko
+        <i>načíst</i>). Stejně tak si můžete aktuální konfiguraci uložit – ať
+        už do souboru, nebo pouze pro tuto chvíli (tlačítko <i>uložit</i>).
+        Před zadáváním si nezapomeňte zvolit barvu.</li>
         <li>Levý klik na buňku: nastavit aktuální vybranou barvu.</li>
         <li>Pravý klik na buňku: změnit barvu na další barvu.</li>
     </ul>
@@ -94,7 +94,7 @@
 
 <div id="rules" class="w3-container">
 <div class="w3-content">
-    <h2>Zápis pravidel</h2>
+    <h2>Zápis pravidla</h2>
     <p><i>Přechodové pravidlo</i> popisuje, jaká bude barva buňky v dalším
     kroku na základě barvy buňky a barev okolních 8 buněk. <i>Přechodové
     pravidlo</i> se skládá z jedné nebo více zanořených podmínek. Zápis
@@ -113,7 +113,7 @@ else:
     <p>Toto pravidlo říká: <i>pokud je buňka červená (r), změní se na zelenou
     (g), jinak se změní na červenou (r)</i>.</p>
 
-    <p>Příklad pravidla s více zanořeními:</p>
+    <p>Příklad pravidla s více zanořeními:</p>
 
 <code><pre>
 if ((rrb------ % 2) == 1) or (------bbr &gt;= 2):
@@ -199,7 +199,7 @@ else:
     </table>
 
     Ptáme se, jaká bude barva buňky na pozici (x=3, y=3) (modrá buňka) při
-    použití výše zmiňovaného <i>Pravidla s více zanořeními</i>.
+    použití výše zmiňovaného <i>pravidla s více zanořeními</i>.
 
     Okolí buňky vypadá takto: <code>rrbbbgrrr</code>.
     <table class="selector_table">
@@ -217,7 +217,7 @@ else:
     <code>------bbr</code> je 1 (pouze poslední písmeno <i>r</i> sedlo).</li>
     <li>Máme výraz <code>if ((3 % 2) == 1) or (1 &gt;= 2):</code>. Upravíme:
     <code>if (1 == 1) or (1 &gt;= 2):</code>. Tento výraz platí, takže
-    pokračujeme na řádek 2 zápisu pravidel.</li>
+    pokračujeme na řádek 2 zápisu pravidla.</li>
     <li>Vyhodnotíme podmínku <code>if (bb-----bb + kk-----kk) &gt;= 5:</code>.</li>
     <li>Přepíšeme selektory podle okolí: <code>if (0 + 0) &gt;= 5:</code>.</li>
     <li>Výraz je nepravdivý, skáčeme tedy do <i>else větve</i>.</li>
@@ -250,16 +250,16 @@ else:
     <p class="rule_example_description">Pravidlo zkoumá, jestli je v horním
     řádku alespoň 1 modrá nebo jsou alespoň 2 modré ve spodním řádku. Pokud ano
     (tedy platí alespoň jedna z podmínek), tak zjišťuje, jestli je celkem
-    alespoň 5 šedých. Když platí obě pravidla, tak bude prostřední buňka modrá.
-    Pokud platí pouze první pravidlo, tak bude šedá. Pokud neplatí ani první
-    pravidlo, prostřední buňka bude modrá.</p>
+    alespoň 5 šedých. Když platí obě podmínky, tak bude prostřední buňka modrá.
+    Pokud platí pouze první podmínka, tak bude šedá. Pokud neplatí ani první
+    podmínka, prostřední buňka bude modrá.</p>
 
 
     <hr>
-    <h3>Pro pokročilé: gramatika jazyka pravidel</h3>
+    <h3>Pro pokročilé: gramatika jazyka pravidla</h3>
 
     <p>Pokud byste měli nějaké nejasnosti, můžete nahlédnout do gramatiky
-    jazyka pro zápis přechodových pravidel tak, jak ji akceptuje nástoj
+    jazyka pro zápis přechodového pravidla tak, jak ji akceptuje nástoj
     <code>pyparsing</code>.</p>
 
 <code><pre>
