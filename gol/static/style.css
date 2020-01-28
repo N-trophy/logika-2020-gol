@@ -22,6 +22,10 @@ ul, ol {
     padding-bottom: 20px;
 }
 
+hr {
+    border-color: rgb(42, 255, 42);
+}
+
 .selector_table {
     border: 2px solid;
     background: #222;
