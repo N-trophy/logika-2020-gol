@@ -1,6 +1,6 @@
 from typing import Dict
 from django.db import models
-from django.db.models import Max
+from django.db.models import Max, Min
 from django.contrib.auth.models import User
 from django.utils import timezone
 
@@ -28,6 +28,9 @@ class Submission(models.Model):
 
     datetime = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return str(self.id)
+
 
 def no_submissions(user: User, task: Task):
     return Submission.objects.filter(user=user, task=task).count()
@@ -45,3 +48,13 @@ def submitted_ok(user: User) -> Dict[int, bool]:
         for res in Submission.objects.filter(user=user).
                    values('task').annotate(ok=Max('ok'))
     }
+
+
+def best_submission(user: User, task: Task) -> Submission:
+    request = Submission.objects.filter(user=user, ok=True, task=task)
+    if task.best_score_func.lower() == 'min':
+        return request.order_by('score', '-datetime').first()
+    elif task.best_score_func.lower() == 'max':
+        return request.order_by('-score', '-datetime').first()
+    else:
+        return None

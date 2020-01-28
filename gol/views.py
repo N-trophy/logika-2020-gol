@@ -2,10 +2,10 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
-import re
 
 from gol.models import Task, Post, TaskCategory
-from gol.models.submission import submissions_remaining, submitted_ok
+from gol.models.submission import submissions_remaining, submitted_ok, \
+        best_submission
 
 
 @login_required(login_url='/login')
@@ -24,6 +24,7 @@ def index(request, *args, **kwargs):
         if task.should_submit():
             if task.id in submitted:
                 task.submitted = 'ok' if submitted[task.id] else 'nok'
+                task.best_submission = best_submission(request.user, task)
             else:
                 task.submitted = 'no'
         else:
@@ -51,6 +52,7 @@ def task(request, *args, **kwargs):
 
     task.allowed_colors = task.allowed_colors.lower()
     task.start_config = task.start_config.replace("\r\n", "\\n")
+    task.best_submission = best_submission(request.user, task)
 
     context = {
         'user': request.user,

@@ -33,6 +33,7 @@ class Task(models.Model):
     stepper_function = models.CharField(default='', max_length=128,
                                         blank=True)
     max_submissions = models.PositiveIntegerField(default=0)
+    best_score_func = models.CharField(default='', max_length=128, blank=True)
 
     def __str__(self):
         return self.name
