@@ -271,8 +271,8 @@ class World {
                 const rules = Rule.deserialize(data);
                 this.automata.setRules(rules);
                 
-                $('#'+submit_info_elem).text = "Kód v textovém editoru se neshoduje s načteným kódem v simulaci. Bude odeslán kód z textového editoru.";
-                $('#'+submit_info_elem).addClass("warning");
+                $('#'+submit_info_elem).text("");
+                $('#'+submit_info_elem).removeClass("warning");
 
                 $('#console-info').text('Kód načten.');
                 $('#console-info').removeClass('warning');
