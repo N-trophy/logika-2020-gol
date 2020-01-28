@@ -45,8 +45,24 @@
             <div id="rules" class="w3-container">
                 <div class="w3-content">
                     <h2>Zápis pravidel</h2>
-                    <p>Přechodové pravidlo opisuje chování každé buňky pro každý další krok simulace (pro každou další iteraci) na základě její barvy a barev okolních 8 buněk v aktuálním kroku. Zadáváte pouze <i>jedno</i> přechodové pravidlo, které se skládá ze dvou větví (if/else; každá z nich zakončená dvojtečkou).</p>
-                    <p></p>
+                    <p>Přechodové pravidlo popisuje chování každé buňky pro každý další krok simulace (pro každou další iteraci) na základě její barvy a barev okolních 8 buněk v aktuálním kroku (v aktuální konfiguraci). Zadáváte pouze <i>jedno</i> přechodové pravidlo, které se skládá ze dvou větví (if/else; každá z nich zakončená dvojtečkou).</p>
+                    <p><i>If větev</i> obsahuje podmínku, která se může skládat i z více výrazů spojených logickými spojkami (OR, AND).</p>
+                    <p>Pokud je podmínka splněna (je vyhodnocena jako pravdivá), provede se kód, který za ní následuje (začíná na následujícím řádku za odsazením). Jinak se provde kód ve větvi else - opět začínající na následujícím řádku za odsazením. Tímto kódem může být buďto písmeno značící barvu, nebo další podmínka (která se bude opět skládat ze dvou větví - if/else).</p>
+                    <p>Podmínka, respektive výraz v ní, se skládá ze 3 částí: Selektor, Porovnávací operátor, jiný selektor/číslo</p>
+                    <p>Selektor se skládá z 9 symbolů. Těmito symboly mohou být písmena pro označení jednotlivých barev, nebo pomlčka "-". Těchto 9 symbolů popisuje po řádcích bezprostřední okolí daného políčka (představte si tabulku 3x3 - popisované políčko se nachází v jejím středu).</p>
+                    <p>Příklad - zápis (bbb--r--b) značí následující rozložení:</p>
+                    <table id="selector_table">
+                        <tr><td>b</td><td>b</td><td>b</td></tr>
+                        <tr><td>-</td><td id="center_cell">-</td><td>r</td></tr>
+                        <tr><td>-</td><td>-</td><td>b</td></tr>
+
+                    </table>
+                    <p>Povolené barvy jsou: <font color="red">r - červená</font>, <font color="blue">b - modrá</font>, <font color="green">g - zelená</font>, <font color="grey">k - šedá</font></p>
+                    <p>"-" označuje políčko libovolné barvy, které v konkrétním pravidle neuvažujeme.</p>
+                    <p>Selektor představuje číslo značící počet polí, která se shodují s reálnou konfigurací. Pole s "-" se nepočítají.</p>
+                    <p>Porovnávací operátory jsou: <, <=, >, >=, ==, !=</p>
+                    <p>Dále můžete využívat násobení (*), sčítání (+), dělení (/), odčítání (-) a modulo (%).</p>
+                    <p>Vytvářejte vždy pouze <i>jedno</i> pravidlo (jednu hlavní podmínku if) s libovolným počtem vnořených podmínek. Pro ty, kteří již mají nějaké zkušenosti s programováním - větve typu elif/ else if zde nepoužívejte.</p>
                 </div>
             </div>
 
