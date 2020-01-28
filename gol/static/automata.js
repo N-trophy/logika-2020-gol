@@ -188,6 +188,7 @@ class Comparator extends BoolExpr {
         if (cmpName == ">=") return ((x,y) => x >= y);
         if (cmpName == ">") return ((x,y) => x > y);
         if (cmpName == "==") return ((x,y) => x == y);
+        if (cmpName == "!=") return ((x,y) => x != y);
     }
 }
 
