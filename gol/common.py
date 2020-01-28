@@ -32,6 +32,9 @@ class Reporter:
     def text(self) -> str:
         return '\n'.join(self.lines)
 
+    def webrepr(self) -> str:
+        return '<br>'.join(self.lines)
+
 
 class Grid:
     def __init__(self, array: List[List[str]]):

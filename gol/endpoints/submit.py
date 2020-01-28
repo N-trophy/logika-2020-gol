@@ -69,6 +69,6 @@ def submit(request, *args, **kwargs):
 
     return JsonResponse({
         'ok': ok,
-        'report': user_reporter.text(),
+        'report': user_reporter.webrepr(),
         'submissions_remaining': submissions_remaining(request.user, task),
     })
