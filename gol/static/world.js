@@ -414,9 +414,8 @@ class World {
                 } else {
                     info_elem.addClass("warning");
                 }
-                console.log(data)
                 $('.remaining_submissions').text(data.submissions_remaining)
-                info_elem.text(data.report);
+                info_elem.html(data.report);
             }),
             error: ((xhr)=>{
                 info_elem.text(xhr.responseText + "<br>Pokud si myslíte, že by tu tato chyba neměla být, kontaktujte organizátory.");
