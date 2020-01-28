@@ -21,15 +21,38 @@
         <div id="page-content">
             {% include "includes/navbar.html" %}
             
-            <div id="info" class="w3-container w3-center">
+            <div id="info" class="w3-container">
                 <div class="w3-content">
-                    <h1>Popis systému</h1>
-                    <p>TODO</p>
+                    <h1 class="w3-center">Popis systému</h1>
+                    <h2>Klikátko</h2>
+                    <h3>Prostor pro zápis pravidel</h3>
+                    <ul>
+                        <li>Prostor pro zápis pravidel se nachází na levé straně. Zapisujete do něj vždy <i>právě jedno</i> přechodové pravidlo. (O způsobu zápisu pravidel se dočtete dále.)</li>
+                        <li>Simulaci můžete spouštět buďto souvisle, anebo po krocích (po jednotlivých iteracích).</li>
+                        <li>Před jejím spuštěním je potřeba kód načíst. K tomu slouží tlačítko "načíst kód" vpravo dole.</li>
+                        <li>Nad ním se vám budou objevovat chybové hlášky. Doporučujeme je číst, mohou vám ušetřit spoustu času.</li>
+                        <li>Můžete zde také měnit velikost mřížky.</li>
+                    </ul>
+                    <h3>Mřížka</h3>
+                    <ul>
+                        <li>Mřížka se nachází napravo od Prostoru pro zápis pravidel, pod kterým najdete tlačítka pro její ovládání.</li>
+                        <li>Její počáteční konfiguraci si můžete vyklikat ručně, načíst ze souboru, nebo obnovit dříve uloženou (tlačítko načíst). Stejně tak si můžete aktuální konfiguraci uložit - ať už do souboru, nebo pouze pro tuto chvíli (tlačítko uložit). Před zadáváním si nezapomeňte zvolit barvu.</li>
+                        <li>Mřížka může, ale nemusí fungovat jako torus (co to znamená se dočtete v úlohách, které s ním pracují). Tuto její vlastnost si můžete nastavit pomocí tlačítek torus/rovina.</li>
+                    </ul>
                 </div>
             </div>
-            
-            {% include "includes/footer.html" %}
+
+            <div id="rules" class="w3-container">
+                <div class="w3-content">
+                    <h2>Zápis pravidel</h2>
+                    <p>Přechodové pravidlo opisuje chování každé buňky pro každý další krok simulace (pro každou další iteraci) na základě její barvy a barev okolních 8 buněk v aktuálním kroku. Zadáváte pouze <i>jedno</i> přechodové pravidlo, které se skládá ze dvou větví (if/else; každá z nich zakončená dvojtečkou).</p>
+                    <p></p>
+                </div>
+            </div>
+
         </div>
+        {% include "includes/footer.html" %}
     </div>
+
 </body>
 </html>
