@@ -1,0 +1,10 @@
+<!-- Matrix -->
+<canvas id="matrix-chars"></canvas>
+<script>
+    $(()=>{
+            matrix = new MatrixText('matrix-chars');
+        });
+    $(window).resize(function() {
+            matrix.reload();
+        });
+</script>

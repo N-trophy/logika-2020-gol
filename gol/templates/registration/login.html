@@ -10,20 +10,12 @@
         <script src="/static/matrix.js"></script>
         <script>
             CSRF_TOKEN = "{{ csrf_token }}"
-
-            $(()=>{
-                matrix = new MatrixText('matrix-chars');
-            });
-            $(window).resize(function() {
-                    matrix.reload();
-                });
         </script>
         <title>Kvalifikace logika N-Trophy X</title>
         <link rel="shortcut icon" type="image/png" href="/static/img/logo.png"/>
     </head>
     <body>
-        <canvas id="matrix-chars">
-        </canvas>
+        {% include "includes/matrix.html" %}
         <div class="w3-container w3-display-middle dark-grey-background">
             <h3 class="w3-center">Přihlášení</h3>
             {% if form.errors %}
