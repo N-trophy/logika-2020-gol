@@ -22,7 +22,7 @@ ul, ol {
     padding-bottom: 20px;
 }
 
-#selector_table {
+.selector_table {
     border: 2px solid;
     background: #222;
     border-collapse: collapse;
@@ -30,36 +30,20 @@ ul, ol {
     max-width: 25%;
 }
 
-#selector_table td {
+.selector_table td {
     border: 1px solid;
     padding: 3px 10px 0px 10px;
+    width: 30px;
 }
 
-#center_cell {
-    background: #333;
+.selector_table tr {
+    height: 30px;
 }
 
-#rule_example {
-    padding-top: 20px;
-}
-
-.rule_example_description {
-    margin-bottom: 50px;
-}
-
-.zero_indent {
-    margin: 5px;
-}
-
-.first_indent {
-    margin: 5px;
-    padding-left: 40px;
-}
-
-.second_indent {
-    margin: 5px;
-    padding-left: 80px;
-}
+.selector_table .red { background-color: red; }
+.selector_table .green { background-color: green; }
+.selector_table .blue { background-color: blue; }
+.selector_table .gray { background-color: gray; }
 
 #page-container {
     position: relative;

@@ -24,20 +24,70 @@
 <div id="info" class="w3-container">
 <div class="w3-content">
     <h1 class="w3-center">Popis systému</h1>
+    <p>Tato stránka je návodem pro práci s klikátkem. Klikátko je k dispozici
+    jak <a href="/klikatko">samostatně</a> (můžete zadat, co potřebujete – může
+    se hodit pro každou úlohu), tak v každé úloze (přednastavené parametry
+    úlohy).</p>
+
     <h2>Klikátko</h2>
+    <p>Účelem klikátka je umožnit vám vyzkoušet si, jak se chová vámi vytvořený
+    celulární automat. Celulární automat definujete vytvořením
+    <ul>
+    <li>pravidel,</li>
+    <li>počáteční konfigurací (stavem mřížky).</li>
+    </ul>
+
+    <p>Celulární automat funguje tak, že vždy vezme nějaký stav mřížky,
+    aplikuje na každou buňku pravidla, což vytvoří mřížku novou. Tento proces
+    se opakuje pořád dokola dokud uživatel simulaci nezastaví. Příklad
+    pravidla: “když mám alespoň 3 zelené sousedy a jsem zelená, zůstávám
+    zelená, jinak se stávám šedou”.</p>
+
+    <p>Klikátko obsahuje 3 části:</p>
+
     <h3>Prostor pro zápis pravidel</h3>
     <ul>
-        <li>Prostor pro zápis pravidel se nachází na levé straně. Zapisujete do něj vždy <i>právě jedno</i> přechodové pravidlo. (O způsobu zápisu pravidel se dočtete dále.)</li>
-        <li>Simulaci můžete spouštět buďto souvisle, anebo po krocích (po jednotlivých iteracích).</li>
-        <li>Před jejím spuštěním je potřeba kód načíst. K tomu slouží tlačítko "načíst kód" vpravo dole.</li>
-        <li>Nad ním se vám budou objevovat chybové hlášky. Doporučujeme je číst, mohou vám ušetřit spoustu času.</li>
-        <li>Můžete zde také měnit velikost mřížky.</li>
+        <li>Prostor pro zápis pravidel se nachází na levé straně nahoře.
+        Zapisujete do něj vždy <i>právě jedno</i> přechodové pravidlo.
+        (O způsobu zápisu pravidel se dočtete dále.)</li>
+        <li>Po zapsání přechodového pravidla je třeba kliknout na tlačítko
+        <i>Načíst kód</i>. Po úspěšném načtení se vámi zapsaná pravidla
+        použijí při spuštění simulace.</li>
     </ul>
+
+    <h3>Nastavení automatu</h3>
+    <p>Prostor pro nastavení automatu se nachází na levé straně dole.
+    Nastavujete v něm různé parametry automatu.</p>
+    <ul>
+        <li><i>Šířka</i> a <i>výška</i> mřížky.</li>
+        <li><i>Zpět</i>: umožňuje vrátit simulaci o krok zpět.</li>
+        <li><i>Spustit</i>: spustí simulaci a nechá ji trvale běžet.</li>
+        <li><i>Další</i>: provede jeden krok simulace.</li>
+
+        <li><i>Vyčistit</i>, <i>Zaplnit</i>: nastavit všechny buňky na
+        konkrétní barvu.</li>
+        <li><i>Rovina/torus</i>: nastavuje, jestli okraje mřížky sousedí
+        s buňkami "na druhé straně mřížky" (torus) nebo prostě nesousedí
+        s ničím (rovina). U každé úlohy je zadáno, jestli funguje jako
+        rovina nebo jako torus.</li>
+        <li><i>Načíst</i>, <i>Uložit</i>: Umožňuje uložit si konkrétní stav
+        a ten pak znovu použít.</li>
+        <li><i>Ze souboru</i>, <i>Do souboru</i>: umožňuje stáhnout a nahrát
+        stav mřížky.</li>
+        <li><i>R,G,B,K</i>: změní barvu, kterou aktuálně vyklikáváte mřížku.</li>
+    </ul>
+
+
     <h3>Mřížka</h3>
     <ul>
-        <li>Mřížka se nachází napravo od Prostoru pro zápis pravidel, pod kterým najdete tlačítka pro její ovládání.</li>
-        <li>Její počáteční konfiguraci si můžete vyklikat ručně, načíst ze souboru, nebo obnovit dříve uloženou (tlačítko načíst). Stejně tak si můžete aktuální konfiguraci uložit - ať už do souboru, nebo pouze pro tuto chvíli (tlačítko uložit). Před zadáváním si nezapomeňte zvolit barvu.</li>
-        <li>Mřížka může, ale nemusí fungovat jako torus (co to znamená se dočtete v úlohách, které s ním pracují). Tuto její vlastnost si můžete nastavit pomocí tlačítek torus/rovina.</li>
+        <li>Mřížka se nachází na pravé straně.</li>
+        <li>Její konfiguraci si můžete vyklikat ručně, načíst ze souboru, nebo
+        obnovit dříve uloženou (tlačítko <i>načíst</i>). Stejně tak si můžete
+        aktuální konfiguraci uložit – ať už do souboru, nebo pouze pro tuto
+        chvíli (tlačítko <i>uložit</i>). Před zadáváním si nezapomeňte zvolit
+        barvu.</li>
+        <li>Levý klik na buňku: nastavit aktuální vybranou barvu.</li>
+        <li>Pravý klik na buňku: změnit barvu na další barvu.</li>
     </ul>
 </div>
 </div>
@@ -45,35 +95,158 @@
 <div id="rules" class="w3-container">
 <div class="w3-content">
     <h2>Zápis pravidel</h2>
-    <p>Přechodové pravidlo popisuje chování každé buňky pro každý další krok simulace (pro každou další iteraci) na základě její barvy a barev okolních 8 buněk v aktuálním kroku (v aktuální konfiguraci). Zadáváte pouze <i>jedno</i> přechodové pravidlo, které se skládá ze dvou větví (if/else; každá z nich zakončená dvojtečkou).</p>
-    <p><i>If větev</i> obsahuje podmínku, která se může skládat i z více výrazů spojených logickými spojkami (OR, AND).</p>
-    <p>Pokud je podmínka splněna (je vyhodnocena jako pravdivá), provede se kód, který za ní následuje (začíná na následujícím řádku za odsazením). Jinak se provde kód ve větvi else - opět začínající na následujícím řádku za odsazením. Tímto kódem může být buďto písmeno značící barvu, nebo další podmínka (která se bude opět skládat ze dvou větví - if/else).</p>
-    <p>Podmínka, respektive výraz v ní, se skládá ze 3 částí: Selektor, Porovnávací operátor, jiný selektor/číslo</p>
-    <p>Selektor se skládá z 9 symbolů. Těmito symboly mohou být písmena pro označení jednotlivých barev, nebo pomlčka "-". Těchto 9 symbolů popisuje po řádcích bezprostřední okolí daného políčka (představte si tabulku 3x3 - popisované políčko se nachází v jejím středu).</p>
-    <p>Příklad - zápis (bbb--r--b) značí následující rozložení:</p>
-    <table id="selector_table">
+    <p><i>Přechodové pravidlo</i> popisuje, jaká bude barva buňky v dalším
+    kroku na základě barvy buňky a barev okolních 8 buněk. <i>Přechodové
+    pravidlo</i> se skládá z jedné nebo více zanořených podmínek. Zápis
+    přechodového pravidla je podobný syntaxi programovacího jazyka
+    <i>Python</i>.</p>
+
+    <p>Příklad pravidla:</p>
+
+<code><pre>
+if ----r---- == 1:
+    g
+else:
+    r
+</pre></code>
+
+    <p>Toto pravidlo říká: <i>pokud je buňka červená (r), změní se na zelenou
+    (g), jinak se změní na červenou (r)</i>.</p>
+
+    <p>Příklad pravidla s více zanořeními:</p>
+
+<code><pre>
+if (bbb------ &gt;= 1) or (------bbb &gt;= 2):
+    if (bb-----bb + kk-----kk) &gt;= 5:
+        b
+    else:
+        k
+else:
+    b
+</pre></code>
+
+    <p>Pokud je podmínka splněna (je vyhodnocena jako pravdivá), provede se
+    kód, který za ní následuje (začíná na následujícím řádku za odsazením).
+    Jinak se provede kód ve větvi <i>else</i> – začínající na následujícím řádku
+    za odsazením.  Tímto kódem může být buďto písmeno značící barvu, nebo další
+    podmínka.</p>
+
+
+    <ol>
+        <li>Každá podmínka musí mít <i>if větev</i> i <i>else větev</i>.</li>
+        <li>Závorek si to podmínky můžete napsat kolik chcete.</li>
+        <li>Podporované logické spojky jsou <code>or</code> a
+        <code>and</code>).</li>
+        <li>Podporované porovnávací operátory jsou <code>&lt;=</code>,
+        <code>&gt;=</code>, <code>&lt;</code>, <code>&gt;</code>,
+        <code>==</code> (rovnost), <code>!=</code> (nerovnost).</li>
+        <li>Podporované aritmetické operátory jsou <code>+</code>,
+        <code>-</code>, <code>*</code>, <code>/</code> (celočíselné dělení),
+        <code>%</code> (zbytek po celočíselném dělení).</li>
+        <li>Priority operátorů jsou standardní.</li>
+    </ol>
+
+    <h3>Vyhodnocování podmínky</h3>
+
+    <p>Podmínka se vyhodnocuje tak, jak byste čekali: výraz <code>and</code>
+    znamená logické <i>a</i>, <code>&lt;</code> znamená <i>menší než</i> atp.</p>
+
+    <p>Jediným zvláštním výrazem v podmínce je tzv. <i>selektor</i>: to je
+    například <code>bbb------</code> nebo <code>kk-----kk</code>.
+
+    <p>Selektor se vždy skládá <strong>právě z 9 symbolů</strong>. Těmito
+    symboly mohou být písmena jednotlivých barev, nebo spojovník
+    <code>-</code>. Těchto 9 symbolů popisuje po řádcích bezprostřední okolí
+    buňky.</p>
+
+    <p>Příklad: zápis <code>bbb--r--b</code> značí následující okolí:</p>
+    <table class="selector_table">
         <tr><td>b</td><td>b</td><td>b</td></tr>
-        <tr><td>-</td><td id="center_cell">-</td><td>r</td></tr>
+        <tr><td>-</td><td>-</td><td>r</td></tr>
         <tr><td>-</td><td>-</td><td>b</td></tr>
     </table>
-    <p>Povolené barvy jsou: <font color="red">r - červená</font>, <font color="blue">b - modrá</font>, <font color="green">g - zelená</font>, <font color="grey">k - šedá</font></p>
-    <p>"-" označuje políčko libovolné barvy, které v konkrétním pravidle neuvažujeme.</p>
-    <p>Selektor představuje číslo značící počet polí, která se shodují s reálnou konfigurací. Pole s "-" se nepočítají.</p>
-    <p>Porovnávací operátory jsou: <, <=, >, >=, ==, !=</p>
-    <p>Dále můžete využívat násobení (*), sčítání (+), dělení (/), odčítání (-) a modulo (%).</p>
-    <p>Vytvářejte vždy pouze <i>jedno</i> pravidlo (jednu hlavní podmínku if) s libovolným počtem vnořených podmínek. Pro ty, kteří již mají nějaké zkušenosti s programováním - větve typu elif/ else if zde nepoužívejte.</p>
-</div>
-<div id="rule_example" class="w3-content">
+    <table class="selector_table">
+        <tr><td class="blue"></td><td class="blue"></td><td class="blue"></td></tr>
+        <tr><td></td><td></td><td class="red"></td></tr>
+        <tr><td></td><td></td><td class="blue"></td></tr>
+    </table>
+    <p>Povolené barvy jsou: <font color="red">r: červená</font>, <font
+    color="blue">b: modrá</font>, <font color="green">g: zelená</font>, <font
+    color="grey">k: šedá</font>. Barvy mohou být omezeny v konkrétních úlohách.</p>
+
+    <p>Selektor se v podmínce chápe jako číslo. Toto číslo značí, <strong>kolik
+    buněk souhlasí se selektorem</strong>.</p>
+
+    <p>Příklad: Máme konfiguraci velikosti 4×4:
+
+    <table class="selector_table">
+        <tr><td class="blue"></td><td class="blue"></td><td class="blue"></td>
+        <td class="gray"></td></tr>
+        <tr><td class="green"></td><td class="red"></td><td class="red"></td>
+        <td class="blue"></tr>
+        <tr><td class="blue"></td><td class="blue"></td><td class="blue"></td>
+        <td class="green"></tr>
+        <tr><td class="red"></td><td class="red"></td><td class="red"></td>
+        <td class="red"></td></tr>
+    </table>
+
+    Ptáme se, jaká bude barva buňky na pozici (x=3, y=3) (modrá buňka) při
+    použití výše zmiňovaného <i>Pravidla s více zanořeními</i>.
+
+    Okolí buňky vypadá takto: <code>rrbbbgrrr</code>.
+    <table class="selector_table">
+        <tr><td class="red"></td><td class="red"></td><td class="blue"></td></tr>
+        <tr><td class="blue"></td><td class="blue"></td><td class="green"></td></tr>
+        <tr><td class="red"></td><td class="red"></td><td class="red"></td></tr>
+    </table></p>
+
+    <ol>
+    <li>Vyhodnocujeme podmínku na řádku 1: <code>if (bbb------ &gt;= 1) or
+    (------bbb &gt;= 2):</code></li>
+    <li>Protože okolí je <code>rrbbbgrrr</code>, tak hodnota selektoru
+    <code>bbb------</code> je 1 (pouze písmeno <i>b</i> třetí od začátku
+    sedlo).  </li>
+    <li>Protože okolí je <code>rrbbbgrrr</code>, tak hodnota selektoru
+    <code>------bbb</code> je 0 (pouze písmeno <i>b</i> třetí od začátku
+    sedlo).</li>
+    <li>Máme výraz <code>if (1 &gt;= 1) or (0 &gt;= 2):</code>. Tento výraz platí,
+    takže pokračujeme na řádek 2 zápisu pravidel.</li>
+    <li>Vyhodnotíme podmínku <code>if (bb-----bb + kk-----kk) &gt;= 5:</code>.</li>
+    <li>Přepíšeme selektory podle okolí: <code>if (0 + 0) &gt;= 5:</code>.</li>
+    <li>Výraz je nepravdivý, skáčeme tedy do else větve.</li>
+    <li>V else větvi už je přímo barva: <i>k</i>, takže buňka v nové generaci
+    bude mít šedou barvu.</li>
+    </ol>
+
+    <p>Tento proces opakujeme pro každou buňku mřížky.</p>
+
+    <ul>
+        <li><code>-</code> (spojovník) označuje políčko libovolné barvy. Toto
+        políčko se do výsledné hodnoty selektoru nepočítá.</li>
+        <li>Vytvářejte vždy pouze <i>jedno</i> pravidlo (jednu hlavní podmínku
+        <code>if</code>) s libovolným počtem vnořených podmínek. Pro ty, kteří
+        již mají nějaké zkušenosti s programováním: větve typu <code>elif</code>,
+        <code>else if</code> zde nepoužívejte.</li>
+    </ul>
+
     <h3>Příklad pravidla</h3>
-    <p class="rule_example_description">Pravidlo zkoumá, jestli je v horním řádku alespoň 1 modrá nebo jsou alespoň 2 modré ve spodním řádku. Pokud ano (tedy platí alespoň jedna z podmínek), tak zjišťuje, jestli je celkem alespoň 5 šedých. Když platí obě pravidla, tak bude prostřední buňka modrá. Pokud platí pouze první pravidlo, tak bude šedá. Pokud neplatí ani první pravidlo, prostřední buňka bude modrá.</p>
-    <p class="zero_indent"> if (bbb------ >= 1) or (------bbb >= 2):</p>
-    <p class="first_indent">if (kkkkkkkkk >= 5):</p>
-    <p class="second_indent">b</p>
-    <p class="first_indent">else:</p>
-    <p class="second_indent">k</p>
-    <p class="zero_indent">else:</p>
-    <p class="first_indent">b</p>
-</div>
+<code><pre>
+if bbb------ &gt;= 1 or ------bbb &gt;= 2:
+    if kkkkkkkkk &gt;= 5:
+        b
+    else:
+        k
+else:
+    b
+</code></pre>
+
+    <p class="rule_example_description">Pravidlo zkoumá, jestli je v horním
+    řádku alespoň 1 modrá nebo jsou alespoň 2 modré ve spodním řádku. Pokud ano
+    (tedy platí alespoň jedna z podmínek), tak zjišťuje, jestli je celkem
+    alespoň 5 šedých. Když platí obě pravidla, tak bude prostřední buňka modrá.
+    Pokud platí pouze první pravidlo, tak bude šedá. Pokud neplatí ani první
+    pravidlo, prostřední buňka bude modrá.</p>
+
 </div>
 </div>
 {% include "includes/footer.html" %}
