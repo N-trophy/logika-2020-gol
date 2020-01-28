@@ -75,7 +75,7 @@ input[type="text"], input[type="password"], textarea, select, button {
 }
 
 .task-ok {
-    color: green;
+    color: #2aa02a;
 }
 
 .task-nok {
