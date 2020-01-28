@@ -112,7 +112,8 @@ else:
 </pre></code>
 
     <p>Toto pravidlo říká: <i>pokud je buňka červená (r), změní se na zelenou
-    (g), jinak se změní na červenou (r)</i>.</p>
+    (g), jinak se změní na červenou (r)</i>. Význam <code>----r----</code> si
+    ukážeme za chvíli.</p>
 
     <p>Příklad pravidla s více zanořeními:</p>
 
@@ -170,14 +171,9 @@ else:
 
     <p>Příklad: zápis <code>bbb--r--b</code> značí následující okolí:</p>
     <table class="selector_table">
-        <tr><td>b</td><td>b</td><td>b</td></tr>
-        <tr><td>-</td><td>-</td><td>r</td></tr>
-        <tr><td>-</td><td>-</td><td>b</td></tr>
-    </table>
-    <table class="selector_table">
-        <tr><td class="blue"></td><td class="blue"></td><td class="blue"></td></tr>
-        <tr><td></td><td></td><td class="red"></td></tr>
-        <tr><td></td><td></td><td class="blue"></td></tr>
+        <tr><td class="blue">b</td><td class="blue">b</td><td class="blue">b</td></tr>
+        <tr><td>-</td><td>-</td><td class="red">r</td></tr>
+        <tr><td>-</td><td>-</td><td class="blue">b</td></tr>
     </table>
     <p>Povolené barvy jsou: <font color="red">r: červená</font>, <font
     color="blue">b: modrá</font>, <font color="green">g: zelená</font>, <font
@@ -199,8 +195,15 @@ else:
         <td class="red"></td></tr>
     </table>
 
+    <p>Pokud použijeme selektor na políčko (x=1, y=1) (červené), dostáváme
+    číslo 5, protože okolí <code>bbbgrrbbb</code> souhlasí se selektorem
+    <code>bbb--r--b</code> ve všech 5 vybaných barvách.</p>
+
+    <h4>Počítání nové barvy</h4>
+
     Ptáme se, jaká bude barva buňky na pozici (x=3, y=3) (modrá buňka) při
-    použití výše zmiňovaného <i>pravidla s více zanořeními</i>.
+    použití výše zmiňovaného <i>pravidla s více zanořeními</i> a výše
+    ukázaného čtverce 4×4.
 
     Okolí buňky vypadá takto: <code>rrbbbgrrr</code>.
     <table class="selector_table">
