@@ -120,7 +120,7 @@ if ((rrb------ % 2) == 1) or (------bbr &gt;= 2):
     if (bb-----bb + kk-----kk) &gt;= 5:
         b
     else:
-        k
+        k  # seda barva
 else:
     b
 </pre></code>
@@ -134,7 +134,9 @@ else:
 
     <ol>
         <li>Každá podmínka musí mít <i>if větev</i> i <i>else větev</i>.</li>
-        <li>Závorek si to podmínky můžete napsat kolik chcete.</li>
+        <li>Závorek si do podmínky můžete napsat kolik chcete.</li>
+        <li>Závorky se nemusí psát nikde. Neuzávorkovaný výraz se
+        uzávorkuje podle priorit operátorů, případně zleva.</li>
         <li>Podporované logické spojky jsou <code>or</code> a
         <code>and</code>).</li>
         <li>Podporované porovnávací operátory jsou <code>&lt;=</code>,
@@ -144,6 +146,12 @@ else:
         <code>-</code>, <code>*</code>, <code>/</code> (celočíselné dělení),
         <code>%</code> (zbytek po celočíselném dělení).</li>
         <li>Priority operátorů jsou standardní.</li>
+        <li>Kód se vyhodnotí i neodsazený, ale ve vašich řešeních odsazení
+        pro přehlednost vyžadujeme!</li>
+        <li>Odsazuje se buď tabulátorem nebo 4 znaky mezera.</li>
+        <li>Jazyk podporuje jednořádkové komentáře: cokoliv za znakem
+        <code>#</code> se nezpracovává (včetně tohoto znaku).</li>
+        <li>Na bílých znacích nezáleží.</li>
     </ol>
 
     <h3>Vyhodnocování podmínky</h3>
