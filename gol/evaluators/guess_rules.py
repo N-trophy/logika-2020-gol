@@ -4,7 +4,8 @@ import pyparsing
 from gol.models import Task
 from gol.common import Grid, Reporter
 from gol.rules_parser import parse
-from .common import Ok, Score, Rules, eval_same_func, compares_count, tick
+from .common import Ok, Score, Rules, compares_count, tick, \
+        no_arithmetic_operators
 
 
 GUESS_ONE_GRIDS = [
@@ -156,6 +157,7 @@ def _eval_guess(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
     return (True, compares)
 
 
+@no_arithmetic_operators
 def eval_guess_rules_one(
         task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
         user_reporter: Reporter) -> Tuple[Ok, Score]:
@@ -163,6 +165,7 @@ def eval_guess_rules_one(
                        GUESS_ONE_GRIDS, 1)
 
 
+@no_arithmetic_operators
 def eval_guess_rules_two(
         task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
         user_reporter: Reporter) -> Tuple[Ok, Score]:

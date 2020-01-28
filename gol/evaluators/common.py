@@ -111,3 +111,25 @@ def validate_grid_size(func):
             return (False, 0)
         return func(task, rules, grid, int_reporter, user_reporter)
     return wrapper
+
+
+def _is_arithmetic_operator(rule: Union[Rule, Color]):
+    if isinstance(rule, Color):
+        return False
+    return 'SelectorOperator' in repr(rule)
+
+
+def no_arithmetic_operators(func):
+    def wrapper(task: Task, rules: Rules, grid: Grid, int_reporter: Reporter,
+                user_reporter: Reporter) -> Tuple[Ok, Score]:
+        try:
+            rules_ = parse(rules, task.allowed_colors)
+        except pyparsing.ParseException as e:
+            user_reporter(f'[ERR] Napodařilo se načíst pravidla: {str(e)}')
+            return (False, 0)
+
+        if _is_arithmetic_operator(rules_):
+            user_reporter('[ERR] Pravidla obsahují aritmetické operátory!')
+            return (False, 0)
+        return func(task, rules, grid, int_reporter, user_reporter)
+    return wrapper
