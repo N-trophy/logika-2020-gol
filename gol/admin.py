@@ -34,7 +34,7 @@ class ParseAdmin(admin.ModelAdmin):
 @admin.register(Submission)
 class SubmissionAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'task', 'datetime', 'int_status', 'ok',
-                    'score', 'user_report', 'int_report')
+                    'score', 'user_report')
     list_filter = ('user', 'task', 'ok', 'int_status', 'score',
                    'user_report', 'int_report')
     ordering = ['-datetime']
