@@ -48,3 +48,6 @@ class Task(models.Model):
 
     def should_submit(self) -> bool:
         return self.eval_function != ''
+
+    def allowed_colors_webrepr(self) -> str:
+        return ', '.join(self.allowed_colors)
