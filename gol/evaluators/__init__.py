@@ -4,3 +4,4 @@ from .line_coloring import eval_line_coloring
 from .loop import eval_loop
 from .guess_rules import eval_guess_rules_two, eval_guess_rules_one
 from .fire import eval_fire
+from .shades_of_grey import eval_shades_of_grey
