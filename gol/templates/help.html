@@ -87,6 +87,8 @@
         <i>načíst</i>). Stejně tak si můžete aktuální konfiguraci uložit – ať
         už do souboru, nebo pouze pro tuto chvíli (tlačítko <i>uložit</i>).
         Před zadáváním si nezapomeňte zvolit barvu.</li>
+        <li>Mřížka se indexuje od levého horního rohu, který má souřadnice x=1,
+        y=1. Pravý horní roh má souřadnice x=šířka, y=1 atp.</li>
         <li>Levý klik na buňku: nastavit aktuální vybranou barvu.</li>
         <li>Pravý klik na buňku: změnit barvu na další barvu.</li>
     </ul>
@@ -139,21 +141,22 @@ else:
         <li>Závorek si do podmínky můžete napsat kolik chcete.</li>
         <li>Závorky se nemusí psát nikde. Neuzávorkovaný výraz se
         uzávorkuje podle priorit operátorů, případně zleva.</li>
-        <li>Podporované logické spojky jsou <code>or</code> a
-        <code>and</code>.</li>
+        <li>Podporované logické spojky jsou <code>or</code> (logické
+        <em>nebo</em>) a <code>and</code> (logické <em>a zároveň</em>).</li>
         <li>Podporované porovnávací operátory jsou <code>&lt;=</code>,
         <code>&gt;=</code>, <code>&lt;</code>, <code>&gt;</code>,
         <code>==</code> (rovnost), <code>!=</code> (nerovnost).</li>
         <li>Podporované aritmetické operátory jsou <code>+</code>,
         <code>-</code>, <code>*</code>, <code>/</code> (celočíselné dělení),
         <code>%</code> (zbytek po celočíselném dělení).</li>
-        <li>Priority operátorů jsou standardní.</li>
-        <li>Kód se vyhodnotí i neodsazený, ale ve vašich řešeních odsazení
-        pro přehlednost vyžadujeme!</li>
+        <li>Priority operátorů jsou standardní. Pokud si nejste jisti
+        prioritou operátorů, použijte závorky.</li>
+        <li>Ve vašich řešeních pro přehlednost vyžadujeme odsazování kódu dle
+        příkladů na této stránce.</li>
         <li>Odsazuje se buď tabulátorem nebo 4 znaky mezera.</li>
         <li>Jazyk podporuje jednořádkové komentáře: cokoliv za znakem
         <code>#</code> se nezpracovává (včetně tohoto znaku).</li>
-        <li>Na bílých znacích nezáleží.</li>
+        <li>Na bílých znacích (mezery, tabulátory) nezáleží.</li>
     </ol>
 
     <h3>Vyhodnocování podmínky</h3>
@@ -167,7 +170,8 @@ else:
     <p>Selektor se vždy skládá <strong>právě z 9 symbolů</strong>. Těmito
     symboly mohou být písmena jednotlivých barev, nebo spojovník
     <code>-</code>. Těchto 9 symbolů popisuje po řádcích bezprostřední okolí
-    buňky.</p>
+    buňky. V našem simulátoru má <strong>každá buňka vždy právě 8
+    sousedů</strong>.</p>
 
     <p>Příklad: zápis <code>bbb--r--b</code> značí následující okolí:</p>
     <table class="selector_table">
@@ -218,7 +222,7 @@ else:
     <li>Protože okolí je <code>rrbbbgrrr</code>, tak hodnota selektoru
     <code>rrb------</code> je 3 (všechny 3 barvy souhlasí).</li>
     <li>Protože okolí je <code>rrbbbgrrr</code>, tak hodnota selektoru
-    <code>------bbr</code> je 1 (pouze poslední písmeno <i>r</i> seouhlasí).</li>
+    <code>------bbr</code> je 1 (pouze poslední písmeno <i>r</i> souhlasí).</li>
     <li>Máme výraz <code>if ((3 % 2) == 1) or (1 &gt;= 2):</code>. Upravíme:
     <code>if (1 == 1) or (1 &gt;= 2):</code>. Tento výraz platí, takže
     pokračujeme na řádek 2 zápisu pravidla.</li>
@@ -238,6 +242,9 @@ else:
         <code>if</code>) s libovolným počtem vnořených podmínek. Pro ty, kteří
         již mají nějaké zkušenosti s programováním: větve typu <code>elif</code>,
         <code>else if</code> zde nepoužívejte.</li>
+        <li>U krajních buňek v režimu rovina se selektory vyhodnocují pouze
+        na platných okolních buňkách, tedy například hodnota selektoru
+        na levé dolní buňce nemůže být větší, než 4.</li>
     </ul>
 
     <h3>Příklad pravidla</h3>
