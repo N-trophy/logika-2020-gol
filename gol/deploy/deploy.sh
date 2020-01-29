@@ -8,7 +8,7 @@ if [ $? -eq 0 ]; then
 fi
 
 if [ $? -eq 0 ]; then
-	OUTPUT+=$(touch ../deploy.sh 2>&1)$'\n\n'
+	OUTPUT+=$(touch ../wsgi.py 2>&1)$'\n\n'
 fi
 
 echo "$OUTPUT" | mail "logika-web@ntrophy.cz" -s "[ntrophy-web] Deploy status"
