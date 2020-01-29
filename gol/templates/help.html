@@ -184,10 +184,14 @@ else:
         <span class="mapColorB">b: modrá</span>,
         <span class="mapColorG">g: zelená</span>,
         <span class="mapColorK">k: šedá</span>.
-        Barvy mohou být omezeny v konkrétních úlohách.</p>
+        V konkrétních úlohách mohou být omezeny.</p>
 
-    <p>Selektor se v podmínce se vyhodnocuje na číslo. Toto číslo značí,
-    <strong>kolik buněk souhlasí se selektorem</strong>.</p>
+    <p>Selektor se v podmínce vyhodnocuje na číslo. Toto číslo značí,
+    <strong>kolik buněk z okolí se svou barvou shoduje se selektorem</strong>.
+    Při tomto porovnávání se ignorují spojovníky (porovnáváme tedy pouze ty buňky,
+    na jejichž pozicích se v selektoru nachází barva). Za každou shodu se zvýší hodnota
+    selektoru o 1.
+    </p>
 
     <p>Příklad: Máme konfiguraci velikosti 4×4:
 
