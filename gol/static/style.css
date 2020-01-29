@@ -268,6 +268,10 @@ input[type="text"], input[type="password"], textarea, select, button {
     z-index: 12;
 }
 
+.lowercase {
+    text-transform: lowercase;
+}
+
 /* Matrix characters */
 #matrix-chars {
     width: 100vw;

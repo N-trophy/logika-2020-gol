@@ -42,7 +42,7 @@
                         <h3>Technická specifikace úlohy</h3>
                         <ol>
                             <li>Povolené barvy: {{ task.allowed_colors_webrepr }}</li>
-                            <li>Typ mřížky: {% if task.grid_type == "PLANE" %} ROVINA {% else %} {{ task.grid_type }} {% endif %}</li>
+                            <li>Typ mřížky: <span class='lowercase'>{% if task.grid_type == "PLANE" %} ROVINA {% else %} {{ task.grid_type }} {% endif %}</span></li>
                             {% if task.should_submit %}
                             <li>Zbývající počet odevzdání: <a class="remaining_submissions">{{ remaining_submissions }}</a></li>
                             {% endif %}
