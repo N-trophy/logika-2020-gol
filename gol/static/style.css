@@ -37,6 +37,31 @@ pre {
     white-space: pre-wrap;
 }
 
+footer {
+    margin-top: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+input[type="text"], input[type="password"], textarea, select, button { 
+    outline: none;
+}
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+#page-content {
+    padding-bottom: 100px;
+}
+
+#width-input, #height-input {
+    border: none !important;
+    outline: none;
+}
+
 .selector_table {
     border: 2px solid;
     background: #222;
@@ -54,35 +79,30 @@ pre {
     width: 25px;
     text-align: center;
 }
-
-.selector_table .red { background-color: red; }
-.selector_table .green { background-color: green; }
-.selector_table .blue { background-color: blue; }
-.selector_table .gray { background-color: gray; }
-
-#page-container {
-    position: relative;
-    min-height: 100vh;
+.mapColorR {
+    color: #f00f;
+}
+.mapColorG {
+    color: #0f0f;
+}
+.mapColorB {
+    color: #00ff;
+}
+.mapColorK {
+    color: #555;
 }
 
-#page-content {
-    padding-bottom: 100px;
+.mapBgColorR {
+    background-color: #f00f;
 }
-
-footer {
-    margin-top: 10px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+.mapBgColorG {
+    background-color: #0f0f;
 }
-
-input[type="text"], input[type="password"], textarea, select, button { 
-    outline: none;
+.mapBgColorB {
+    background-color: #00ff;
 }
-
-#width-input, #height-input {
-    border: none !important;
-    outline: none;
+.mapBgColorK {
+    background-color: #555;
 }
 
 .task-ok {
