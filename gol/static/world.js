@@ -244,6 +244,7 @@ class World {
         this.stop();
 
         $('#console-info').text('Zpracovávám...');
+        $('#console-info').removeClass('warning');
 
         const src = editor.getValue();
 
