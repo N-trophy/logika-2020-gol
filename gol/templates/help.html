@@ -175,9 +175,9 @@ else:
 
     <p>Příklad: zápis <code>bbb--r--b</code> značí následující okolí:</p>
     <table class="selector_table">
-        <tr><td class="mapBgColorB">b</td><td class="mapBgColorB">b</td><td class="mapBgColorB">b</td></tr>
-        <tr><td>-</td><td>-</td><td class="mapBgColorR">r</td></tr>
-        <tr><td>-</td><td>-</td><td class="mapBgColorB">b</td></tr>
+        <tr><td class="blue">b</td><td class="blue">b</td><td class="blue">b</td></tr>
+        <tr><td>-</td><td>-</td><td class="red">r</td></tr>
+        <tr><td>-</td><td>-</td><td class="blue">b</td></tr>
     </table>
     <p>Povolené barvy jsou:
         <span class="mapColorR">r: červená</span>,
@@ -192,10 +192,10 @@ else:
     <p>Příklad: Máme konfiguraci velikosti 4×4:
 
     <table class="selector_table">
-        <tr><td class="mapBgColorB"></td><td class="mapBgColorB"></td><td class="mapBgColorB"></td><td class="mapBgColorG"></td></tr>
-        <tr><td class="mapBgColorG"></td><td class="mapBgColorR"></td><td class="mapBgColorR"></td><td class="mapBgColorB"></tr>
-        <tr><td class="mapBgColorB"></td><td class="mapBgColorB"></td><td class="mapBgColorB"></td><td class="mapBgColorG"></tr>
-        <tr><td class="mapBgColorR"></td><td class="mapBgColorR"></td><td class="mapBgColorR"></td><td class="mapBgColorR"></td></tr>
+        <tr><td class="blue"></td><td class="blue"></td><td class="blue"></td><td class="green"></td></tr>
+        <tr><td class="green"></td><td class="red"></td><td class="red"></td><td class="blue"></tr>
+        <tr><td class="blue"></td><td class="blue"></td><td class="blue"></td><td class="green"></tr>
+        <tr><td class="red"></td><td class="red"></td><td class="red"></td><td class="red"></td></tr>
     </table>
 
     <p>Pokud použijeme selektor na políčko (x=2, y=2) (červené), dostáváme
@@ -210,9 +210,9 @@ else:
 
     Okolí buňky vypadá takto: <code>rrbbbgrrr</code>.
     <table class="selector_table">
-        <tr><td class="mapBgColorR"></td><td class="mapBgColorR"></td><td class="mapBgColorB"></td></tr>
-        <tr><td class="mapBgColorB"></td><td class="mapBgColorB"></td><td class="mapBgColorG"></td></tr>
-        <tr><td class="mapBgColorR"></td><td class="mapBgColorR"></td><td class="mapBgColorR"></td></tr>
+        <tr><td class="red"></td><td class="red"></td><td class="blue"></td></tr>
+        <tr><td class="blue"></td><td class="blue"></td><td class="green"></td></tr>
+        <tr><td class="red"></td><td class="red"></td><td class="red"></td></tr>
     </table></p>
 
     <ol>

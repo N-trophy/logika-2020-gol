@@ -63,6 +63,7 @@ input[type="text"], input[type="password"], textarea, select, button {
 }
 
 .selector_table {
+    color: black;
     border: 2px solid;
     background: #222;
     border-collapse: collapse;
@@ -92,16 +93,16 @@ input[type="text"], input[type="password"], textarea, select, button {
     color: #555;
 }
 
-.mapBgColorR {
+.red {
     background-color: #f00f;
 }
-.mapBgColorG {
+.green {
     background-color: #0f0f;
 }
-.mapBgColorB {
+.blue {
     background-color: #00ff;
 }
-.mapBgColorK {
+.gray {
     background-color: #555;
 }
 
