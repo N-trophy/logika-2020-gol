@@ -16,7 +16,7 @@
         });
 
         editor.on('change', (a,b)=>{
-            $('#console-info').text('Kód změněn.');
+            $('#console-info').html('Kód změněn → stiskněte <em>načíst kód</em>.');
             $('#console-info').addClass('warning');
 
             $('#submit-info').text("Kód v textovém editoru se neshoduje s načteným kódem v simulaci. Bude odeslán kód z textového editoru.");
