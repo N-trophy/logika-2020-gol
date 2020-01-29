@@ -15,7 +15,14 @@ body {
     color: rgb(42, 255, 42);
     background-color: rgb(16, 17, 16);
     font-family: 'Courier New', Courier, monospace;
-    text-align: justify;
+}
+
+@media (max-width: 600px) {
+  body { text-align: left; }
+}
+
+@media (min-width: 601px) {
+  body { text-align: justify; }
 }
 
 ul, ol {
