@@ -3,6 +3,13 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mass_mail
+import csv
+
+"""
+Get data from ntrophy db with this request:
+SELECT user_login, display_name, user_email FROM `wp_ntrophy_users`
+Do not forget to filter output.
+"""
 
 
 @login_required
@@ -11,8 +18,8 @@ from django.core.mail import send_mass_mail
 def user_create(request, *args, **kwargs):
     body = request.body.decode('utf-8')
     users = []
-    for line in body.split('\n'):
-        login, teamname, email = line.strip().split(',')
+    for line in csv.reader(body.split('\n')):
+        login, teamname, email = line
 
         u = User(
             username=login,
