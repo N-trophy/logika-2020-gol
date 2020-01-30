@@ -153,7 +153,7 @@ class OperatorSelector extends Selector {
 
     getOperator(opName){
         if (opName == '*') return ((a,b)=>a * b);
-        if (opName == '/') return ((a,b)=>a / b);
+        if (opName == '/') return ((a,b)=>Math.floor(a / b));
         if (opName == '%') return ((a,b)=>a % b);
         if (opName == '+') return ((a,b)=>a + b);
         if (opName == '-') return ((a,b)=>a - b);
