@@ -51,3 +51,6 @@ class Task(models.Model):
 
     def allowed_colors_webrepr(self) -> str:
         return ', '.join(self.allowed_colors)
+
+    def submits_points(self) -> bool:
+        return self.best_score_func != ''

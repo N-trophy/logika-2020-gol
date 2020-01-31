@@ -1,11 +1,12 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from gol.models import Task, Post, TaskCategory
 from gol.models.submission import submissions_remaining, submitted_ok, \
-        best_submission
+        best_submission, best_submissions
 
 
 @login_required(login_url='/login')
@@ -65,3 +66,23 @@ def task(request, *args, **kwargs):
 @login_required(login_url='/login')
 def help(request, *args, **kwargs):
     return render(request, "help.html")
+
+
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
+def monitor(request, *args, **kwargs):
+    tasks = Task.objects.exclude(eval_function__exact='').all()
+    users = list(User.objects.filter(id__gte=20).all())
+    for user in users:
+        user.best_submissions = best_submissions(user, tasks=tasks).values()
+
+    users.sort(key=lambda u: len(
+        list(filter(lambda subm: subm is not None, u.best_submissions))
+    ), reverse=True)
+
+    context = {
+        'user': request.user,
+        'tasks': tasks,
+        'users': users,
+    }
+    return render(request, "monitor.html", context)

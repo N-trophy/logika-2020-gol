@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+     integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+     crossorigin="anonymous">
+    <script src="/static/core.js"></script>
+    <script>
+        CSRF_TOKEN = "{{ csrf_token }}"
+    </script>
+    <title>Monitoring – Kvalifikace logika N-trophy X</title>
+    <link rel="shortcut icon" type="image/png" href="/static/img/logo.png"/>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div id="page-container">
+<div id="page-content">
+{% include "includes/navbar.html" %}
+
+<div id="monitor" class="w3-container">
+<div class="w3-content">
+<h1 class="w3-center">Monitoring</h1>
+
+<table class="stats_table">
+<th>Web ID</th>
+<th>N-trophy ID</th>
+<th>Tým</th>
+{% for task in tasks %}
+    <th>{{ task.name }}</th>
+{% endfor %}
+{% for user in users %}
+    <tr>
+    <td class="left">{{ user.id }}</td>
+    <td class="left">{{ user.username }}</td>
+    <td class="left">{{ user.get_full_name }}</td>
+    {% for submission in user.best_submissions %}
+        <td>
+        {% if submission %}
+            {% if submission.ok %}
+                {% if submission.task.submits_points %}
+                    {{ submission.score }}
+                {% else %}
+                ✓
+                {% endif %}
+            {% else %}
+                X
+            {% endif %}
+        {% endif %}
+        </td>
+    {% endfor %}
+
+    </tr>
+{% endfor %}
+</table>
+
+</div>
+</div>
+</div>
+{% include "includes/footer.html" %}
+</div>
+</body>
+</html>

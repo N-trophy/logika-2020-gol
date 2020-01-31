@@ -80,6 +80,27 @@ input[type="text"], input[type="password"], textarea, select, button {
     width: 25px;
     text-align: center;
 }
+
+.stats_table {
+    border-collapse: collapse;
+    margin: 10px auto;
+}
+
+.stats_table td {
+    border-bottom: 1px solid rgb(42, 255, 42);
+    padding: 5px 20px;
+    text-align: center;
+}
+
+.stats_table .left {
+    text-align: left;
+}
+
+.stats_table th {
+    writing-mode: vertical-rl;
+    vertical-align: middle;
+}
+
 .mapColorR {
     color: #f00f;
 }

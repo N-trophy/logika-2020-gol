@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional, List
 from django.db import models
 from django.db.models import Max
 from django.contrib.auth.models import User
@@ -58,3 +58,35 @@ def best_submission(user: User, task: Task) -> Submission:
         return request.order_by('-score', '-datetime').first()
     else:
         return None
+
+
+def best_submissions(user: User, tasks: Optional[List[Task]] = None) \
+        -> Dict[Task, Submission]:
+    result = {}
+    if tasks is None:
+        tasks = Task.objects.all()
+    submissions = Submission.objects.filter(user=user).all()
+
+    submissions_dict = {}
+    for submission in submissions:
+        if submission.task not in submissions_dict:
+            submissions_dict[submission.task] = []
+        submissions_dict[submission.task].append(submission)
+
+    for task in tasks:
+        task_submissions = submissions_dict[task] \
+            if task in submissions_dict else []
+
+        if task.best_score_func.lower() == 'min':
+            result[task] = max(task_submissions,
+                               key=lambda subm: (subm.ok, -subm.score),
+                               default=None)
+        elif task.best_score_func.lower() == 'max':
+            result[task] = max(task_submissions,
+                               key=lambda subm: (subm.ok, subm.score),
+                               default=None)
+        else:
+            result[task] = max(task_submissions, key=lambda subm: subm.ok,
+                               default=None)
+
+    return result

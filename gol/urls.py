@@ -34,4 +34,5 @@ urlpatterns = [
     path('task/<int:id>/step', step),
     path('help', views.help),
     path('usercreate', user_create),
+    path('monitor', views.monitor),
 ]
