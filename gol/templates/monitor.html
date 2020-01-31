@@ -36,19 +36,21 @@
     <tr>
     <td class="left">{{ user.id }}</td>
     <td class="left">{{ user.username }}</td>
-    <td class="left">{{ user.get_full_name }}</td>
+    <td class="left"><a href="/admin/auth/user/{{ user.id }}/">{{ user.get_full_name }}</a></td>
     {% for submission in user.best_submissions %}
         <td>
         {% if submission %}
+            <a href="/admin/gol/submission/{{ submission.id }}/">
             {% if submission.ok %}
                 {% if submission.task.submits_points %}
                     {{ submission.score }}
                 {% else %}
-                ✓
+                    ✓
                 {% endif %}
             {% else %}
                 X
             {% endif %}
+            </a>
         {% endif %}
         </td>
     {% endfor %}

@@ -101,6 +101,14 @@ input[type="text"], input[type="password"], textarea, select, button {
     vertical-align: middle;
 }
 
+.stats_table a {
+    text-decoration: none;
+}
+
+.stats_table a:hover {
+    text-decoration: underline;
+}
+
 .mapColorR {
     color: #f00f;
 }

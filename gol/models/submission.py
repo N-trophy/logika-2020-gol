@@ -78,15 +78,21 @@ def best_submissions(user: User, tasks: Optional[List[Task]] = None) \
             if task in submissions_dict else []
 
         if task.best_score_func.lower() == 'min':
-            result[task] = max(task_submissions,
-                               key=lambda subm: (subm.ok, -subm.score),
-                               default=None)
+            result[task] = max(
+                task_submissions,
+                key=lambda subm: (subm.ok, -subm.score, subm.datetime),
+                default=None
+            )
         elif task.best_score_func.lower() == 'max':
-            result[task] = max(task_submissions,
-                               key=lambda subm: (subm.ok, subm.score),
-                               default=None)
+            result[task] = max(
+                task_submissions,
+                key=lambda subm: (subm.ok, subm.score, subm.datetime),
+                default=None
+            )
         else:
-            result[task] = max(task_submissions, key=lambda subm: subm.ok,
-                               default=None)
+            result[task] = max(
+                task_submissions, key=lambda subm: (subm.ok, subm.datetime),
+                default=None
+            )
 
     return result
