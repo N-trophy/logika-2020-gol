@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from gol.models import Task, Post, TaskCategory
 from gol.models.submission import submissions_remaining, submitted_ok, \
@@ -72,7 +73,12 @@ def help(request, *args, **kwargs):
 @user_passes_test(lambda u: u.is_superuser)
 def monitor(request, *args, **kwargs):
     tasks = Task.objects.exclude(eval_function__exact='').all()
-    users = list(User.objects.filter(id__gte=20).all())
+
+    users = User.objects
+    if not settings.DEBUG:
+        users = users.filter(id__gte=20)
+    users = list(users.all())
+
     for user in users:
         user.best_submissions = best_submissions(user, tasks=tasks).values()
 
