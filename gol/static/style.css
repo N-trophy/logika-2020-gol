@@ -98,7 +98,6 @@ input[type="text"], input[type="password"], textarea, select, button {
 
 .stats_table th {
     writing-mode: vertical-rl;
-    vertical-align: middle;
 }
 
 .stats_table a {
