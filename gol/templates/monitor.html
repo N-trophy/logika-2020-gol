@@ -26,6 +26,7 @@
 <h1 class="w3-center">Monitoring</h1>
 
 <table class="stats_table">
+<th>Pořadí</th>
 <th>Web ID</th>
 <th>N-trophy ID</th>
 <th>Tým</th>
@@ -34,6 +35,7 @@
 {% endfor %}
 {% for user in users %}
     <tr>
+    <td class="left">{{ forloop.counter }}</td>
     <td class="left">{{ user.id }}</td>
     <td class="left">{{ user.username }}</td>
     <td class="left"><a href="/admin/auth/user/{{ user.id }}/">{{ user.get_full_name }}</a></td>
