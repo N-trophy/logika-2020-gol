@@ -37,7 +37,9 @@
     <tr>
     <td class="left">{{ forloop.counter }}</td>
     <td class="left">{{ user.id }}</td>
-    <td class="left">{{ user.username }}</td>
+    <td class="left
+        {% if user.never_logged_in %}never-logged-in{% endif %}">
+        {{ user.username }}</td>
     <td class="left"><a href="/admin/auth/user/{{ user.id }}/">{{ user.get_full_name }}</a></td>
     {% for submission in user.best_submissions %}
         <td>
@@ -65,6 +67,9 @@
 
 <p><span style="color: orange;">Oranžově</span> jsou zvýrazněna odevzdání
 v posledních 24 hodinách.</p>
+
+<p><span style="color: red;">Červeně</span> jsou zvýrazněny týmy, které
+se ani jednou nepřihlásily.</p>
 
 </div>
 </div>

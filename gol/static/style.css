@@ -112,6 +112,10 @@ input[type="text"], input[type="password"], textarea, select, button {
     color: orange;
 }
 
+.stats_table .never-logged-in {
+    color: red;
+}
+
 .mapColorR {
     color: #f00f;
 }

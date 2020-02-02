@@ -81,6 +81,7 @@ def monitor(request, *args, **kwargs):
 
     for user in users:
         user.best_submissions = best_submissions(user, tasks=tasks).values()
+        user.never_logged_in = user.last_login is None
 
     users.sort(key=lambda u: len(
         list(filter(lambda subm: subm is not None, u.best_submissions))
