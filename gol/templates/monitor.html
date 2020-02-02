@@ -40,7 +40,7 @@
     {% for submission in user.best_submissions %}
         <td>
         {% if submission %}
-            <a href="/admin/gol/submission/{{ submission.id }}/">
+            <a href="/admin/gol/submission/{{ submission.id }}/" title="{{ submission.datetime }}">
             {% if submission.ok %}
                 {% if submission.task.submits_points %}
                     {{ submission.score }}
