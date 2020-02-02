@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import Max
 from django.contrib.auth.models import User
 from django.utils import timezone
+import datetime
 
 from gol.models.task import Task
 
@@ -30,6 +31,9 @@ class Submission(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+    def monitor_highlight(self):
+        return self.datetime >= timezone.now() - datetime.timedelta(days=1)
 
 
 def no_submissions(user: User, task: Task):

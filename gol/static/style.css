@@ -108,6 +108,10 @@ input[type="text"], input[type="password"], textarea, select, button {
     text-decoration: underline;
 }
 
+.stats_table .highlight {
+    color: orange;
+}
+
 .mapColorR {
     color: #f00f;
 }
