@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mass_mail
+from django.views.decorators.csrf import csrf_exempt
 import csv
 
 """
@@ -15,6 +16,7 @@ Do not forget to filter output.
 @login_required
 @require_http_methods(['POST'])
 @permission_required('add_user', 'change_user')
+@csrf_exempt
 def user_create(request, *args, **kwargs):
     body = request.body.decode('utf-8')
     users = []
