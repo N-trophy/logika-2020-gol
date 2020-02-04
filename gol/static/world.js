@@ -219,7 +219,7 @@ class World {
 
     // Drawing methods ----------------------------------------------------------------
     drawAxes(){
-        
+
     }
 
     drawSquare(x, y, color){
@@ -246,7 +246,7 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         const table = this.automata.getCurrentTable()
 
-        
+
         for (let x = 0; x<this.width; x++) {
             for (let y = 0; y<this.height; y++) {
                 const val = table[x][y]
@@ -257,15 +257,15 @@ class World {
         for (let x = 0; x<this.width; x++) {
             this.drawChar(x % 10, x + 1, 0, '#2aff2a');
         }
-    
+
         for (let y = 0; y<this.height; y++) {
             this.drawChar(y % 10, 0, y + 1, '#2aff2a');
         }
     }
-    
+
     loadSource(editor, submit_info_elem, resize=true) {
         this.stop();
-        
+
         $('#console-info').text('Zpracovávám...');
         $('#console-info').removeClass('warning');
 
@@ -294,7 +294,7 @@ class World {
             success: ((data)=>{
                 const rules = Rule.deserialize(data);
                 this.automata.setRules(rules);
-                
+
                 $('#'+submit_info_elem).text("");
                 $('#'+submit_info_elem).removeClass("warning");
 
@@ -456,6 +456,6 @@ class World {
             })
         });
 
-        
+
     }
 }
