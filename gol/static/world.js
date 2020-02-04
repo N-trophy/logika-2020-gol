@@ -255,11 +255,11 @@ class World {
         }
 
         for (let x = 0; x<this.width; x++) {
-            this.drawChar(x % 10, x + 1, 0, '#2aff2a');
+            this.drawChar((x+1) % 10, x + 1, 0, '#2aff2a');
         }
 
         for (let y = 0; y<this.height; y++) {
-            this.drawChar(y % 10, 0, y + 1, '#2aff2a');
+            this.drawChar((y+1) % 10, 0, y + 1, '#2aff2a');
         }
     }
 
