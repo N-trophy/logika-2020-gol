@@ -218,31 +218,54 @@ class World {
 
 
     // Drawing methods ----------------------------------------------------------------
+    drawAxes(){
+        
+    }
+
     drawSquare(x, y, color){
-        const px = x * this.canvas.width / this.width;
-        const py = y * this.canvas.height / this.height;
-        const dx = this.canvas.width / this.width;
-        const dy = this.canvas.height / this.height;
+        const px = x * this.canvas.width / (this.width + 1);
+        const py = y * this.canvas.height / (this.height + 1);
+        const dx = this.canvas.width / (this.width + 1);
+        const dy = this.canvas.height / (this.height + 1);
         this.ctx.fillStyle = color;
         this.ctx.clearRect(px, py, 0.9*dx, 0.9*dy);
         this.ctx.fillRect(px, py, 0.9*dx, 0.9*dy);
+    }
+
+    drawChar(char, x, y, color){
+        const px = (x + 0.1) * this.canvas.width / (this.width + 1);
+        const py = (y + 0.8) * this.canvas.height / (this.height + 1);
+        const dx = this.canvas.width / (this.width + 1);
+        const dy = this.canvas.height / (this.height + 1);
+        this.ctx.fillStyle = color;
+        this.ctx.font = dx + "px Courier";
+        this.ctx.fillText(char, px, py);
     }
 
     drawTable(){
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         const table = this.automata.getCurrentTable()
 
+        
         for (let x = 0; x<this.width; x++) {
             for (let y = 0; y<this.height; y++) {
                 const val = table[x][y]
-                this.drawSquare(x, y, this.pallet[val]);
+                this.drawSquare(x + 1, y + 1, this.pallet[val]);
             }
         }
-    }
 
+        for (let x = 0; x<this.width; x++) {
+            this.drawChar(x % 10, x + 1, 0, 'white');
+        }
+    
+        for (let y = 0; y<this.height; y++) {
+            this.drawChar(y % 10, 0, y + 1, 'white');
+        }
+    }
+    
     loadSource(editor, submit_info_elem, resize=true) {
         this.stop();
-
+        
         $('#console-info').text('Zpracovávám...');
         $('#console-info').removeClass('warning');
 
@@ -294,16 +317,25 @@ class World {
     }
 
     canvasClick(event){
-        const x = Math.floor(event.offsetX * this.width / this.canvas.scrollWidth);
-        const y = Math.floor(event.offsetY * this.height / this.canvas.scrollHeight);
+        let x = Math.floor(event.offsetX * (this.width + 1) / this.canvas.scrollWidth);
+        let y = Math.floor(event.offsetY * (this.height + 1) / this.canvas.scrollHeight);
+        if (x > 0 && y > 0) {
+            x--;
+            y--;
+        } else return;
         this.automata.setCell(this.pickedColor, x, y);
         this.drawTable();
     }
 
     canvasRightClick(event){
         event.preventDefault();
-        const x = Math.floor(event.offsetX * this.width / this.canvas.scrollWidth);
-        const y = Math.floor(event.offsetY * this.height / this.canvas.scrollHeight);
+        let x = Math.floor(event.offsetX * (this.width + 1) / this.canvas.scrollWidth);
+        let y = Math.floor(event.offsetY * (this.height + 1) / this.canvas.scrollHeight);
+        if (x > 0 && y > 0) {
+            x--;
+            y--;
+        } else return;
+
         let col = this.automata.getCell(x, y);
         let col_index = (this.colors.indexOf(col) + 1) % this.colors.length;
         col = this.colors[col_index];
