@@ -136,7 +136,7 @@ def results_csv(request, *args, **kwargs):
             else:
                 submissions.append('X')
 
-        writer.writerow([i, user.id, user.username, user.get_full_name(),
+        writer.writerow([i+1, user.id, user.username, user.get_full_name(),
                          *submissions])
 
     return response
