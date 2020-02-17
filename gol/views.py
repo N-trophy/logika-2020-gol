@@ -129,7 +129,7 @@ def results_csv(request, *args, **kwargs):
             if submission is None:
                 submissions.append('')
             elif submission.ok:
-                if submission.task.submits_points:
+                if submission.task.submits_points():
                     submissions.append(submission.score)
                 else:
                     submissions.append('✓')
