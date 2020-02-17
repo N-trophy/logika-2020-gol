@@ -101,7 +101,7 @@ def monitor(request, *args, **kwargs):
 @user_passes_test(lambda u: u.is_superuser)
 def results_csv(request, *args, **kwargs):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    response['Content-Disposition'] = 'attachment; filename="results.csv"'
     writer = csv.writer(response)
 
     tasks = Task.objects.exclude(eval_function__exact='').all()
