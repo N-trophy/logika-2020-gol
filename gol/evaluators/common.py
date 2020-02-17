@@ -5,7 +5,7 @@ import pyparsing
 
 from gol.models import Task
 from gol.common import Grid, Reporter, Color, Point2D, grid_colors_valid
-from gol.rules_parser import Rule, parse
+from gol.rules_parser import Rule, parse, strip_comments
 import gol.rules_parser.comparison
 
 Ok = bool
@@ -46,7 +46,7 @@ def eval_same_func(task: Task, rules: Rules, grid: Grid,
 
 
 def compares_count(rules: str) -> int:
-    rules_ = rules.replace('>=', '>').replace('<=', '<')
+    rules_ = strip_comments(rules.replace('>=', '>').replace('<=', '<'))
     comparisons_cnt = sum([
         rules_.count(comparator)
         for comparator in gol.rules_parser.comparison.COMPARES.keys()
