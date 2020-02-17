@@ -1,9 +1,10 @@
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.conf import settings
+import csv
 
 from gol.models import Task, Post, TaskCategory
 from gol.models.submission import submissions_remaining, submitted_ok, \
@@ -94,3 +95,47 @@ def monitor(request, *args, **kwargs):
         'users': users,
     }
     return render(request, "monitor.html", context)
+
+
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
+def results_csv(request, *args, **kwargs):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    writer = csv.writer(response)
+
+    tasks = Task.objects.exclude(eval_function__exact='').all()
+
+    users = User.objects
+    if not settings.DEBUG:
+        users = users.filter(id__gte=20)
+    users = list(users.all())
+
+    for user in users:
+        user.best_submissions = best_submissions(user, tasks=tasks).values()
+
+    users.sort(key=lambda u: (len(
+        list(filter(lambda subm: subm is not None, u.best_submissions))),
+        not u.never_logged_in
+    ), reverse=True)
+
+    writer.writerow(['Předběžné pořadí', 'Web ID', 'N-trophy ID', 'Tým'] +
+                    [task.name for task in tasks])
+
+    for i, user in enumerate(users):
+        submissions = []
+        for submission in user.best_submissions:
+            if submission is None:
+                submissions.append('')
+            elif submission.ok:
+                if submission.task.submits_points:
+                    submissions.append(submission.score)
+                else:
+                    submissions.append('✓')
+            else:
+                submissions.append('X')
+
+        writer.writerow([i, user.id, user.username, user.get_full_name(),
+                         *submissions])
+
+    return response

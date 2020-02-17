@@ -35,4 +35,5 @@ urlpatterns = [
     path('help', views.help),
     path('usercreate', user_create),
     path('monitor', views.monitor),
+    path('results.csv', views.results_csv),
 ]
