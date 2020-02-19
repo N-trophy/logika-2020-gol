@@ -54,7 +54,7 @@ def submitted_ok(user: User) -> Dict[int, bool]:
     }
 
 
-def best_submission(user: User, task: Task) -> Submission:
+def best_submission(user: User, task: Task) -> Optional[Submission]:
     request = Submission.objects.filter(user=user, ok=True, task=task)
     if task.best_score_func.lower() == 'min':
         return request.order_by('score', '-datetime').first()

@@ -11,7 +11,6 @@ from gol.models.submission import submissions_remaining, submitted_ok, \
         best_submission, best_submissions
 
 
-@login_required(login_url='/login')
 def simulation(request):
     context = {
         'user': request.user,
@@ -19,10 +18,10 @@ def simulation(request):
     return render(request, 'simulation.html', context)
 
 
-@login_required(login_url='/login')
 def index(request, *args, **kwargs):
     tasks = Task.objects.order_by('id').all()
-    submitted = submitted_ok(request.user)
+    submitted = submitted_ok(request.user) \
+        if request.user.is_authenticated else []
     for task in tasks:
         if task.should_submit():
             if task.id in submitted:
@@ -43,7 +42,6 @@ def index(request, *args, **kwargs):
     return render(request, 'index.html', context)
 
 
-@login_required(login_url='/login')
 def task(request, *args, **kwargs):
     try:
         task = Task.objects.get(id=kwargs['id'])
@@ -55,17 +53,18 @@ def task(request, *args, **kwargs):
 
     task.allowed_colors = task.allowed_colors.lower()
     task.start_config = task.start_config.replace('\r\n', '\\n')
-    task.best_submission = best_submission(request.user, task)
+    task.best_submission = best_submission(request.user, task) \
+            if request.user.is_authenticated else None
 
     context = {
         'user': request.user,
         'task': task,
-        'remaining_submissions': submissions_remaining(request.user, task),
+        'remaining_submissions': submissions_remaining(request.user, task) \
+            if request.user.is_authenticated else -1,
     }
     return render(request, 'task.html', context)
 
 
-@login_required(login_url='/login')
 def help(request, *args, **kwargs):
     return render(request, 'help.html')
 

@@ -15,7 +15,6 @@ from gol.models import Parse, Task
 
 
 @require_http_methods(['POST'])
-@login_required()
 def parse_rules(request, *args, **kwargs):
     data = json.loads(request.body.decode('utf-8'))
     expr = data['expr']
@@ -33,11 +32,13 @@ def parse_rules(request, *args, **kwargs):
     colors += colors.upper()
 
     parse_obj = Parse(
-        user=request.user,
         task=task,
         input_text=expr,
         params=str(kwargs),
     )
+
+    if request.user.is_authenticated:
+        parse_obj.user = request.user
 
     start = time.time()
     try:
@@ -67,6 +68,7 @@ def parse_rules(request, *args, **kwargs):
     finally:
         end = time.time()
         parse_obj.evaluation_time = end-start
-        parse_obj.save()
+        if request.user.is_authenticated:
+            parse_obj.save()
 
     return JsonResponse(rules_)

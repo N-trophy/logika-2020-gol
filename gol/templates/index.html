@@ -19,14 +19,16 @@
     <div id="page-container">
         <div id="page-content">
 
-            <!-- <canvas id='matrix-chars'></canvas> TODO -->
             <!-- Navbar -->
             {% include "includes/navbar.html" %}
 
             <!-- Reminder -->
-            <!-- <div class="w3-center">
-                <p class="w3-padding-large w3-large w3-margin-top w3-center" style="border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;line-height: 1.8;">Nezapomeňte odevzdat pdf soubor do <a href="https://ntrophy.cz/submit-page/" target="_blank">odevzdávárny</a>.</p>
-            </div> -->
+            {% if not user.is_authenticated %}
+            <div class="w3-center w3-padding-large w3-large w3-margin-top">
+                <p>Pozor: nejste přihlášeni! Můžete si prohlížet web, ale
+                odevzdávání se vám nezapočítají.</p>
+            </div>
+            {% endif %}
 
             <!-- News -->
             <div id="news" class="w3-container">

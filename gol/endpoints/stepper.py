@@ -11,7 +11,6 @@ import gol.steppers as steppers
 
 
 @require_http_methods(['POST'])
-@login_required()
 def step(request, *args, **kwargs):
     data = json.loads(request.body.decode('utf-8'))
     grid = data['grid']

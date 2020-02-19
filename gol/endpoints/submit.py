@@ -13,13 +13,13 @@ import gol.evaluators as evaluators
 
 
 @require_http_methods(['POST'])
-@login_required()
 def submit(request, *args, **kwargs):
     data = json.loads(request.body.decode('utf-8'))
     rules = data['rules']
     grid = data['grid']
 
-    if timezone.now() >= QUALIFICATION_END and not request.user.is_superuser:
+    if (timezone.now() >= QUALIFICATION_END and not request.user.is_superuser
+        and request.user.is_authenticated):
         return HttpResponseForbidden('Qualification ended!')
 
     try:
@@ -30,17 +30,20 @@ def submit(request, *args, **kwargs):
     if not hasattr(evaluators, task.eval_function):
         return HttpResponseNotFound('Evaluator not found!')
 
-    done_evaluations = no_submissions(request.user, task)
+    done_evaluations = no_submissions(request.user, task) \
+        if request.user.is_authenticated else 0
     if (task.max_submissions > 0 and done_evaluations >= task.max_submissions
             and not request.user.is_superuser):
         return HttpResponseForbidden('Reached limit of submissions!')
 
     submission = Submission(
-        user=request.user,
         task=task,
         rules=rules,
         grid=grid,
     )
+
+    if request.user.is_authenticated:
+        submission.user = request.user
 
     int_reporter = Reporter()
     user_reporter = Reporter()
@@ -65,10 +68,12 @@ def submit(request, *args, **kwargs):
         return HttpResponseBadRequest('Vnitřní výjimka vyhodnocovátka, '
                                       'kontaktujte organizátory!')
     finally:
-        submission.save()
+        if request.user.is_authenticated:
+            submission.save()
 
     return JsonResponse({
         'ok': ok,
         'report': user_reporter.webrepr(),
-        'submissions_remaining': submissions_remaining(request.user, task),
+        'submissions_remaining': submissions_remaining(request.user, task) \
+            if request.user.is_authenticated else -1,
     })
