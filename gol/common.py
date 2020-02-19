@@ -5,6 +5,7 @@ from datetime import datetime
 from django.utils import timezone
 
 QUALIFICATION_END = timezone.make_aware(datetime(2020, 2, 16, 20, 00, 00))
+SUBMISSIONS_PATH = 'gol/submissions'
 
 Color = str
 Point2D = Tuple[int, int]  # x, y

@@ -1,14 +1,16 @@
-from django.http import HttpResponseNotFound, HttpResponse
+from django.http import HttpResponseNotFound, HttpResponse, FileResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.conf import settings
 import csv
+import os
 
 from gol.models import Task, Post, TaskCategory
 from gol.models.submission import submissions_remaining, submitted_ok, \
         best_submission, best_submissions
+from gol.common import SUBMISSIONS_PATH
 
 
 def simulation(request):
@@ -139,3 +141,27 @@ def results_csv(request, *args, **kwargs):
                          *submissions])
 
     return response
+
+
+@login_required(login_url='/login')
+@user_passes_test(lambda u: u.is_superuser)
+def pdf_submission_id(request, *args, **kwargs):
+    try:
+        return FileResponse(
+            open(os.path.join(SUBMISSIONS_PATH, kwargs['id']+'.pdf'), 'rb'),
+            content_type='application/pdf'
+        )
+    except FileNotFoundError:
+        return HttpResponseNotFound('Submission not found!')
+
+
+@login_required(login_url='/login')
+def my_pdf_submission(request, *args, **kwargs):
+    try:
+        return FileResponse(
+            open(os.path.join(SUBMISSIONS_PATH, request.user.username+'.pdf'),
+                 'rb'),
+            content_type='application/pdf'
+        )
+    except FileNotFoundError:
+        return HttpResponseNotFound('Submission not found!')

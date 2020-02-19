@@ -36,4 +36,6 @@ urlpatterns = [
     path('usercreate', user_create),
     path('monitor', views.monitor),
     path('results.csv', views.results_csv),
+    path('pdfscan/<str:id>', views.pdf_submission_id),
+    path('pdfscan', views.my_pdf_submission),
 ]
