@@ -16,7 +16,7 @@ def simulation(request):
     context = {
         'user': request.user,
     }
-    return render(request, "simulation.html", context)
+    return render(request, 'simulation.html', context)
 
 
 @login_required(login_url='/login')
@@ -40,7 +40,7 @@ def index(request, *args, **kwargs):
         'posts': (Post.objects.filter(published__lt=timezone.now()).
                   order_by('-published')[:12]),
     }
-    return render(request, "index.html", context)
+    return render(request, 'index.html', context)
 
 
 @login_required(login_url='/login')
@@ -54,7 +54,7 @@ def task(request, *args, **kwargs):
         task.rules = ''  # prevent security vulnerabilities in template
 
     task.allowed_colors = task.allowed_colors.lower()
-    task.start_config = task.start_config.replace("\r\n", "\\n")
+    task.start_config = task.start_config.replace('\r\n', '\\n')
     task.best_submission = best_submission(request.user, task)
 
     context = {
@@ -62,12 +62,12 @@ def task(request, *args, **kwargs):
         'task': task,
         'remaining_submissions': submissions_remaining(request.user, task),
     }
-    return render(request, "task.html", context)
+    return render(request, 'task.html', context)
 
 
 @login_required(login_url='/login')
 def help(request, *args, **kwargs):
-    return render(request, "help.html")
+    return render(request, 'help.html')
 
 
 @login_required(login_url='/login')
@@ -94,7 +94,7 @@ def monitor(request, *args, **kwargs):
         'tasks': tasks,
         'users': users,
     }
-    return render(request, "monitor.html", context)
+    return render(request, 'monitor.html', context)
 
 
 @login_required(login_url='/login')
