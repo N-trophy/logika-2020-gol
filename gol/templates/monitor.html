@@ -26,10 +26,11 @@
 <h1 class="w3-center">Monitoring</h1>
 
 <table class="stats_table">
-<th>Pořadí</th>
+<th>Předběžné pořadí</th>
 <th>Web ID</th>
 <th>N-trophy ID</th>
 <th>Tým</th>
+<th>PDF scan</th>
 {% for task in tasks %}
     <th>{{ task.name }}</th>
 {% endfor %}
@@ -41,6 +42,7 @@
         {% if user.never_logged_in %}never-logged-in{% endif %}">
         {{ user.username }}</td>
     <td class="left"><a href="/admin/auth/user/{{ user.id }}/">{{ user.get_full_name }}</a></td>
+    <td><a href="/pdfscan/{{ user.username }}">zde</a></td>
     {% for submission in user.best_submissions %}
         <td>
         {% if submission %}
